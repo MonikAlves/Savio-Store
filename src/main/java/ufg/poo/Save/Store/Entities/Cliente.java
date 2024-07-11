@@ -6,13 +6,13 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="produto")
+@Table(name="cliente")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Produtos implements Serializable {
+public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +22,19 @@ public class Produtos implements Serializable {
     private String nome;
 
     @Column(nullable = false)
-    private Double preco;
+    private String email;
 
     @Column(nullable = false)
-    private int estoque;
+    private String telefone;
 
     @Column(nullable = false)
-    private String image;
+    private String senha;
 
     @Column(nullable = false)
-    private String tamanho;
+    private int dadosLegais;
+
+    @Column(nullable = false)
+    private boolean superUser;
+
 
 }

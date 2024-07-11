@@ -9,7 +9,7 @@ import ufg.poo.Save.Store.Entities.Produtos;
 import java.util.List;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produtos,String> {
+public interface ProdutoRepository extends JpaRepository<Produtos,Long> {
     @Procedure(name = "get_products_by_ID")
-    List<Produtos> get_products_by_ID(@Param("id") String id);
+    List<Produtos> get_products_by_ID(@Param("id") long id);
 }
