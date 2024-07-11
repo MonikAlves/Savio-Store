@@ -18,15 +18,17 @@ public class ProdutoController {
 
     @GetMapping("/pegar/{id}")
     @Transactional
-    public List<Produtos> pegar(@PathVariable String id) {
+    public List<Produtos> pegar(@PathVariable long id) {
         List<Produtos> produtos = produtoRepository.get_products_by_ID(id);
         return produtos;
     }
 
-    @PostMapping("/colocar")
+    @DeleteMapping("/colocar")
     public void colocar(@RequestBody Produtos produto){
         System.out.println(produto);
-        this.produtoRepository.save(produto);
+        this.produtoRepository.delete(produto);
     }
+
+    //delete só precisa do pk, o id
 
 }

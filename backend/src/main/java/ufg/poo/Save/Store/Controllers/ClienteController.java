@@ -32,8 +32,9 @@ public class ClienteController {
             this.clienteRepository.save(cliente);
         }
 
-        @DeleteMapping("/deletar")
-        public void deletar(@RequestBody Cliente cliente){
+        @DeleteMapping("/deletar/{id}")
+        public void deletar(@PathVariable long a){
+            Cliente cliente = this.clienteRepository.findById(long a);
             this.clienteRepository.delete(cliente);
         }
 
