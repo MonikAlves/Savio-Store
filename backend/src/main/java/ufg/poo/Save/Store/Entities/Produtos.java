@@ -22,6 +22,9 @@ public class Produtos implements Serializable {
     private String nome;
 
     @Column(nullable = false)
+    private String descricao;
+
+    @Column(nullable = false)
     private Double preco;
 
     @Column(nullable = false)
