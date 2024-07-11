@@ -31,7 +31,7 @@ public class Cliente implements Serializable {
     private String senha;
 
     @Column(nullable = false)
-    private int dadosLegais;
+    private String dadosLegais;
 
     @Column(nullable = false)
     private boolean superUser;
