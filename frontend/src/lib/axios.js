@@ -10,7 +10,7 @@ export class ProductsApi {
 
     async getProducts() {
         try {
-            const response = await this.axios.get('/listarProdutos');
+            const response = await this.axios.get('/all');
             return response.data;
         } catch (error) {
             console.error(error);
