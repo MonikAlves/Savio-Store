@@ -1,26 +1,23 @@
 package ufg.poo.Save.Store.Services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ufg.poo.Save.Store.Entities.Produtos;
-import ufg.poo.Save.Store.Repositories.ProdutoRepository;
-
-import java.util.List;
+import ufg.poo.Save.Store.Entities.Product;
+import ufg.poo.Save.Store.Repositories.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
 public class ProdutoService {
 
-    private ProdutoRepository produtoRepository;
+    private ProductRepository productRepository;
 
     public String getProduto(){
-        return this.produtoRepository.toString();
+        return this.productRepository.toString();
     }
 
 
-    public boolean register(Produtos novoproduto){
-        this.produtoRepository.save(novoproduto);
+    public boolean register(Product novoproduto){
+        this.productRepository.save(novoproduto);
         return true;
     }
 
