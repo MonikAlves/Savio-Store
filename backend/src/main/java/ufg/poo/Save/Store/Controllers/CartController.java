@@ -1,15 +1,10 @@
 package ufg.poo.Save.Store.Controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ufg.poo.Save.Store.Entities.Cart;
-import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Services.CartService;
 
@@ -20,16 +15,12 @@ import java.util.List;
 @RequestMapping("/SavioStore/cart")
 @RequiredArgsConstructor
 public class CartController {
-    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    @Autowired
-    private CartRepository cartRepository;
-    @Autowired
-    private CartService cartService;
+    private final CartRepository cartRepository;
+    private final CartService cartService;
 
 
     @GetMapping("/all")
-    @Transactional
     public List<Cart> getAllProducts() {
         return cartRepository.findAll();
     }

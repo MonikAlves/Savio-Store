@@ -1,7 +1,6 @@
 package ufg.poo.Save.Store.Controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ufg.poo.Save.Store.Entities.Product;
@@ -13,7 +12,7 @@ import java.util.List;
 @RequestMapping("/SavioStore/product")
 @RequiredArgsConstructor
 public class ProductController {
-    @Autowired
+
     ProductRepository productRepository;
 
     @GetMapping("/all")

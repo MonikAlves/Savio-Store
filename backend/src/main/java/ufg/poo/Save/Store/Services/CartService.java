@@ -1,21 +1,27 @@
 package ufg.poo.Save.Store.Services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 import ufg.poo.Save.Store.Entities.Cart;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CartService {
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
+    private final ClientService clientService;
+    private final ProductService productService;
 
-    public String addCart(@RequestBody Cart cart){
+    public String addCart(Cart cart){
+
             long clientId = cart.getClient().getId();
             long productId = cart.getProduct().getId();
+
+            clientService.clientExist(clientId);
+            productService.productExist(productId);
+
             String exist = cartRepository.verify_cart_exist(clientId,productId);
 
             if(exist.equals("no")){
