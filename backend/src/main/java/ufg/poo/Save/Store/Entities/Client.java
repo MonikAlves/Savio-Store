@@ -36,5 +36,4 @@ public class Client implements Serializable {
     @Column(nullable = false)
     private boolean superUser;
 
-
 }
