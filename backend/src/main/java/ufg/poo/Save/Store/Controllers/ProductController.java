@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @GetMapping("/all")
     @Transactional
