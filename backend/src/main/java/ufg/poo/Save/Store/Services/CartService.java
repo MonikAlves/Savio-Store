@@ -4,7 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ufg.poo.Save.Store.Entities.Cart;
+import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Repositories.CartRepository;
+import ufg.poo.Save.Store.Repositories.ClientRepository;
+import ufg.poo.Save.Store.Repositories.ProductRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +19,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ClientService clientService;
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
     public String addCart(Cart cart){
 
@@ -31,5 +38,10 @@ public class CartService {
             }else{
                 return "Adicionado mais uma unidade ao carrinho\n";
             }
+    }
+
+    public List<Product> importList(long id){
+        clientService.clientExist(id);
+        return  this.productRepository.get_products_by_id_client(id);
     }
 }
