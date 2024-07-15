@@ -6,34 +6,34 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="produto")
+@Table(name="product")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Produtos implements Serializable {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
-    private String descricao;
+    private String description;
 
     @Column(nullable = false)
-    private Double preco;
+    private Double price;
 
     @Column(nullable = false)
-    private int estoque;
+    private int stock;
 
     @Column(nullable = false)
     private String image;
 
     @Column(nullable = false)
-    private String tamanho;
+    private String size;
 
 }

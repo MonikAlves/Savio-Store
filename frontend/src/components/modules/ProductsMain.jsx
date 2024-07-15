@@ -50,10 +50,10 @@ export function ProductsMain() {
                             return (
                              <Product
                                 key={index}
-                                image = {product.imagem}
-                                title={product.nome}
-                                description ={product.descricao}
-                                price = {product.preco}
+                                image = {product.image}
+                                title={product.name}
+                                description ={product.description}
+                                price = {product.price}
                             />   
                             )
                         })
