@@ -50,7 +50,7 @@ export function ProductsMain() {
                             return (
                              <Product
                                 key={index}
-                                image = {product.image}
+                                image = {"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" +product.image}
                                 title={product.name}
                                 description ={product.description}
                                 price = {product.price}
