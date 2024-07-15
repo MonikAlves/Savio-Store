@@ -25,8 +25,8 @@ public class CartController {
         return cartRepository.findAll();
     }
 
-    @PostMapping("/post")
-    public ResponseEntity<List<String>> post(@RequestBody List<Cart> carts){
+    @PostMapping("/add")
+    public ResponseEntity<List<String>> add(@RequestBody List<Cart> carts){
         List<String> message =  new ArrayList<>();
         for(Cart cart : carts){
             message.add(cartService.addCart(cart));
