@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufg.poo.Save.Store.Entities.Cart;
+import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Services.CartService;
 
@@ -16,13 +17,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final CartRepository cartRepository;
+
     private final CartService cartService;
 
 
-    @GetMapping("/all")
-    public List<Cart> getAllProducts() {
-        return cartRepository.findAll();
+    @GetMapping("/{id}")
+    public List<Product> showProducts(@PathVariable long id) {
+        return cartService.importList(id);
     }
 
     @PostMapping("/add")
@@ -33,6 +34,8 @@ public class CartController {
         }
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
+
+
 }
 
 /*

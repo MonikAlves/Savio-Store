@@ -16,12 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientController {
 
-        private final ClientRepository clientRepository;
         private final ClientService clientService;
 
-        @GetMapping("/{id}")
-        public Client a(@PathVariable long id) {
-            return clientService.getClient(id);
+        @GetMapping("/information/{email}/{password}")
+        public Client validateLogin(@PathVariable String email, @PathVariable String password) {
+            return clientService.verifyLogin(email, password);
         }
 
         @PostMapping("/colocar")
@@ -30,9 +29,9 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
         }
 
-        @DeleteMapping("/deletar/{id}")
+        /*@DeleteMapping("/deletar/{id}")
         public void deletar(@PathVariable Client client){
             this.clientRepository.delete(client);
-        }
+        }*/
 
 }

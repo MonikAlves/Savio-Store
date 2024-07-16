@@ -25,6 +25,9 @@ public class Product implements Serializable {
     private String description;
 
     @Column(nullable = false)
+    private String size;
+
+    @Column(nullable = false)
     private Double price;
 
     @Column(nullable = false)
@@ -32,8 +35,5 @@ public class Product implements Serializable {
 
     @Column(nullable = false)
     private String image;
-
-    @Column(nullable = false)
-    private String size;
 
 }
