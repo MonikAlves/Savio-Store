@@ -54,6 +54,7 @@ export function ProductsMain() {
                                 title={product.name}
                                 description ={product.description}
                                 price = {product.price}
+                                product={product}
                             />   
                             )
                         })

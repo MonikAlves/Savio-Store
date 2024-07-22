@@ -18,6 +18,7 @@ export function Header() {
     const userActions = [
         { to: '/login', label: 'Login', icon: <LogIn /> },
         { to: '/register', label: 'Register ', icon: <User /> },
+        { to: '/cart', label: `Carrinho (${state.reduce((acc, item) => acc + item.quantity, 0)})`, icon: <ShoppingCart /> },
     ];
 
     const cartIcon = [

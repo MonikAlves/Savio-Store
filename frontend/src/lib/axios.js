@@ -17,4 +17,14 @@ export class ProductsApi {
             return [];
         }
     }
+
+    async getProductById(id) {
+        try {
+            const response = await this.axios.get('/listarProdutoById/' + id);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    }
 }
