@@ -21,7 +21,7 @@ export function ContactMain() {
                     </span>
                     <textarea className="w-full p-2.5 rounded ring-[1px] ring-black/40 focus:pl-4 transition-all" type="text" name="" placeholder="Digite sua mensagem" />
                 </label>
-                <button className="cursor-pointer bg-red-600 w-full rounded p-2.5 font-bold text-white hover:bg-red-700 transition-all">
+                <button className="cursor-pointer bg-orange-500 w-full rounded p-2.5 font-bold text-black hover:bg-orange-700 hover:text-white transition-all">
                     Enviar
                 </button>
             </form>

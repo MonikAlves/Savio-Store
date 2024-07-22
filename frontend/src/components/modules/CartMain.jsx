@@ -16,29 +16,29 @@ export function CartMain() {
     ]
 
     return (
-        <main className="flex-1 p-5 flex flex-col gap-10 pt-32 justify-center items-center">
-            <h1 className='text-4xl font-semibold text-black/80 w-full text-center p-2.5 border-b-[1px] border-b-black/30'>Carrinho</h1>
+        <main className="flex-1 p-5 flex flex-col gap-10 justify-center items-center">
+            <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Carrinho</h1>
             <div className="flex gap-5">
                 {
                     state.length == 0 ?
-                        <div className="bg-slate-100 w-full p-5 rounded flex flex-col gap-5 justify-center items-center">
+                        <div className="text-white ring ring-white w-full p-5 rounded flex flex-col gap-5 justify-center items-center">
                             <h2 className="text-center text-5xl font-thin">
                                 Seu carrinho está vazio
                             </h2>
-                            <NavLink className="flex gap-2.5 p-2.5 ring-[1px] ring-black rounded hover:bg-black hover:text-white transition-all" to={"/products"}>
+                            <NavLink className="flex bg-white text-black gap-2.5 p-2.5 ring-[1px] ring-white rounded hover:bg-orange-600 transition-all" to={"/products"}>
                                 <ArrowLeftIcon/>
                                 Continuar comprado
                             </NavLink>
                         </div>
                         :
                         <>
-                            <div className="flex flex-col ring-[1px] ring-black/30 rounded p-2.5 gap-5">
-                                <h2 className="bg-slate-100 p-2.5 rounded text-xl font-semibold">Lista de Produtos</h2>
+                            <div className="flex flex-col ring-[1px] ring-white text-white rounded p-2.5 gap-5">
+                                <h2 className="bg-white p-2.5 text-black rounded text-xl font-bold">Lista de Produtos</h2>
                                 {
                                     state.map((product, index) => (
                                         <CartProduct
                                             key={index}
-                                            image={product.image}
+                                            image={"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" +product.image}
                                             title={product.title}
                                             description={product.description}
                                             quantity={product.quantity}
@@ -47,11 +47,11 @@ export function CartMain() {
                                     ))}
 
                             </div>
-                            <div className="flex flex-col h-fit ring-[1px] ring-black/30 rounded p-2.5 min-w-80">
-                                <h2 className="bg-slate-100 p-2.5 rounded text-xl font-semibold">Resumo do pedido</h2>
+                            <div className="flex flex-col h-fit ring-[1px] ring-white rounded p-2.5 min-w-80">
+                                <h2 className="bg-white p-2.5 rounded text-xl font-bold">Resumo do pedido</h2>
                                 {
                                     summaries.map((summary, index) => (
-                                        <div key={index} className={`flex justify-between p-2.5 ${summary.isBold && "font-bold"}`}>
+                                        <div key={index} className={`flex justify-between text-white p-2.5 ${summary.isBold && "font-bold"}`}>
                                             <span>
                                                 {summary.label}
                                             </span>
@@ -61,7 +61,7 @@ export function CartMain() {
                                         </div>
                                     ))
                                 }
-                                <button className="bg-black/85 text-white p-2.5 rounded font-bold hover:bg-black transition-all">
+                                <button className="bg-white text-black p-2.5 rounded font-bold hover:bg-orange-600 transition-all">
                                     Finalizar compra
                                 </button>
                             </div>

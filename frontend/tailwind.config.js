@@ -16,13 +16,16 @@ export default {
           eerie: '#131A22',
         },
       },
-    },
 
-    /*extend: {
       backgroundImage: {
         'main-bg': "url('/main.png')",
-      }
-    },*/
+      },
+
+      luizImage: {
+        'masc-roupas': "url('/luiz.png')",
+      },
+
+    },
   },
 
   plugins: [],

@@ -9,7 +9,6 @@ import { ContactMain } from './components/modules/ContactMain.jsx';
 import { LoginMain } from './components/modules/LoginMain.jsx';
 import { RegisterMain } from './components/modules/RegisterMain.jsx';
 import { CartMain } from './components/modules/CartMain.jsx';
-import { Product } from './components/shared/Product.jsx';
 
 
 const router = createBrowserRouter([
