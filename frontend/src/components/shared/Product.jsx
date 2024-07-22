@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react"
+import { useContext, useRef, useState, useEffect } from "react"
 import { ShoppingContext } from "../../contexts/ShoppingProvider";
 import { ShoppingCart } from 'lucide-react';
 
@@ -6,26 +6,34 @@ export function Product({image, title, description, price, product}){
 
     const {addToCart} = useContext(ShoppingContext); 
 
-    const [clicked, setClicked] = useState(false);
+    const audioRef = useRef(null);
+    const [selectedButton, setSelectedButton] = useState(null);
     const [buttonState, setButtonState] = useState(false);
     const [showCart, setShowCart] = useState(false);
 
-    const currentClicked = () => {
-        setClicked(!clicked);
-        setButtonState(clicked ? false : true);
-    }
+    const handleButtonClick = (buttonId) => {
+        setSelectedButton(buttonId); // Atualiza o estado para o botão clicado
+    };
 
-    const handleClick = () => {
-        setClicked(!clicked);
-        setButtonState(clicked ? false : true);
+    const getButtonClasses = (buttonId) => {
+        return `w-9 text-black font-bold rounded p-2 cursor-pointer text-center transition-all ${selectedButton === buttonId ? 'bg-orange-600' : 'bg-white hover:bg-orange-500'}`;
     };
 
     const handleAddToCartClick = () => {
         addToCart(product);
+
+        if (audioRef.current) { 
+            audioRef.current.volume = 0.1;
+            //audioRef.current.currentTime = 0; // Reinicia o áudio se ele já estiver tocando
+            audioRef.current.play().catch(error => {
+              console.error("Erro ao tentar reproduzir o áudio: ", error);
+            });
+        }
+
         setShowCart(true);
         setTimeout(() => {
           setShowCart(false);
-        }, 2000);
+        }, 1000);
       };
     
       useEffect(() => {
@@ -35,6 +43,7 @@ export function Product({image, title, description, price, product}){
 
     return (
         <div className="w-80 h-[500px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
+            <audio ref={audioRef} src="public/cart_sound.mp3"/>
             <figure className="flex bg-gray-500 flex-col ring-1 ring-white w-[170px] h-[180px]">
                 <img src={image} alt={description} className="h-[160px]"/>
             </figure>
@@ -51,17 +60,17 @@ export function Product({image, title, description, price, product}){
                 </p>
                 <div className="p-5 flex gap-3 flex-wrap flex-col h-full items-center justify-end">
                     <div className="flex gap-2 space-x-3">
-                        <button className={`w-9 text-black font-bold rounded p-2 cursor-pointer text-center hover:bg-orange-500 transition-all ${clicked ? 'bg-orange-600 hover:bg-orange-600' : 'bg-white'}`} onClick={() => {setClicked(!clicked, "P"); handleClick();}}>S</button>
-                        <button className={`w-9 text-black font-bold rounded p-2 cursor-pointer text-center hover:bg-orange-500 transition-all ${clicked ? 'bg-orange-600 hover:bg-orange-600' : 'bg-white'}`} onClick={() => {setClicked(!clicked, "M"); handleClick();}}>M</button>
-                        <button className={`w-9 text-black font-bold rounded p-2 cursor-pointer text-center hover:bg-orange-500 transition-all ${clicked ? 'bg-orange-600 hover:bg-orange-600' : 'bg-white'}`} onClick={() => {setClicked(!clicked), "G"; handleClick();}}>L</button>
+                        <button className={getButtonClasses('P')} onClick={() => handleButtonClick('P')}>P</button>
+                        <button className={getButtonClasses('M')} onClick={() => handleButtonClick('M')}>M</button>
+                        <button className={getButtonClasses('G')} onClick={() => handleButtonClick('G')}>G</button>
                     </div>
                     <button className="text-black w-full w-[240px] font-bold bg-white/100 rounded p-2 cursor-pointer text-center hover:bg-orange-600 transition-all">Comprar</button>
                     <button className="text-black w-full font-bold bg-white/100 rounded p-2 cursor-pointer text-center hover:bg-orange-600 transition-all" onClick={handleAddToCartClick}>Adicionar ao carrinho</button>
                 </div>
                     {showCart && (
-                        <div className="absolute bottom-0 h-full flex justify-center w-full">
+                        <div className="absolute h-full flex justify-center w-full">
                         <div className="animate-cart-up">
-                            <ShoppingCart className="color-black"/>
+                            <ShoppingCart className="h-[50px] w-[50px] text-orange-500"/>
                         </div>
                         </div>
                     )}
