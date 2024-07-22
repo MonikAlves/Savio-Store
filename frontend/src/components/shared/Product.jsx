@@ -12,12 +12,18 @@ export function Product({image, title, description, price, product}){
     const [showCart, setShowCart] = useState(false);
 
     const handleButtonClick = (buttonId) => {
-        setSelectedButton(buttonId); // Atualiza o estado para o botão clicado
+        if(selectedButton === buttonId) {
+            setSelectedButton(null);
+        }
+        else {
+            setSelectedButton(buttonId);
+        }
     };
 
     const getButtonClasses = (buttonId) => {
         return `w-9 text-black font-bold rounded p-2 cursor-pointer text-center transition-all ${selectedButton === buttonId ? 'bg-orange-600' : 'bg-white hover:bg-orange-500'}`;
     };
+
 
     const handleAddToCartClick = () => {
         addToCart(product);

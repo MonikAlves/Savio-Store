@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ShoppingContext } from '../../contexts/ShoppingProvider';
-import { FilePen, LogIn, Pencil, ShoppingCart, User } from 'lucide-react';
+import { FilePen, LogIn, Pencil, User } from 'lucide-react';
 import logo from '/S-logo.png';
 
-export function Header() {
+export function HeaderOut() {
 
     const { state } = useContext(ShoppingContext);
 
@@ -15,25 +15,10 @@ export function Header() {
         { to: '/contact', label: 'Contact' },
     ];
 
-    const [userActions, setUserActions] = useState([
-        { to: '/login', label: 'Login', icon: <LogIn /> },
-        { to: '/register', label: 'Register', icon: <User /> },
-    ]);
-
-    const addCart = () => {
-        const newAction = { to: '/cart', label: `Carrinho (${state.reduce((acc, item) => acc + item.quantity, 0)})`, icon: <ShoppingCart /> };
-        setUserActions((prevActions) => [...prevActions, newAction]);
-    };
-
-    /*const userActions = [
+    const userActions = [
         { to: '/login', label: 'Login', icon: <LogIn /> },
         { to: '/register', label: 'Register ', icon: <User /> },
-    ];*/
-
-    const cartIcon = [
-        { to: '/cart', label: `Carrinho (${state.reduce((acc, item) => acc + item.quantity, 0)})`, icon: <ShoppingCart /> },
     ];
-
 
     return (
         <header className='flex items-center flex-col w-full'>
