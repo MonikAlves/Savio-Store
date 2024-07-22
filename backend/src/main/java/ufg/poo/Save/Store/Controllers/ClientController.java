@@ -12,18 +12,19 @@ import ufg.poo.Save.Store.Services.ClientService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/SavioStore/client")
+@RequestMapping("/SavioStore/Client")
 @RequiredArgsConstructor
 public class ClientController {
 
         private final ClientService clientService;
 
-        @GetMapping("/information/{email}/{password}")
-        public Client validateLogin(@PathVariable String email, @PathVariable String password) {
-            return clientService.verifyLogin(email, password);
+        @PostMapping("/login")
+        public Client validateLogin(@RequestBody Client client) {
+            System.out.println("Deu certo " + client);
+            return clientService.verifyLogin(client);
         }
 
-        @PostMapping("/colocar")
+        @PostMapping("/register")
         public ResponseEntity<String> colocar(@RequestBody Client client){
             String message = clientService.addClient(client);
             return ResponseEntity.status(HttpStatus.CREATED).body(message);

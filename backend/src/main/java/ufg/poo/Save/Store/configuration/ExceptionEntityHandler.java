@@ -33,4 +33,9 @@ public class ExceptionEntityHandler {
     public ResponseEntity handleEmailIsNotValid(EmailIsNotValid emailIsNotValid) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(emailIsNotValid.getMessage());
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity handleBadRequestException(BadRequestException badRequestException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(badRequestException.getMessage());
+    }
 }

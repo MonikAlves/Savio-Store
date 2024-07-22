@@ -64,8 +64,11 @@ public class ClientService {
         return this.clientRepository.findById(id).orElseThrow(() -> new ClientNotFound("Client not found"));
     }
 
-    public Client verifyLogin(String email, String password){
-        loginExists(email);
+    public Client verifyLogin(Client client){
+        String email = client.getEmail();
+        String password = client.getPassword();
+
+        loginExists(client.getEmail());
         Client cliente = clientRepository.getReferenceByEmail(email);
         if(!cliente.getPassword().equals(password)){
             throw new Unauthorized("Wrong password, KILL YOURSELF");

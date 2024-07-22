@@ -12,4 +12,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     @Procedure(name = "get_products_by_id_client")
     List<Product> get_products_by_id_client(@Param("id") long id);
+
+    Product getProductById(Long id);
 }
