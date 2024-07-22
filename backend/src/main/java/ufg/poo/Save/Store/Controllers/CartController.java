@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufg.poo.Save.Store.Entities.Cart;
+import ufg.poo.Save.Store.Entities.Client;
 import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Services.CartService;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/SavioStore/cart")
+@RequestMapping("/SavioStore/Cart")
 @RequiredArgsConstructor
 public class CartController {
 
@@ -23,17 +24,23 @@ public class CartController {
 
     @GetMapping("/{id}")
     public List<Product> showProducts(@PathVariable long id) {
-        return cartService.importList(id);
+        return this.cartService.importList(id);
     }
 
     @PostMapping("/add")
     public ResponseEntity<List<String>> add(@RequestBody List<Cart> carts){
         List<String> message =  new ArrayList<>();
         for(Cart cart : carts){
-            message.add(cartService.addCart(cart));
+            message.add(this.cartService.addCart(cart));
         }
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody Cart cart){
+        this.cartService.delete(cart.getId());
+    }
+
 
 
 }
@@ -45,11 +52,6 @@ public class CartController {
 * calculate_total_by_id_cart -> dado um id de carrinho ele calcula o total daquele produto especifico
 * CALL calculate_total_by_id_cart("id do carrinho");
 *
-* calculate_total_line -> calcula o total de uma linha quando recebe o id da pessoa e do produto
-* call SavioStore.calculate_total_line("id client", "id produto");
-*
-* get_products_by_id_client -> Recebe o id do usuario e retorna todos os produtos que ele tem no carrinho
-* call SavioStore.get_products_by_id_client("id do cliente");
 *
 *
 *

@@ -21,18 +21,20 @@ public class ClientController {
         @PostMapping("/login")
         public Client validateLogin(@RequestBody Client client) {
             System.out.println("Deu certo " + client);
-            return clientService.verifyLogin(client);
+            return this.clientService.verifyLogin(client);
         }
 
         @PostMapping("/register")
         public ResponseEntity<String> colocar(@RequestBody Client client){
-            String message = clientService.addClient(client);
+            this.clientService.verifyInformationEmpty(client);
+            String message = this.clientService.addClient(client);
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
         }
 
-        /*@DeleteMapping("/deletar/{id}")
-        public void deletar(@PathVariable Client client){
-            this.clientRepository.delete(client);
-        }*/
+        @DeleteMapping("/delete")
+        public void delete(@RequestBody Client client){
+            this.clientService.delete(client.getId());
+        }
+
 
 }

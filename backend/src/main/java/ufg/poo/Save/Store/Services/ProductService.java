@@ -78,4 +78,9 @@ public class ProductService {
         if(produto.getPrice() == null) throw new BadRequestException("Preço não informado");
         if(produto.getImage() == null) throw new BadRequestException("Imagem não informada");
     }
+
+    public void delete(long id){
+        this.productExist(id);
+        this.productRepository.deleteById(id);
+    }
 }

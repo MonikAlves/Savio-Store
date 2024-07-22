@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import ufg.poo.Save.Store.Entities.Client;
-import ufg.poo.Save.Store.Exception.ClientAlreadyExist;
-import ufg.poo.Save.Store.Exception.ClientNotFound;
-import ufg.poo.Save.Store.Exception.EmailIsNotValid;
-import ufg.poo.Save.Store.Exception.Unauthorized;
+import ufg.poo.Save.Store.Entities.Product;
+import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 
 import java.util.Optional;
@@ -53,7 +51,7 @@ public class ClientService {
         String email = client.getEmail();
 
         this.verifyClientExist(email);
-        clientRepository.save(client);
+        this.clientRepository.save(client);
 
         this.validateEmail(email);
 
@@ -68,13 +66,26 @@ public class ClientService {
         String email = client.getEmail();
         String password = client.getPassword();
 
-        loginExists(client.getEmail());
-        Client cliente = clientRepository.getReferenceByEmail(email);
+        this.loginExists(client.getEmail());
+        Client cliente = this.clientRepository.getReferenceByEmail(email);
         if(!cliente.getPassword().equals(password)){
             throw new Unauthorized("Wrong password, KILL YOURSELF");
         }
 
         return cliente;
+    }
+
+    public void verifyInformationEmpty(Client client){
+        if(client.getName() == null) throw new BadRequestException("Nome não informado");
+        if(client.getEmail() == null) throw new BadRequestException("Email não informada");
+        if(client.getPassword() == null) throw new BadRequestException("Senha não informada");
+        if(client.getPhone() == null) throw new BadRequestException("Telefone não informado");
+        if(client.getLegalData() == null) throw new BadRequestException("CPF ou CNPJ não informado");
+    }
+
+    public void delete(long id){
+        this.clientExist(id);
+        this.clientRepository.deleteById(id);
     }
 
 }

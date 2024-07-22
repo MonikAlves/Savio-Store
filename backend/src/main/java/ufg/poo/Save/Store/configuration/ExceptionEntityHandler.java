@@ -19,6 +19,11 @@ public class ExceptionEntityHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(clientNotFound.getMessage());
     }
 
+    @ExceptionHandler(CartNotFound.class)
+    public ResponseEntity handleCartNotFound(CartNotFound cartNotFound) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(cartNotFound.getMessage());
+    }
+
     @ExceptionHandler(ProductNotFound.class)
     public ResponseEntity handleProductNotFound(ProductNotFound productNotFound) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(productNotFound.getMessage());

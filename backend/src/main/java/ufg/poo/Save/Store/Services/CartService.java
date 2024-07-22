@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ufg.poo.Save.Store.Entities.Cart;
 import ufg.poo.Save.Store.Entities.Product;
+import ufg.poo.Save.Store.Exception.ClientNotFound;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 import ufg.poo.Save.Store.Repositories.ProductRepository;
+import ufg.poo.Save.Store.Exception.CartNotFound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +28,14 @@ public class CartService {
             long clientId = cart.getClient().getId();
             long productId = cart.getProduct().getId();
 
-            clientService.clientExist(clientId);
-            productService.productExist(productId);
+            this.clientService.clientExist(clientId);
+            this.productService.productExist(productId);
 
             String exist = cartRepository.verify_cart_exist(clientId,productId);
 
             if(exist.equals("no")){
-                cartRepository.save(cart);
-                cartRepository.calculate_total_line(clientId, productId);
+                this.cartRepository.save(cart);
+                this.cartRepository.calculate_total_line(clientId, productId);
                 return "Adicionado no carrinho\n";
             }else{
                 return "Adicionado mais uma unidade ao carrinho\n";
@@ -41,7 +43,17 @@ public class CartService {
     }
 
     public List<Product> importList(long id){
-        clientService.clientExist(id);
+        this.clientService.clientExist(id);
         return  this.productRepository.get_products_by_id_client(id);
+    }
+
+    public void cartExist(long id){
+        boolean exist = this.cartRepository.existsById(id);
+        if(!exist) throw new CartNotFound("Cart not found");
+    }
+
+    public void delete(long id){
+        this.cartExist(id);
+        this.cartRepository.deleteById(id);
     }
 }
