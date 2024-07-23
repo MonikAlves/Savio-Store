@@ -25,7 +25,7 @@ export function LoginMain() {
 
 
     const handleSubmit = async (event) => {
-        const consumer = new userConsumer(import.meta.env.USER_API_URL)
+        const consumer = new userConsumer(import.meta.env.VITE_USER_API_URL);
         event.preventDefault();
 
         const Client = {
