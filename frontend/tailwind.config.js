@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
     extend: {
       colors: {
@@ -24,6 +25,8 @@ export default {
       luizImage: {
         'masc-roupas': "url('/luiz.png')",
       },
+
+      
 
     },
   },

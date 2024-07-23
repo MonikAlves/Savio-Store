@@ -5,8 +5,7 @@ export function AboutMain() {
   const categories = [
     { name: 'Roupas Masculinas', image: '/public/luiz.png' },
     { name: 'Roupas Femininas', image: 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600' },
-    { name: 'Jóias', image: 'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=600' },
-    { name: 'Eletrônicos', image: 'https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { name: 'Tênis', image: 'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=600' },
   ]
 
   return (
