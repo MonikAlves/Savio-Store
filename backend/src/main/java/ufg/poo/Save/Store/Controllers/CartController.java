@@ -33,16 +33,16 @@ public class CartController {
         return ResponseEntity.ok().body(products);
     }
 
-    @PostMapping("/add")
+    /*@PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody List<Cart> carts) {
-        // TODO
+        //todo
         List<String> message = new ArrayList<>();
 
         for (Cart cart : carts) {
             message.add(this.cartService.addCart(cart));
         }
         return new ResponseEntity<>(message, HttpStatus.CREATED);
-    }
+    }*/
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody Cart cart){

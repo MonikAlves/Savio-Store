@@ -60,11 +60,20 @@ export function Header() {
                             </NavLink>
 
                         ))
-                    }  
-                    <li onClick = {LOGOUT}>
-                        logout
-                    </li>
+                    }
+
+                    <div className='flex gap-2.5 justify-end'>
+                        
+                        
+                        <button onClick={LOGOUT} className="transition-all text-white ring-black rounded py-1 px-2 text-sm hover:text-amazon-orange flex items-center gap-2">
+                            <LogIn />
+                            Logout
+                        </button>
+
                     </div>
+
+                    </div>
+                    
             </div>
             
             <div className="flex w-full p-1 items-center border-b-[1px] border-amazon-eerie bg-amazon-gunmetal justify-center">
