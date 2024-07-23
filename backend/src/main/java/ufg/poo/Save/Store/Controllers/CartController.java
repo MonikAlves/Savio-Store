@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ufg.poo.Save.Store.DTOS.ResponseDTO;
 import ufg.poo.Save.Store.Entities.Cart;
-import ufg.poo.Save.Store.Entities.Client;
 import ufg.poo.Save.Store.Entities.Product;
-import ufg.poo.Save.Store.Repositories.CartRepository;
+import ufg.poo.Save.Store.Exception.SuperException;
 import ufg.poo.Save.Store.Services.CartService;
 
 import java.util.ArrayList;
@@ -17,32 +17,44 @@ import java.util.List;
 @RequestMapping("/SavioStore/Cart")
 @RequiredArgsConstructor
 public class CartController {
-
-
     private final CartService cartService;
 
-
     @GetMapping("/{id}")
-    public List<Product> showProducts(@PathVariable long id) {
-        return this.cartService.importList(id);
+    public ResponseEntity<?> showProducts(@PathVariable long id) {
+        List<Product> products;
+
+        try {
+            products = this.cartService.importList(id);
+        }
+        catch (SuperException e) {
+            return ResponseDTO.response(e);
+        }
+
+        return ResponseEntity.ok().body(products);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<List<String>> add(@RequestBody List<Cart> carts){
-        List<String> message =  new ArrayList<>();
-        for(Cart cart : carts){
+    public ResponseEntity<?> add(@RequestBody List<Cart> carts) {
+        // TODO
+        List<String> message = new ArrayList<>();
+
+        for (Cart cart : carts) {
             message.add(this.cartService.addCart(cart));
         }
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody Cart cart){
-        this.cartService.delete(cart.getId());
+    public ResponseEntity<?> delete(@RequestBody Cart cart){
+        try {
+            this.cartService.delete(cart.getId());
+        }
+        catch (SuperException e) {
+            return ResponseDTO.response(e);
+        }
+
+        return ResponseEntity.ok().build();
     }
-
-
-
 }
 
 /*
@@ -51,8 +63,5 @@ public class CartController {
 *
 * calculate_total_by_id_cart -> dado um id de carrinho ele calcula o total daquele produto especifico
 * CALL calculate_total_by_id_cart("id do carrinho");
-*
-*
-*
 *
 * */

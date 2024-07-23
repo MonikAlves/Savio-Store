@@ -1,7 +1,9 @@
 package ufg.poo.Save.Store.Exception;
 
-public class Unauthorized extends RuntimeException{
-    public Unauthorized(String messagem){
-        super(messagem);
+import org.springframework.http.HttpStatus;
+
+public class Unauthorized extends SuperException {
+    public Unauthorized(String message) {
+        super(message, HttpStatus.UNAUTHORIZED);
     }
 }

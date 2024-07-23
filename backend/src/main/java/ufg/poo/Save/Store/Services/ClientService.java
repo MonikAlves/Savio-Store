@@ -1,12 +1,9 @@
 package ufg.poo.Save.Store.Services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 import ufg.poo.Save.Store.Entities.Client;
-import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 
@@ -21,33 +18,33 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    public void clientExist(long id){
+    public void clientExist(long id) throws ClientNotFound {
         boolean exist = this.clientRepository.existsById(id);
-        if(!exist) throw new ClientNotFound("Client not found");
+        if(!exist) throw new ClientNotFound("Usuario não esta cadastrado no banco");
     }
 
-    public void loginExists(String email){
+
+    public void loginExists(String email) throws ClientNotFound {
         Optional<Client> exist = this.clientRepository.findByEmail(email);
-        if(exist.isEmpty()) throw new ClientNotFound("Client not registered");
+        if(exist.isEmpty())throw new ClientNotFound("Usuario não esta cadastrado no banco");
     }
 
-
-    public void verifyClientExist(String email) {
+    public void verifyClientExist(String email) throws ClientAlreadyExist {
         Optional<Client> isClientRegistered = this.clientRepository.findByEmail(email);
         if(isClientRegistered.isPresent()) throw new ClientAlreadyExist("Client already exist");
     }
 
-    public void validateEmail(String email) {
+    public void validateEmail(String email) throws EmailNotValid {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-.]+.[.]com$");
         Matcher matcher = pattern.matcher(email);
 
-        if (!matcher.matches()) throw new EmailIsNotValid("Email is not valid");
+        if (!matcher.matches()) throw new EmailNotValid("Email is not valid");
         else {
             System.out.println("DEU ERRADO COM EMAIL: " + email);
         }
     }
 
-    public String addClient(Client client) {
+    public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid {
         String email = client.getEmail();
 
         this.verifyClientExist(email);
@@ -55,27 +52,34 @@ public class ClientService {
 
         this.validateEmail(email);
 
-        return "Client added successfully";
+        return this.clientRepository.getReferenceByEmail(email);
     }
 
-    public Client getClient(long id){
-        return this.clientRepository.findById(id).orElseThrow(() -> new ClientNotFound("Client not found"));
-    }
+//    public Client getClient(long id){
+//        Optional<Client> exist = this.clientRepository.findById(id);
+//        if(exist.isEmpty()) {
+//            ErrorDTO error = new ErrorDTO();
+//            error.setError("Usario não esta cadastrado no banco");
+//            error.setType("Login Error");
+//            error.setActivated(true);
+//            throw new ClientNotFound(error);
+//        }
+//        return exist.get();
+//    }
 
-    public Client verifyLogin(Client client){
+    public Client verifyLogin(Client client) throws Unauthorized,ClientNotFound {
         String email = client.getEmail();
         String password = client.getPassword();
 
         this.loginExists(client.getEmail());
-        Client cliente = this.clientRepository.getReferenceByEmail(email);
-        if(!cliente.getPassword().equals(password)){
-            throw new Unauthorized("Wrong password, KILL YOURSELF");
-        }
 
+        Client cliente = clientRepository.getReferenceByEmail(email);
+
+        if (!cliente.getPassword().equals(password)) throw new Unauthorized("Senha errada");
         return cliente;
     }
 
-    public void verifyInformationEmpty(Client client){
+    public void verifyInformationEmpty(Client client) throws BadRequestException{
         if(client.getName() == null) throw new BadRequestException("Nome não informado");
         if(client.getEmail() == null) throw new BadRequestException("Email não informada");
         if(client.getPassword() == null) throw new BadRequestException("Senha não informada");
@@ -83,7 +87,7 @@ public class ClientService {
         if(client.getLegalData() == null) throw new BadRequestException("CPF ou CNPJ não informado");
     }
 
-    public void delete(long id){
+    public void delete(long id) throws ClientNotFound{
         this.clientExist(id);
         this.clientRepository.deleteById(id);
     }

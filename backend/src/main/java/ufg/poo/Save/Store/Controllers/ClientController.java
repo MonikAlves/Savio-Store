@@ -4,37 +4,50 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ufg.poo.Save.Store.DTOS.ErrorDTO;
+import ufg.poo.Save.Store.DTOS.ResponseDTO;
 import ufg.poo.Save.Store.Entities.Client;
-import ufg.poo.Save.Store.Entities.Product;
-import ufg.poo.Save.Store.Repositories.ClientRepository;
+import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Services.ClientService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/SavioStore/Client")
 @RequiredArgsConstructor
 public class ClientController {
-
         private final ClientService clientService;
 
         @PostMapping("/login")
-        public Client validateLogin(@RequestBody Client client) {
-            System.out.println("Deu certo " + client);
-            return this.clientService.verifyLogin(client);
+        public ResponseEntity<?> validateLogin(@RequestBody Client client) {
+            Client cliente = null;
+            try{
+                cliente = this.clientService.verifyLogin(client);
+            } catch (SuperException e) {
+                return ResponseDTO.response(e);
+            }
+            return ResponseEntity.ok().body(cliente);
         }
 
         @PostMapping("/register")
-        public ResponseEntity<String> colocar(@RequestBody Client client){
-            this.clientService.verifyInformationEmpty(client);
-            String message = this.clientService.addClient(client);
-            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        public ResponseEntity<?> create(@RequestBody Client client){
+            Client cliente = null;
+            try{
+                this.clientService.verifyInformationEmpty(client);
+                cliente = this.clientService.addClient(client);
+            } catch (SuperException e) {
+                 return ResponseDTO.response(e);
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
         }
 
         @DeleteMapping("/delete")
-        public void delete(@RequestBody Client client){
-            this.clientService.delete(client.getId());
+        public ResponseEntity<?> delete(@RequestBody Client client) {
+            try {
+                this.clientService.delete(client.getId());
+            } catch (SuperException e) {
+                return ResponseDTO.response(e);
+            }
+
+            return ResponseEntity.ok().build();
         }
-
-
 }

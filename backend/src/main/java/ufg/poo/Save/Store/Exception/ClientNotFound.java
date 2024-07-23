@@ -1,7 +1,10 @@
 package ufg.poo.Save.Store.Exception;
 
-public class ClientNotFound extends RuntimeException {
+
+import org.springframework.http.HttpStatus;
+
+public class ClientNotFound extends SuperException {
     public ClientNotFound(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_FOUND);
     }
 }

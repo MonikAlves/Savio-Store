@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Exception.BadRequestException;
-import ufg.poo.Save.Store.Exception.ClientNotFound;
 import ufg.poo.Save.Store.Exception.ProductNotFound;
 import ufg.poo.Save.Store.Repositories.ProductRepository;
 
@@ -15,7 +14,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional
 public class ProductService {
-
     private final ProductRepository productRepository;
 
     public String getProduto(){
@@ -28,7 +26,7 @@ public class ProductService {
         return true;
     }
 
-    public void productExist(long id){
+    public void productExist(long id) throws ProductNotFound {
         boolean exist = this.productRepository.existsById(id);
         if(!exist) throw new ProductNotFound("Product not found");
     }
@@ -71,7 +69,7 @@ public class ProductService {
         this.productRepository.save(novoproduto);
     }
 
-    public void verifyInformationEmpty(Product produto){
+    public void verifyInformationEmpty(Product produto) throws BadRequestException {
         if(produto.getName() == null) throw new BadRequestException("Nome não informado");
         if(produto.getDescription() == null) throw new BadRequestException("Descrição não informada");
         if(produto.getSize() == null) throw new BadRequestException("Tamanho não informado");
@@ -79,7 +77,7 @@ public class ProductService {
         if(produto.getImage() == null) throw new BadRequestException("Imagem não informada");
     }
 
-    public void delete(long id){
+    public void delete(long id) throws ProductNotFound {
         this.productExist(id);
         this.productRepository.deleteById(id);
     }
