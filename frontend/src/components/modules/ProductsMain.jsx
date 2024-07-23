@@ -18,7 +18,6 @@ export function ProductsMain() {
         }
 
         fetchProducts();
-
     }, [])
 
     return (
@@ -59,6 +58,7 @@ export function ProductsMain() {
                             )
                         })
                     }
+                    
                 </div>
             </section>
         </main>
