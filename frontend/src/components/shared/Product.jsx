@@ -1,6 +1,7 @@
 import { useContext, useRef, useState, useEffect } from "react"
 import { ShoppingContext } from "../../contexts/ShoppingProvider";
 import { ShoppingCart } from 'lucide-react';
+import { NavLink } from "react-router-dom";
 
 export function Product({image, title, description, price, product}){
 
@@ -48,7 +49,8 @@ export function Product({image, title, description, price, product}){
       }, [showCart]);
 
     return (
-        <div className="w-80 h-[500px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
+        <NavLink>
+                <div className="w-80 h-[500px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
             <audio ref={audioRef} src="public/cart_sound.mp3"/>
             <figure className="flex bg-gray-500 flex-col ring-1 ring-white w-[170px] h-[180px]">
                 <img src={image} alt={description} className="h-[160px]"/>
@@ -81,5 +83,6 @@ export function Product({image, title, description, price, product}){
                         </div>
                     )}
             </div>
+        </NavLink>
     );
 }
