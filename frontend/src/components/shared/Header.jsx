@@ -3,10 +3,17 @@ import { NavLink } from 'react-router-dom'
 import { ShoppingContext } from '../../contexts/ShoppingProvider';
 import { FilePen, LogIn, Pencil, ShoppingCart, User } from 'lucide-react';
 import logo from '/S-logo.png';
+import { useUser } from "../../contexts/UserProvider";
 
 export function Header() {
+    const { logout } = useUser()
 
     const { state } = useContext(ShoppingContext);
+
+    const LOGOUT = () => {
+        console.log("desloguei")
+        logout()
+    }
 
     const navItems = [
         { to: '/', label: 'Home' },
@@ -15,11 +22,25 @@ export function Header() {
         { to: '/contact', label: 'Contact' },
     ];
 
-    const userActions = [
+    const [userActions, setUserActions] = useState([
         { to: '/login', label: 'Login', icon: <LogIn /> },
         { to: '/register', label: 'Register', icon: <User /> },
+    ]);
+
+    const addCart = () => {
+        const newAction = { to: '/cart', label: `Carrinho (${state.reduce((acc, item) => acc + item.quantity, 0)})`, icon: <ShoppingCart /> };
+        setUserActions((prevActions) => [...prevActions, newAction]);
+    };
+
+    /*const userActions = [
+        { to: '/login', label: 'Login', icon: <LogIn /> },
+        { to: '/register', label: 'Register ', icon: <User /> },
+    ];*/
+
+    const cartIcon = [
         { to: '/cart', label: `Carrinho (${state.reduce((acc, item) => acc + item.quantity, 0)})`, icon: <ShoppingCart /> },
     ];
+
 
     return (
         <header className='flex items-center flex-col w-full'>
@@ -39,7 +60,10 @@ export function Header() {
                             </NavLink>
 
                         ))
-                    }
+                    }  
+                    <li onClick = {LOGOUT}>
+                        logout
+                    </li>
                     </div>
             </div>
             
