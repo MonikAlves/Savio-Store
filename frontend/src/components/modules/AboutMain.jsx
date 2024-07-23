@@ -1,6 +1,9 @@
 import React from 'react'
+import { useUser } from "../../contexts/UserProvider";
+
 
 export function AboutMain() {
+  const { user } = useUser();
 
   const categories = [
     { name: 'Roupas Masculinas', image: '/public/luiz.png' },
@@ -11,6 +14,7 @@ export function AboutMain() {
 
   return (
     <main className="p-5 flex flex-col gap-7">
+      <h1>current user {user ? user.email: "vazio"}</h1>
       <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Sobre nós</h1>
       <p className='text-center text-white text-xl font-thin'>
       A Savio´Store é uma loja virtual que visa trazer um maior conforto aos seus clientes,

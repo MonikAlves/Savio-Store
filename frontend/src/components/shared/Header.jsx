@@ -3,10 +3,17 @@ import { NavLink } from 'react-router-dom'
 import { ShoppingContext } from '../../contexts/ShoppingProvider';
 import { FilePen, LogIn, Pencil, ShoppingCart, User } from 'lucide-react';
 import logo from '/S-logo.png';
+import { useUser } from "../../contexts/UserProvider";
 
 export function Header() {
+    const { logout } = useUser()
 
     const { state } = useContext(ShoppingContext);
+
+    const LOGOUT = () => {
+        console.log("desloguei")
+        logout()
+    }
 
     const navItems = [
         { to: '/', label: 'Home' },
@@ -53,7 +60,10 @@ export function Header() {
                             </NavLink>
 
                         ))
-                    }
+                    }  
+                    <li onClick = {LOGOUT}>
+                        logout
+                    </li>
                     </div>
             </div>
             
