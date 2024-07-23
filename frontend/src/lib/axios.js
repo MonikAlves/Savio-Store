@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 export class ProductsApi {
-
     constructor() {
         this.axios = axios.create({
             baseURL: import.meta.env.VITE_API_BASE_URL
         });
+        console.log("Base URL no constructor:", import.meta.env.VITE_API_BASE_URL); // Verificação
     }
 
     async getProducts() {
@@ -27,4 +27,5 @@ export class ProductsApi {
             return [];
         }
     }
+   
 }

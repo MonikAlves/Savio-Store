@@ -16,7 +16,7 @@ public class ExceptionEntityHandler {
 
     @ExceptionHandler(ClientNotFound.class)
     public ResponseEntity handleClientNotFound(ClientNotFound clientNotFound) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(clientNotFound.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(clientNotFound.getMessage());
     }
 
     @ExceptionHandler(CartNotFound.class)
@@ -34,9 +34,9 @@ public class ExceptionEntityHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unauthorized.getMessage());
     }
 
-    @ExceptionHandler(EmailIsNotValid.class)
-    public ResponseEntity handleEmailIsNotValid(EmailIsNotValid emailIsNotValid) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(emailIsNotValid.getMessage());
+    @ExceptionHandler(EmailNotValid.class)
+    public ResponseEntity handleEmailIsNotValid(EmailNotValid emailNotValid) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(emailNotValid.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)

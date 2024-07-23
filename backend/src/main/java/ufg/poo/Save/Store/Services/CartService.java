@@ -6,12 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ufg.poo.Save.Store.Entities.Cart;
 import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Exception.ClientNotFound;
+import ufg.poo.Save.Store.Exception.ProductNotFound;
 import ufg.poo.Save.Store.Repositories.CartRepository;
-import ufg.poo.Save.Store.Repositories.ClientRepository;
 import ufg.poo.Save.Store.Repositories.ProductRepository;
 import ufg.poo.Save.Store.Exception.CartNotFound;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +22,7 @@ public class CartService {
     private final ProductService productService;
     private final ProductRepository productRepository;
 
-    public String addCart(Cart cart){
+    public String addCart(Cart cart) throws ClientNotFound, ProductNotFound {
 
             long clientId = cart.getClient().getId();
             long productId = cart.getProduct().getId();
@@ -42,17 +41,17 @@ public class CartService {
             }
     }
 
-    public List<Product> importList(long id){
+    public List<Product> importList(long id) throws ClientNotFound {
         this.clientService.clientExist(id);
         return  this.productRepository.get_products_by_id_client(id);
     }
 
-    public void cartExist(long id){
+    public void cartExist(long id) throws CartNotFound {
         boolean exist = this.cartRepository.existsById(id);
         if(!exist) throw new CartNotFound("Cart not found");
     }
 
-    public void delete(long id){
+    public void delete(long id) throws CartNotFound {
         this.cartExist(id);
         this.cartRepository.deleteById(id);
     }

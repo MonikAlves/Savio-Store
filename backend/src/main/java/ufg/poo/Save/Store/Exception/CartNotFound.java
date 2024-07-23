@@ -1,7 +1,9 @@
 package ufg.poo.Save.Store.Exception;
 
-public class CartNotFound extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class CartNotFound extends SuperException {
     public CartNotFound(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_FOUND);
     }
 }
