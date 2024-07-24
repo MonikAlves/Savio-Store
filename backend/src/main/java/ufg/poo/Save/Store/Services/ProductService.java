@@ -65,7 +65,6 @@ public class ProductService {
         List<Product> products = this.productRepository.findAll();
         List<Product> productsValid = new ArrayList<>();
         for(Product p : products){
-            System.out.println("AAAAA" + p.toString() + "0-0-0");
             if(!p.getStock().equals("0-0-0")){
                 productsValid.add(p);
             }

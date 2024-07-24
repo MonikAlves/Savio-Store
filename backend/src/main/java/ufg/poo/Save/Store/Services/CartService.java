@@ -22,6 +22,8 @@ public class CartService {
 
     public void addCart(Cart newCart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound {
 
+            if(newCart.getQuantity() < 1) throw new SizeNotFound("Quantidade não é possivel");
+
             long clientId = newCart.getClient().getId();
             long productId = newCart.getProduct().getId();
             String size = newCart.getSize();
@@ -33,13 +35,19 @@ public class CartService {
             boolean exist =  cartRepository.verify_cart_exist(clientId,productId,size);
 
             if(!exist){
+                Product product = productRepository.getProductById(productId);
+
+                int maximum = Integer.parseInt(this.calculateStockBySize(product.getSize(),newCart.getSize(),product.getStock()));
+
+                if(newCart.getQuantity() > maximum) throw new insufficientStock("Estoque insuficiente");
+
                 this.cartRepository.save(newCart);
                 this.cartRepository.calculate_total_line(clientId, productId,size);
             }else{
                 Cart cart = this.cartRepository.get_cart_by_id_client_and_id_product(clientId, productId,size);
                 if(verifyStock(cart,newCart.getQuantity())){
                     cart.setQuantity(newCart.getQuantity() + cart.getQuantity());
-                     this.cartRepository.save(cart);
+                    this.cartRepository.save(cart);
                     cart.setTotal(cart.getQuantity() *cart.getProduct().getPrice());
                 }
             }
@@ -96,7 +104,6 @@ public class CartService {
         cart = this.cartRepository.getReferenceById(cart.getId());
         long clientId = cart.getClient().getId();
         long productId = cart.getProduct().getId();
-        String size = cart.getSize();
 
         this.clientService.clientExist(clientId);
         this.productService.productExist(productId);
