@@ -8,7 +8,6 @@ import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Services.ProductService;
 import ufg.poo.Save.Store.Exception.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class ProductController {
         return this.productService.getRandom(products);
     }
 
-    @PostMapping("/post")
+    @PostMapping("/add")
     public ResponseEntity<?> post(@RequestBody List<Product> product){
         try {
             for (Product p : product) {

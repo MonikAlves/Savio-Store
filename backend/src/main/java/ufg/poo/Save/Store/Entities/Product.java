@@ -31,7 +31,7 @@ public class Product implements Serializable {
     private Double price;
 
     @Column(nullable = false)
-    private int stock;
+    private String stock;
 
     @Column(nullable = false)
     private String image;

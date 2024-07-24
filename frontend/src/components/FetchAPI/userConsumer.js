@@ -30,7 +30,7 @@ export class userConsumer {
     async CadUser (Client) {
         try {
             console.log(this.BASEURL)
-            const response = await fetch(this.BASEURL + "/create", {
+            const response = await fetch(this.BASEURL + "/register", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

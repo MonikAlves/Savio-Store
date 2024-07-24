@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { userConsumer } from "../FetchAPI/userConsumer";
 import Message from "../shared/Message"
+import { useNavigate } from "react-router-dom";
 
 export function RegisterMain() {
     const  [ NomeCompleto, setNomeCompleto ] = useState("")
@@ -11,8 +12,9 @@ export function RegisterMain() {
     const  [ cpf, setCpf ] = useState("")
     const  [ message, setMessage] = useState("")
     const  [ type , setType ] = useState("")
+    const navigate = useNavigate();
 
-    const consumer = new userConsumer()
+    const consumer = new userConsumer(import.meta.env.VITE_USER_API_URL)
 
     const validations = (Client) => {
         if (Client.name.trim().length <= 0 || Client.name === null) {
@@ -49,13 +51,14 @@ export function RegisterMain() {
                 await consumer.CadUser(client)
                 setMessage("cadastrado com sucesso")
                 setType("sucess")
-                console.log(type)
+                navigate("/"); 
             } else {
                 setMessage("Algum campo do cadastro está vazio");
                 setType("error")
             }
         } catch (error) {
             setMessage(error.message)
+            setType("error")
         }
 
     }

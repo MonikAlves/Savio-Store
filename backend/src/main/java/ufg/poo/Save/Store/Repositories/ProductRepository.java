@@ -9,9 +9,6 @@ import ufg.poo.Save.Store.Entities.Product;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
-    @Procedure(name = "get_products_by_id_client")
-    List<Product> get_products_by_id_client(@Param("id") long id);
-
+public interface ProductRepository extends JpaRepository<Product,Long>{
     Product getProductById(Long id);
 }

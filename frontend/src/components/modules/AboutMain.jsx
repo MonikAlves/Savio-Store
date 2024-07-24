@@ -4,7 +4,7 @@ import { useUser } from "../../contexts/UserProvider";
 
 export function AboutMain() {
   const { user } = useUser();
-
+  
   const categories = [
     { name: 'Roupas Masculinas', image: '/public/luiz.png' },
     { name: 'Roupas Femininas', image: 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600' },

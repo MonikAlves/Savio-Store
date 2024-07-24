@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ufg.poo.Save.Store.DTOS.ErrorDTO;
 import ufg.poo.Save.Store.DTOS.ResponseDTO;
 import ufg.poo.Save.Store.Entities.Client;
 import ufg.poo.Save.Store.Exception.*;

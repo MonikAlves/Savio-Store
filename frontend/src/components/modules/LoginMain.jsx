@@ -38,7 +38,12 @@ export function LoginMain() {
                 const data = await consumer.VerifyLogin(Client); 
                 setMessage(""); 
                 login({
-                    email: data.email}
+                    email: data.email,
+                    name: data.name,
+                    id: data.id,
+                    phone: data.phone,
+                    superUser: data.superUser,
+                }
                 )
                 setMessage("Usuario logado com sucesso")
                 setType("sucess")
