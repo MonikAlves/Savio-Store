@@ -3,11 +3,13 @@ import { useState } from "react";
 import { userConsumer } from "../FetchAPI/userConsumer";
 import { useUser } from "../../contexts/UserProvider";
 import { useNavigate } from "react-router-dom";
+import Message from "../shared/Message";
 
 export function LoginMain() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [errorMessage, setErrorMessage] = useState(""); 
+    const [message, setMessage] = useState(""); 
+    const [ type, setType ] = useState("")
     const { user, login, logout} = useUser()
     const navigate = useNavigate(); 
 
@@ -23,7 +25,7 @@ export function LoginMain() {
 
 
     const handleSubmit = async (event) => {
-        const consumer = new userConsumer(import.meta.env.USER_API_URL)
+        const consumer = new userConsumer(import.meta.env.VITE_USER_API_URL);
         event.preventDefault();
 
         const Client = {
@@ -34,19 +36,22 @@ export function LoginMain() {
         try {
             if(validations(Client)){
                 const data = await consumer.VerifyLogin(Client); 
-                setErrorMessage(""); 
+                setMessage(""); 
                 login({
                     email: data.email}
                 )
+                setMessage("Usuario logado com sucesso")
+                setType("sucess")
                 navigate("/"); 
             } else {
-                setErrorMessage("Campo senha ou email estão vazios")
+                setMessage("Campo senha ou email estão vazios")
+                setType("error")
             }
             //fica pro luiz implementar o local storage para guardar a session
             
         } catch (error) {
-            console.error("Erro ao enviar o formulário:", error);
-            setErrorMessage(error.message); 
+            setMessage(error.message); 
+            setType("error")
         }
     }
 
@@ -77,10 +82,11 @@ export function LoginMain() {
                         />
                     </label>
                 </div>
-                {errorMessage && ( // Exibe a mensagem de erro se existir
-                    <div className="text-red-500 text-center">
-                        {errorMessage}
-                    </div>
+                {message && type && ( // Exibe a mensagem de erro se existir
+                    <Message
+                        message = {message}
+                        type = {type}
+                    />
                 )}
                 <button 
                     className="gap-5 cursor-pointer bg-orange-500 w-full rounded p-2.5 font-bold text-black hover:bg-orange-700 hover:text-white transition-all"

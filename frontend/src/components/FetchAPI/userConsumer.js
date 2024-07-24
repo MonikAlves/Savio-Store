@@ -5,8 +5,8 @@ export class userConsumer {
 
     async VerifyLogin  (Client) {
         try {
-            console.log(this.BASEURL)
-            const response = await fetch("http://localhost:8080/SavioStore/Client/login", {
+            console.log(this.BASEURL + "/login")
+            const response = await fetch(this.BASEURL + "/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export class userConsumer {
     async CadUser (Client) {
         try {
             console.log(this.BASEURL)
-            const response = await fetch("http://localhost:8080/SavioStore/Client/create", {
+            const response = await fetch(this.BASEURL + "/create", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

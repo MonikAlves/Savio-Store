@@ -7,9 +7,12 @@ import ufg.poo.Save.Store.Entities.Client;
 import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,19 +41,84 @@ public class ClientService {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-.]+.[.]com$");
         Matcher matcher = pattern.matcher(email);
 
-        if (!matcher.matches()) throw new EmailNotValid("Email is not valid");
-        else {
-            System.out.println("DEU ERRADO COM EMAIL: " + email);
+        if (!matcher.matches()) {
+            throw new EmailNotValid("Email inválido");
         }
     }
 
-    public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid {
+    public void validateLegalData(String legalData) throws LegalDataNotValid {
+        List<Integer> digits = new ArrayList<>();
+        boolean equals = true;
+
+        for (int index = 0; index < legalData.length(); index++) {
+            char digit = legalData.charAt(index);
+
+            if (!Character.isDigit(digit)) {
+                throw new LegalDataNotValid("CPF inválido");
+            }
+
+            if (digit != legalData.charAt(0)) {
+                equals = false;
+            }
+
+            digits.add((Integer)(digit - '0'));
+        }
+
+        if (equals || digits.size() != 11) {
+            throw new LegalDataNotValid("CPF inválido");
+        }
+
+        int first = 0;
+        int second = 0;
+
+        for (int index = 0, weight = 10; index < 9; index++, weight--) {
+            first += (weight * digits.get(index));
+        }
+
+        first = ((10 * first) % 11) % 10;
+        second += (2 * first);
+
+        for (int index = 0, weight = 11; index < 9; index++, weight--) {
+            second += (weight * digits.get(index));
+        }
+
+        second = ((10 * second) % 11) % 10;
+
+        if (first != digits.get(9) && second != digits.get(10)) {
+            throw new LegalDataNotValid("CPF inválido");
+        }
+    }
+
+    public void validatePhone(String phone) throws PhoneNotValid {
+        List<Integer> digits = new ArrayList<>();
+
+        for (int index = 0; index < phone.length(); index++) {
+            char digit = phone.charAt(index);
+
+            if (!Character.isDigit(digit)) {
+                throw new PhoneNotValid("Telefone inválido");
+            }
+
+            digits.add((Integer)(digit - '0'));
+        }
+
+        if (digits.size() != 11) {
+            throw new PhoneNotValid("Telefone inválido");
+        }
+    }
+
+    public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid, LegalDataNotValid, PhoneNotValid {
         String email = client.getEmail();
+        String legalData = client.getLegalData();
+        String phone = client.getPhone();
 
         this.verifyClientExist(email);
-        this.clientRepository.save(client);
 
         this.validateEmail(email);
+        // this.validateLegalData(legalData);
+        // this.validatePhone(phone);
+
+        this.clientRepository.save(client);
 
         return this.clientRepository.getReferenceByEmail(email);
     }
