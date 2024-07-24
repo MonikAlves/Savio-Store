@@ -14,39 +14,54 @@ import ufg.poo.Save.Store.Services.ClientService;
 @RequestMapping("/SavioStore/Client")
 @RequiredArgsConstructor
 public class ClientController {
-        private final ClientService clientService;
+    private final ClientService clientService;
 
-        @PostMapping("/login")
-        public ResponseEntity<?> validateLogin(@RequestBody Client client) {
-            Client cliente = null;
-            try{
-                cliente = this.clientService.verifyLogin(client);
-            } catch (SuperException e) {
-                return ResponseDTO.response(e);
-            }
-            return ResponseEntity.ok().body(cliente);
+    /**
+     * @brief Verify client login
+     * @param client
+     * @return Response entity with operation status
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> validateLogin(@RequestBody Client client) {
+        Client cliente = null;
+        try{
+            cliente = this.clientService.verifyLogin(client);
+        } catch (SuperException e) {
+            return ResponseDTO.response(e);
+        }
+        return ResponseEntity.ok().body(cliente);
+    }
+
+    /**
+     * @brief Register client
+     * @param client Client to be registered
+     * @return Response entity with operation status
+     */
+    @PostMapping("/register")
+    public ResponseEntity<?> create(@RequestBody Client client){
+        Client cliente = null;
+        try{
+            this.clientService.verifyInformationEmpty(client);
+            cliente = this.clientService.addClient(client);
+        } catch (SuperException e) {
+             return ResponseDTO.response(e);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+    }
+
+    /**
+     * @brief Delete a client
+     * @param client Client to be deleted
+     * @return Response entity with operation status
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody Client client) {
+        try {
+            this.clientService.delete(client.getId());
+        } catch (SuperException e) {
+            return ResponseDTO.response(e);
         }
 
-        @PostMapping("/register")
-        public ResponseEntity<?> create(@RequestBody Client client){
-            Client cliente = null;
-            try{
-                this.clientService.verifyInformationEmpty(client);
-                cliente = this.clientService.addClient(client);
-            } catch (SuperException e) {
-                 return ResponseDTO.response(e);
-            }
-            return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
-        }
-
-        @DeleteMapping("/delete")
-        public ResponseEntity<?> delete(@RequestBody Client client) {
-            try {
-                this.clientService.delete(client.getId());
-            } catch (SuperException e) {
-                return ResponseDTO.response(e);
-            }
-
-            return ResponseEntity.ok().build();
-        }
+        return ResponseEntity.ok().build();
+    }
 }
