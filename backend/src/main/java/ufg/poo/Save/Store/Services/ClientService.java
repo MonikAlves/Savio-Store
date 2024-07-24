@@ -53,14 +53,14 @@ public class ClientService {
             char digit = legalData.charAt(index);
 
             if (!Character.isDigit(digit)) {
-                throw new LegalDataNotValid("CPF não é válido");
+                throw new LegalDataNotValid("CPF inválido");
             }
 
             digits.add((Integer)(digit - '0'));
         }
 
         if (digits.size() != 11) {
-            throw new LegalDataNotValid("CPF não é válido");
+            throw new LegalDataNotValid("CPF inválido");
         }
 
         int first = 0;
@@ -80,7 +80,7 @@ public class ClientService {
         second = ((10 * second) % 11) % 10;
 
         if (first != digits.get(9) && second != digits.get(10)) {
-            throw new LegalDataNotValid("CPF não é válido");
+            throw new LegalDataNotValid("CPF inválido");
         }
     }
 
