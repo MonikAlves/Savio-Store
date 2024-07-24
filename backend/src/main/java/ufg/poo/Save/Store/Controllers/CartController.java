@@ -17,6 +17,11 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
+    /**
+     * @brief Get a list with all available products in client cart
+     * @param id Client id
+     * @return Response entity with status operation and product list
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> showProducts(@PathVariable long id) {
         List<Cart> carts;
@@ -31,6 +36,11 @@ public class CartController {
         return ResponseEntity.ok().body(carts);
     }
 
+    /**
+     * @brief Add cart
+     * @param cart Cart to be added
+     * @return Response entity with status operation
+     */
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody Cart cart) {
         try{
@@ -41,6 +51,11 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @brief Make cart purchase
+     * @param cart Cart to be purchased
+     * @return Response entity with status operation
+     */
     @PostMapping("/buy")
     public ResponseEntity<?> buy(@RequestBody Cart cart) {
         try{
@@ -52,6 +67,11 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @brief Delete a cart
+     * @param cart Cart to be deleted
+     * @return Response entity with status operation
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody Cart cart){
         try {
