@@ -44,25 +44,40 @@ export function Product({image, title, description, price, product}){
         }
         if(user){
             console.log(user.id)
-            const blabla = await consumer.GetCart(user.id);
+            try {
+                const blabla =  await consumer.GetCart(user.id);
+                console.log(blabla)
+            } catch(error) {
+                console.log(error)
+            }
         }
-        console.log(blabla)
+
         const parametro = {idClient: user.id, idProduto: product.id, Tamanho: selectedButton};
         if(setSelectedButton) {
             try {
-                await consumer.addCart(parametro)
-                setSelectedButton("")
-                setMessage("deu certo")
-                setType("sucess")
+                const response = await consumer.addCart(parametro)
+
+                if(response.error) {
+                    setMessage(response.error)
+                    setType("error")
+                    return
+                }
+              
             } catch (error) {
+                console.log(error)
                 setMessage(error.message)
                 setType("error")
+                return
             }
         } else {
             setMessage("Nenhum tamanho selecionado")
             setType("error")
+            return
         }
+
         setShowCart(true);
+        setSelectedButton("")
+    
         setTimeout(() => {
           setShowCart(false);
         }, 1000);

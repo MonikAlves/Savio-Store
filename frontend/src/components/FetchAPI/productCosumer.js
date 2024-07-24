@@ -5,16 +5,16 @@ export class productConsumer {
 
     async GetCart(id) {
         try {
-            fetch(this.BASEURL + "/" + id, {
+            const response = fetch(this.BASEURL + "/" + id, {
                 method: "GET",
             })
-            .then(data => {
-                return data.json()
-            })
-            .catch(error => {
-                console.log(error)
-            })
 
+            if(!response) {
+                const errorResponse = await response.json(); 
+                throw new Error(errorResponse.error || "Erro desconhecido");
+            }
+
+            return (await response).json()
         } catch (e) {
             console.log(e)
             throw e
@@ -39,6 +39,7 @@ export class productConsumer {
                     size: Tamanho
                 })
             })
+            
             if(!response) {
                 const errorResponse = await response.json(); 
                 throw new Error(errorResponse.error || "Erro desconhecido");
