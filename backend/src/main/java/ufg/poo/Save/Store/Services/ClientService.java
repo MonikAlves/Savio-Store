@@ -48,6 +48,7 @@ public class ClientService {
 
     public void validateLegalData(String legalData) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
+        boolean equals = true;
 
         for (int index = 0; index < legalData.length(); index++) {
             char digit = legalData.charAt(index);
@@ -56,10 +57,14 @@ public class ClientService {
                 throw new LegalDataNotValid("CPF inválido");
             }
 
+            if (digit != legalData.charAt(0)) {
+                equals = false;
+            }
+
             digits.add((Integer)(digit - '0'));
         }
 
-        if (digits.size() != 11) {
+        if (equals || digits.size() != 11) {
             throw new LegalDataNotValid("CPF inválido");
         }
 
@@ -102,7 +107,7 @@ public class ClientService {
         }
     }
 
-    public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid, LegalDataNotValid {
+    public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid, LegalDataNotValid, PhoneNotValid {
         String email = client.getEmail();
         String legalData = client.getLegalData();
         String phone = client.getPhone();
