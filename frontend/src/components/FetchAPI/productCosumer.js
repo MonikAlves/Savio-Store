@@ -21,6 +21,24 @@ export class productConsumer {
         }
     }
 
+    async GetRandomProd() {
+        try {
+            const response = fetch(this.BASEURL + "/random", {
+                method: "GET",
+            })
+
+            if(!response) {
+                const errorResponse = await response.json(); 
+                throw new Error(errorResponse.error || "Erro desconhecido");
+            }
+
+            return (await response).json()
+        } catch (e) {
+            console.log(e)
+            throw e
+        }
+    }
+
     async addCart ({idClient, idProduto, Tamanho}) {
         try {
             const response = await fetch(this.BASEURL + "/add", {

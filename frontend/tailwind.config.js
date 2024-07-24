@@ -18,7 +18,7 @@ export default {
       },
 
       backgroundImage: {
-        'main-bg': "url('/main.png')",
+        'main-bg': "url('/public/capa-do-site.jpg')",
       },
 
       luizImage: {

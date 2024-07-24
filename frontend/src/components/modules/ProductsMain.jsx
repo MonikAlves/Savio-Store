@@ -3,13 +3,15 @@ import { ProductsApi } from "../../lib/axios";
 import { Product } from "../shared/Product";
 import { useLocation } from "react-router-dom";
 import { useUser } from "../../contexts/UserProvider";
+import { productConsumer } from "../FetchAPI/productCosumer";
 
 export function ProductsMain() {
-    const [products, setProducts] = useState([]);
+    const consumer = new productConsumer(import.meta.env.VITE_API_BASE_URL);
     const location = useLocation(); 
-    const { user } = useUser()
+    const { user } = useUser();
+    const  [products, setProducts] = useState();
     
-    useEffect(() => {
+    /*useEffect(() => {
 
         const productsApi = new ProductsApi()
 
@@ -20,13 +22,31 @@ export function ProductsMain() {
 
         fetchProducts();
     }, [])
+    */
+   
+    useEffect(() => {
+
+        async function fetchProducts() {
+
+            try {
+                const data = await consumer.GetRandomProd();
+                setProducts(data);
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchProducts();
+
+    }, [])
 
     return (
         <main className="p-5 flex flex-col gap-10">
             {
                 location.pathname === '/' &&
-                <section className="min-h-[80vh] bg-main-bg rounded text-white p-10 flex justify-start items-center">
-                    <div className="flex flex-col gap-2.5 bg-black/50 rounded p-5 w-fit">
+                <section className="min-h-[80vh] bg-main-bg rounded text-white p-10 flex justify-center items-end">
+                    <div className="flex flex-col gap-2.5 bg-black/40 rounded p-5 w-fit">
                         <h1 className="text-3xl font-bold">
                             Novidades da temporada
                         </h1>
@@ -41,7 +61,7 @@ export function ProductsMain() {
             }
             <section className="flex flex-col gap-7">
                 <h1 className="w-full p-1 text-center text-white text-5xl">
-                    Produtos mais recentes
+                    Produtos Recomendados
                 </h1>
                 <div className="flex p-5 gap-2.5 flex-wrap p-2.5 items-start justify-center" >
                     {

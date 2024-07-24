@@ -34,7 +34,12 @@ export function Product({image, title, description, price, product}){
 
     const handleAddToCartClick = async () => {
         addToCart(product);
-     
+        setShowCart(true);
+        
+        setTimeout(() => {
+          setShowCart(false);
+        }, 1000);
+
         if (audioRef.current) { 
             audioRef.current.volume = 0.1;
             //audioRef.current.currentTime = 0; // Reinicia o áudio se ele já estiver tocando
@@ -42,6 +47,7 @@ export function Product({image, title, description, price, product}){
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
         }
+
         if(user){
             console.log(user.id)
             try {
@@ -60,27 +66,20 @@ export function Product({image, title, description, price, product}){
                 if(response.error) {
                     setMessage(response.error)
                     setType("error")
-                    return
                 }
               
             } catch (error) {
                 console.log(error)
                 setMessage(error.message)
                 setType("error")
-                return
             }
         } else {
             setMessage("Nenhum tamanho selecionado")
             setType("error")
-            return
         }
 
-        setShowCart(true);
-        setSelectedButton("")
-    
-        setTimeout(() => {
-          setShowCart(false);
-        }, 1000);
+        setSelectedButton("");
+
       };
     
       useEffect(() => {
