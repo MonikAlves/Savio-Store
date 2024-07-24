@@ -21,22 +21,41 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
+    /**
+     * @brief Verify if client exists from id
+     * @param id Client id
+     * @throws ClientNotFound
+     */
     public void clientExist(long id) throws ClientNotFound {
         boolean exist = this.clientRepository.existsById(id);
         if(!exist) throw new ClientNotFound();
     }
 
-
+    /**
+     * @brief Verify if client exists from email
+     * @param email Client email
+     * @throws ClientNotFound
+     */
     public void loginExists(String email) throws ClientNotFound {
         Optional<Client> exist = this.clientRepository.findByEmail(email);
         if(exist.isEmpty())throw new ClientNotFound();
     }
 
+    /**
+     * @brief Verify if client not exists from email
+     * @param email Client email
+     * @throws ClientAlreadyExist
+     */
     public void verifyClientExist(String email) throws ClientAlreadyExist {
         Optional<Client> isClientRegistered = this.clientRepository.findByEmail(email);
         if(isClientRegistered.isPresent()) throw new ClientAlreadyExist();
     }
 
+    /**
+     * @brief Validate client email
+     * @param email Client email
+     * @throws EmailNotValid
+     */
     public void validateEmail(String email) throws EmailNotValid {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-.]+.[.]com$");
         Matcher matcher = pattern.matcher(email);
@@ -46,6 +65,11 @@ public class ClientService {
         }
     }
 
+    /**
+     * @brief Validate client legal data
+     * @param legalData Client legal data
+     * @throws LegalDataNotValid
+     */
     public void validateLegalData(String legalData) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
         boolean equals = true;
@@ -89,6 +113,11 @@ public class ClientService {
         }
     }
 
+    /**
+     * Validate client phone
+     * @param phone Client phone
+     * @throws PhoneNotValid
+     */
     public void validatePhone(String phone) throws PhoneNotValid {
         List<Integer> digits = new ArrayList<>();
 
@@ -107,6 +136,15 @@ public class ClientService {
         }
     }
 
+    /**
+     * @brief Register client with validations
+     * @param client Client that will be added
+     * @return Client found
+     * @throws ClientAlreadyExist
+     * @throws EmailNotValid
+     * @throws LegalDataNotValid
+     * @throws PhoneNotValid
+     */
     public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid, LegalDataNotValid, PhoneNotValid {
         String email = client.getEmail();
         String legalData = client.getLegalData();
@@ -123,7 +161,14 @@ public class ClientService {
         return this.clientRepository.getReferenceByEmail(email);
     }
 
-    public Client verifyLogin(Client client) throws Unauthorized,ClientNotFound {
+    /**
+     * @brief Find client with validations
+     * @param client Client whose login will be validated
+     * @return Client found
+     * @throws Unauthorized
+     * @throws ClientNotFound
+     */
+    public Client verifyLogin(Client client) throws Unauthorized, ClientNotFound {
         String email = client.getEmail();
         String password = client.getPassword();
 
@@ -135,6 +180,11 @@ public class ClientService {
         return cliente;
     }
 
+    /**
+     * @brief Verify if an information is empty
+     * @param client Client whose information will be verified
+     * @throws BadRequestException
+     */
     public void verifyInformationEmpty(Client client) throws BadRequestException{
         if(client.getName() == null) throw new BadRequestException("Nome não informado");
         if(client.getEmail() == null) throw new BadRequestException("Email não informada");
@@ -143,6 +193,11 @@ public class ClientService {
         if(client.getLegalData() == null) throw new BadRequestException("CPF ou CNPJ não informado");
     }
 
+    /**
+     * @brief Delete a client with validations
+     * @param id Client id
+     * @throws ClientNotFound
+     */
     public void delete(long id) throws ClientNotFound{
         this.clientExist(id);
         this.clientRepository.deleteById(id);
