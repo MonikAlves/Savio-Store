@@ -2,12 +2,13 @@ import { useEffect, useState } from "react"
 import { ProductsApi } from "../../lib/axios";
 import { Product } from "../shared/Product";
 import { useLocation } from "react-router-dom";
+import { useUser } from "../../contexts/UserProvider";
 
 export function ProductsMain() {
-
     const [products, setProducts] = useState([]);
-    const location = useLocation();
-        
+    const location = useLocation(); 
+    const { user } = useUser()
+   // console.log(user)
     useEffect(() => {
 
         const productsApi = new ProductsApi()

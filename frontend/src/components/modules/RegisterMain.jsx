@@ -52,8 +52,6 @@ export function RegisterMain() {
                 setMessage("cadastrado com sucesso")
                 setType("sucess")
                 navigate("/"); 
-
-
             } else {
                 setMessage("Algum campo do cadastro está vazio");
                 setType("error")
