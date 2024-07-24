@@ -115,25 +115,13 @@ public class ClientService {
         this.verifyClientExist(email);
 
         this.validateEmail(email);
-        // this.validateLegalData(legalData);
-        // this.validatePhone(phone);
+        this.validateLegalData(legalData);
+        this.validatePhone(phone);
 
         this.clientRepository.save(client);
 
         return this.clientRepository.getReferenceByEmail(email);
     }
-
-//    public Client getClient(long id){
-//        Optional<Client> exist = this.clientRepository.findById(id);
-//        if(exist.isEmpty()) {
-//            ErrorDTO error = new ErrorDTO();
-//            error.setError("Usario não esta cadastrado no banco");
-//            error.setType("Login Error");
-//            error.setActivated(true);
-//            throw new ClientNotFound(error);
-//        }
-//        return exist.get();
-//    }
 
     public Client verifyLogin(Client client) throws Unauthorized,ClientNotFound {
         String email = client.getEmail();
