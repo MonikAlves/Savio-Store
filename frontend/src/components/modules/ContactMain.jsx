@@ -24,7 +24,6 @@ export function ContactMain() {
                 <button className="cursor-pointer bg-orange-500 w-full rounded p-2.5 font-bold text-black hover:bg-orange-700 hover:text-white transition-all">
                     Enviar
                 </button>
-                <p>testetet</p>
             </form>
         </main>
     )
