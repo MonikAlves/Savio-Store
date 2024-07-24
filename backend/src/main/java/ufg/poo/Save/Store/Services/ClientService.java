@@ -42,7 +42,7 @@ public class ClientService {
         Matcher matcher = pattern.matcher(email);
 
         if (!matcher.matches()) {
-            throw new EmailNotValid("Email não é válido");
+            throw new EmailNotValid("Email inválido");
         }
     }
 
