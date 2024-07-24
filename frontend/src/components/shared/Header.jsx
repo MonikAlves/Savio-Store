@@ -57,7 +57,6 @@ export function Header() {
                                 {item.label}
                             </NavLink>
                         ))
-<<<<<<< HEAD
                     }
                     </div>
                     )}
@@ -80,13 +79,6 @@ export function Header() {
                     </div>
                     )}
 
-=======
-                    }  
-                    <li onClick = {LOGOUT}>
-                        logout
-                    </li>
-                    </div>
->>>>>>> ffd1c65f276472c64937965ee196ef9f46f8d88f
             </div>
             
             <div className="flex w-full flex-row p-1 items-center border-b-[1px] border-amazon-eerie bg-amazon-gunmetal justify-center">
