@@ -108,11 +108,12 @@ public class ClientService {
         String phone = client.getPhone();
 
         this.verifyClientExist(email);
-        this.clientRepository.save(client);
 
         this.validateEmail(email);
         // this.validateLegalData(legalData);
         // this.validatePhone(phone);
+
+        this.clientRepository.save(client);
 
         return this.clientRepository.getReferenceByEmail(email);
     }
