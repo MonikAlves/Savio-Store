@@ -75,7 +75,6 @@ export function Header() {
                             <LogIn />
                             Logout
                         </button>
-
                     </div>
                     )}
 
