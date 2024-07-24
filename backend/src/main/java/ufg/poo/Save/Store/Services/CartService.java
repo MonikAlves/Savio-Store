@@ -23,7 +23,7 @@ public class CartService {
 
     public void addCart(Cart newCart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound {
 
-            if(newCart.getQuantity() < 1) throw new SizeNotFound("Quantidade não é possivel");
+            if(newCart.getQuantity() < 1) throw new SizeNotFound();
 
             long clientId = newCart.getClient().getId();
             long productId = newCart.getProduct().getId();
@@ -40,7 +40,7 @@ public class CartService {
 
                 int maximum = Integer.parseInt(this.calculateStockBySize(product.getSize(),newCart.getSize(),product.getStock()));
 
-                if(newCart.getQuantity() > maximum) throw new insufficientStock("Estoque insuficiente");
+                if(newCart.getQuantity() > maximum) throw new insufficientStock();
 
                 this.cartRepository.save(newCart);
                 this.cartRepository.calculate_total_line(clientId, productId,size);
@@ -59,7 +59,7 @@ public class CartService {
         if(this.cartRepository.verify_stock_cart(cart.getId(),quantity,stock)){
             return true;
         }
-        throw new insufficientStock("Estoque insuficiente");
+        throw new insufficientStock();
 
     }
 
@@ -69,7 +69,7 @@ public class CartService {
                 return stocks.split("-")[i];
             }
         }
-        throw new SizeNotFound("Tamanho solicitado não encontrado");
+        throw new SizeNotFound();
 
     }
 
@@ -80,7 +80,7 @@ public class CartService {
 
     public void cartExist(long id) throws CartNotFound {
         boolean exist = this.cartRepository.existsById(id);
-        if(!exist) throw new CartNotFound("Carrinho não achado");
+        if(!exist) throw new CartNotFound();
     }
 
     public void delete(long id) throws CartNotFound {

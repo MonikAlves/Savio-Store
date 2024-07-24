@@ -28,7 +28,7 @@ public class ProductService {
 
     public void productExist(long id) throws ProductNotFound {
         boolean exist = this.productRepository.existsById(id);
-        if(!exist) throw new ProductNotFound("Product não achado");
+        if(!exist) throw new ProductNotFound();
     }
 
     public int idGen(int max){

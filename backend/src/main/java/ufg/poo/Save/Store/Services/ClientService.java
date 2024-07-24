@@ -23,18 +23,18 @@ public class ClientService {
 
     public void clientExist(long id) throws ClientNotFound {
         boolean exist = this.clientRepository.existsById(id);
-        if(!exist) throw new ClientNotFound("Usuario não esta cadastrado no banco");
+        if(!exist) throw new ClientNotFound();
     }
 
 
     public void loginExists(String email) throws ClientNotFound {
         Optional<Client> exist = this.clientRepository.findByEmail(email);
-        if(exist.isEmpty())throw new ClientNotFound("Usuario não esta cadastrado no banco");
+        if(exist.isEmpty())throw new ClientNotFound();
     }
 
     public void verifyClientExist(String email) throws ClientAlreadyExist {
         Optional<Client> isClientRegistered = this.clientRepository.findByEmail(email);
-        if(isClientRegistered.isPresent()) throw new ClientAlreadyExist("Client already exist");
+        if(isClientRegistered.isPresent()) throw new ClientAlreadyExist();
     }
 
     public void validateEmail(String email) throws EmailNotValid {
@@ -42,7 +42,7 @@ public class ClientService {
         Matcher matcher = pattern.matcher(email);
 
         if (!matcher.matches()) {
-            throw new EmailNotValid("Email inválido");
+            throw new EmailNotValid();
         }
     }
 
@@ -54,7 +54,7 @@ public class ClientService {
             char digit = legalData.charAt(index);
 
             if (!Character.isDigit(digit)) {
-                throw new LegalDataNotValid("CPF inválido");
+                throw new LegalDataNotValid();
             }
 
             if (digit != legalData.charAt(0)) {
@@ -65,7 +65,7 @@ public class ClientService {
         }
 
         if (equals || digits.size() != 11) {
-            throw new LegalDataNotValid("CPF inválido");
+            throw new LegalDataNotValid();
         }
 
         int first = 0;
@@ -85,7 +85,7 @@ public class ClientService {
         second = ((10 * second) % 11) % 10;
 
         if (first != digits.get(9) && second != digits.get(10)) {
-            throw new LegalDataNotValid("CPF inválido");
+            throw new LegalDataNotValid();
         }
     }
 
@@ -96,14 +96,14 @@ public class ClientService {
             char digit = phone.charAt(index);
 
             if (!Character.isDigit(digit)) {
-                throw new PhoneNotValid("Telefone inválido");
+                throw new PhoneNotValid();
             }
 
             digits.add((Integer)(digit - '0'));
         }
 
         if (digits.size() != 11) {
-            throw new PhoneNotValid("Telefone inválido");
+            throw new PhoneNotValid();
         }
     }
 
@@ -143,7 +143,7 @@ public class ClientService {
 
         Client cliente = clientRepository.getReferenceByEmail(email);
 
-        if (!cliente.getPassword().equals(password)) throw new Unauthorized("Senha errada");
+        if (!cliente.getPassword().equals(password)) throw new Unauthorized();
         return cliente;
     }
 
