@@ -30,7 +30,7 @@ public class CartService {
             this.clientService.clientExist(clientId);
             this.productService.productExist(productId);
 
-            Boolean exist =  cartRepository.verify_cart_exist(clientId,productId,size);
+            boolean exist =  cartRepository.verify_cart_exist(clientId,productId,size);
 
             if(!exist){
                 this.cartRepository.save(newCart);
@@ -77,5 +77,34 @@ public class CartService {
     public void delete(long id) throws CartNotFound {
         this.cartExist(id);
         this.cartRepository.deleteById(id);
+    }
+
+    public String reduceStock(Cart cart) throws ProductNotFound{
+        this.productService.productExist(cart.getProduct().getId());
+        String sizes = cart.getProduct().getSize();
+        String[] stock = cart.getProduct().getStock().split("-");
+        for(int i=0;i<3;i++){
+            if(sizes.split("-")[i].equals(cart.getSize())){
+                stock[i] = String.valueOf(Integer.parseInt(stock[i]) - cart.getQuantity());
+            }
+        }
+
+        return stock[0] +"-"+ stock[1] +"-"+ stock[2];
+    }
+
+    public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound {
+        cart = this.cartRepository.getReferenceById(cart.getId());
+        long clientId = cart.getClient().getId();
+        long productId = cart.getProduct().getId();
+        String size = cart.getSize();
+
+        this.clientService.clientExist(clientId);
+        this.productService.productExist(productId);
+        this.cartExist(cart.getId());
+
+        this.verifyStock(cart,0);
+        cart.getProduct().setStock(this.reduceStock(cart));
+        this.cartRepository.delete(cart);
+
     }
 }

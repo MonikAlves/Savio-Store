@@ -41,6 +41,17 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/buy")
+    public ResponseEntity<?> buy(@RequestBody Cart cart) {
+        try{
+            this.cartService.buyCart(cart);
+
+        }catch (SuperException e) {
+            return ResponseDTO.response(e);
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody Cart cart){
         try {
