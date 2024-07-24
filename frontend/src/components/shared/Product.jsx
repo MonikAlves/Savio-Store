@@ -1,11 +1,13 @@
 import { useContext, useRef, useState, useEffect } from "react"
 import { ShoppingContext } from "../../contexts/ShoppingProvider";
 import { ShoppingCart } from 'lucide-react';
+import { useUser } from "../../contexts/UserProvider";
+import { productConsumer } from "../FetchAPI/productCosumer";
 
 export function Product({image, title, description, price, product}){
-
+    const { user } = useUser()
     const {addToCart} = useContext(ShoppingContext); 
-
+    const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL)
     const audioRef = useRef(null);
     const [selectedButton, setSelectedButton] = useState(null);
     const [buttonState, setButtonState] = useState(false);
@@ -25,8 +27,9 @@ export function Product({image, title, description, price, product}){
     };
 
 
-    const handleAddToCartClick = () => {
+    const handleAddToCartClick = async () => {
         addToCart(product);
+        console.log(product)
 
         if (audioRef.current) { 
             audioRef.current.volume = 0.1;
@@ -34,6 +37,13 @@ export function Product({image, title, description, price, product}){
             audioRef.current.play().catch(error => {
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
+        }
+        console.log("entrei")
+        try {
+            const response = await consumer.addCart({idClient: "1", idProduto: "1", Tamanho: "M"})
+            console.log(response)
+        } catch (error) {
+            console.log(error)
         }
 
         setShowCart(true);

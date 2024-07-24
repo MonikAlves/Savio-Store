@@ -8,7 +8,7 @@ export function ProductsMain() {
     const [products, setProducts] = useState([]);
     const location = useLocation(); 
     const { user } = useUser()
-   // console.log(user)
+    
     useEffect(() => {
 
         const productsApi = new ProductsApi()
