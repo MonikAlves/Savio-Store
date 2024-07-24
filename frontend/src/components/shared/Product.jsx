@@ -3,6 +3,8 @@ import { ShoppingContext } from "../../contexts/ShoppingProvider";
 import { ShoppingCart } from 'lucide-react';
 import { useUser } from "../../contexts/UserProvider";
 import { productConsumer } from "../FetchAPI/productCosumer";
+import Message from "./Message";
+
 
 export function Product({image, title, description, price, product}){
     const { user } = useUser()
@@ -12,8 +14,11 @@ export function Product({image, title, description, price, product}){
     const [selectedButton, setSelectedButton] = useState(null);
     const [buttonState, setButtonState] = useState(false);
     const [showCart, setShowCart] = useState(false);
+    const [ message, setMessage ] = useState("")
+    const [ type, setType ] = useState("")
 
     const handleButtonClick = (buttonId) => {
+        console.log(buttonId)
         if(selectedButton === buttonId) {
             setSelectedButton(null);
         }
@@ -29,8 +34,7 @@ export function Product({image, title, description, price, product}){
 
     const handleAddToCartClick = async () => {
         addToCart(product);
-        console.log(product)
-
+     
         if (audioRef.current) { 
             audioRef.current.volume = 0.1;
             //audioRef.current.currentTime = 0; // Reinicia o áudio se ele já estiver tocando
@@ -38,14 +42,26 @@ export function Product({image, title, description, price, product}){
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
         }
-        console.log("entrei")
-        try {
-            const response = await consumer.addCart({idClient: "1", idProduto: "1", Tamanho: "M"})
-            console.log(response)
-        } catch (error) {
-            console.log(error)
+        if(user){
+            console.log(user.id)
+            const blabla = await consumer.GetCart(user.id);
         }
-
+        console.log(blabla)
+        const parametro = {idClient: user.id, idProduto: product.id, Tamanho: selectedButton};
+        if(setSelectedButton) {
+            try {
+                await consumer.addCart(parametro)
+                setSelectedButton("")
+                setMessage("deu certo")
+                setType("sucess")
+            } catch (error) {
+                setMessage(error.message)
+                setType("error")
+            }
+        } else {
+            setMessage("Nenhum tamanho selecionado")
+            setType("error")
+        }
         setShowCart(true);
         setTimeout(() => {
           setShowCart(false);
@@ -59,6 +75,10 @@ export function Product({image, title, description, price, product}){
 
     return (
         <div className="w-80 h-[500px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
+            {message && type && (
+                <Message message ={message} type= {type}/>
+            )}
+            
             <audio ref={audioRef} src="public/cart_sound.mp3"/>
             <figure className="flex bg-gray-500 flex-col ring-1 ring-white w-[170px] h-[180px]">
                 <img src={image} alt={description} className="h-[160px]"/>

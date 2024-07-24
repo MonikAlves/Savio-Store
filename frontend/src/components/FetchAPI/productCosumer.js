@@ -3,10 +3,26 @@ export class productConsumer {
         this.BASEURL = baseURL;
     }
 
+    async GetCart(id) {
+        try {
+            fetch(this.BASEURL + "/" + id, {
+                method: "GET",
+            })
+            .then(data => {
+                return data.json()
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        } catch (e) {
+            console.log(e)
+            throw e
+        }
+    }
+
     async addCart ({idClient, idProduto, Tamanho}) {
         try {
-            console.log("ENTREI PARA FAZER A REQ")
-            console.log(idClient + " " + idProduto + "  " + Tamanho)
             const response = await fetch(this.BASEURL + "/add", {
                 method: "POST",
                 headers: {
@@ -19,7 +35,7 @@ export class productConsumer {
                     product: {
                         id: idProduto,
                     },
-                    qunatity: 10000,
+                    quantity: 1,
                     size: Tamanho
                 })
             })

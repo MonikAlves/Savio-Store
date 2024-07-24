@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
     const verifySession = () => {
         const storedUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
-        if (storedUser.email) {
+        if (storedUser) {
             setUser(storedUser);
             setIsLoggedIn(true);
         } else {

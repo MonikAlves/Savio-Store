@@ -63,7 +63,7 @@ public class CartService {
 
     }
 
-    public String calculateStockBySize(String sizes,String size, String stocks) throws SizeNotFound {
+    public String calculateStockBySize(String sizes, String size, String stocks) throws SizeNotFound {
         for(int i=0;i<3;i++){
             if(sizes.split("-")[i].equals(size)){
                 return stocks.split("-")[i];
