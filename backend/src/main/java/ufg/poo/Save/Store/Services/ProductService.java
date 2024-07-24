@@ -17,6 +17,10 @@ import java.util.*;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    /**
+     * @deprecated
+     * @return
+     */
     public String getProduto(){
         return this.productRepository.toString();
     }
