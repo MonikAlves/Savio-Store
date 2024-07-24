@@ -9,8 +9,7 @@ import { ContactMain } from './components/modules/ContactMain.jsx';
 import { LoginMain } from './components/modules/LoginMain.jsx';
 import { RegisterMain } from './components/modules/RegisterMain.jsx';
 import { CartMain } from './components/modules/CartMain.jsx';
-
-
+import { InfoProduct } from './components/modules/InfoProduct.jsx';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartMain />,
+      },
+      {
+        path: "/infoproduct",
+        element: <InfoProduct />,
       },
     ]
   },
