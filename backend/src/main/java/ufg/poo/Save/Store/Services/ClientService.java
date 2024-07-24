@@ -91,14 +91,14 @@ public class ClientService {
             char digit = phone.charAt(index);
 
             if (!Character.isDigit(digit)) {
-                throw new PhoneNotValid("CPF não é válido");
+                throw new PhoneNotValid("Telefone inválido");
             }
 
             digits.add((Integer)(digit - '0'));
         }
 
         if (digits.size() != 11) {
-            throw new PhoneNotValid("CPF não é válido");
+            throw new PhoneNotValid("Telefone inválido");
         }
     }
 
