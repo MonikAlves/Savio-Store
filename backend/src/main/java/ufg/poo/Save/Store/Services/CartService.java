@@ -9,6 +9,7 @@ import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Repositories.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -72,9 +73,9 @@ public class CartService {
 
     }
 
-    public List<Product> importList(long id) throws ClientNotFound {
+    public List<Cart> importList(long id) throws ClientNotFound {
         this.clientService.clientExist(id);
-        return  this.productRepository.get_products_by_id_client(id);
+        return this.cartRepository.get_products_by_id_client(id);
     }
 
     public void cartExist(long id) throws CartNotFound {

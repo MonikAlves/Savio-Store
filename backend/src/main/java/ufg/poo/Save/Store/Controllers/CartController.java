@@ -19,16 +19,16 @@ public class CartController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> showProducts(@PathVariable long id) {
-        List<Product> products;
+        List<Cart> carts;
 
         try {
-            products = this.cartService.importList(id);
+            carts = this.cartService.importList(id);
         }
         catch (SuperException e) {
             return ResponseDTO.response(e);
         }
 
-        return ResponseEntity.ok().body(products);
+        return ResponseEntity.ok().body(carts);
     }
 
     @PostMapping("/add")
