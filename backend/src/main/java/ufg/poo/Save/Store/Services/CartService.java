@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ufg.poo.Save.Store.Entities.Cart;
 import ufg.poo.Save.Store.Entities.Product;
-import ufg.poo.Save.Store.Exception.ClientNotFound;
-import ufg.poo.Save.Store.Exception.ProductNotFound;
+import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Repositories.ProductRepository;
-import ufg.poo.Save.Store.Exception.CartNotFound;
 
 import java.util.List;
 
@@ -22,23 +20,48 @@ public class CartService {
     private final ProductService productService;
     private final ProductRepository productRepository;
 
-    public String addCart(Cart cart) throws ClientNotFound, ProductNotFound {
+    public void addCart(Cart newCart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound {
 
-            long clientId = cart.getClient().getId();
-            long productId = cart.getProduct().getId();
+            long clientId = newCart.getClient().getId();
+            long productId = newCart.getProduct().getId();
+            String size = newCart.getSize();
+
 
             this.clientService.clientExist(clientId);
             this.productService.productExist(productId);
 
-            String exist = cartRepository.verify_cart_exist(clientId,productId);
+            Boolean exist =  cartRepository.verify_cart_exist(clientId,productId,size);
 
-            if(exist.equals("no")){
-                this.cartRepository.save(cart);
-                this.cartRepository.calculate_total_line(clientId, productId);
-                return "Adicionado no carrinho\n";
+            if(!exist){
+                this.cartRepository.save(newCart);
+                this.cartRepository.calculate_total_line(clientId, productId,size);
             }else{
-                return "Adicionado mais uma unidade ao carrinho\n";
+                Cart cart = this.cartRepository.get_cart_by_id_client_and_id_product(clientId, productId,size);
+                if(verifyStock(cart,newCart.getQuantity())){
+                    cart.setQuantity(newCart.getQuantity() + cart.getQuantity());
+                     this.cartRepository.save(cart);
+                    cart.setTotal(cart.getQuantity() *cart.getProduct().getPrice());
+                }
             }
+    }
+
+    public boolean verifyStock(Cart cart,int quantity) throws SizeNotFound, insufficientStock {
+        int stock = Integer.parseInt(this.calculateStockBySize(cart.getProduct().getSize(),cart.getSize(), cart.getProduct().getStock()));
+        if(this.cartRepository.verify_stock_cart(cart.getId(),quantity,stock)){
+            return true;
+        }
+        throw new insufficientStock("Estoque insuficiente");
+
+    }
+
+    public String calculateStockBySize(String sizes,String size, String stocks) throws SizeNotFound {
+        for(int i=0;i<3;i++){
+            if(sizes.split("-")[i].equals(size)){
+                return stocks.split("-")[i];
+            }
+        }
+        throw new SizeNotFound("Tamanho solicitado não encontrado");
+
     }
 
     public List<Product> importList(long id) throws ClientNotFound {
@@ -48,7 +71,7 @@ public class CartService {
 
     public void cartExist(long id) throws CartNotFound {
         boolean exist = this.cartRepository.existsById(id);
-        if(!exist) throw new CartNotFound("Cart not found");
+        if(!exist) throw new CartNotFound("Carrinho não achado");
     }
 
     public void delete(long id) throws CartNotFound {

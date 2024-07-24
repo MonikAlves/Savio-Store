@@ -28,7 +28,7 @@ public class ProductService {
 
     public void productExist(long id) throws ProductNotFound {
         boolean exist = this.productRepository.existsById(id);
-        if(!exist) throw new ProductNotFound("Product not found");
+        if(!exist) throw new ProductNotFound("Product não achado");
     }
 
     public int idGen(int max){
@@ -62,7 +62,15 @@ public class ProductService {
     }
 
     public List<Product> getAll(){
-        return this.productRepository.findAll();
+        List<Product> products = this.productRepository.findAll();
+        List<Product> productsValid = new ArrayList<>();
+        for(Product p : products){
+            System.out.println("AAAAA" + p.toString() + "0-0-0");
+            if(!p.getStock().equals("0-0-0")){
+                productsValid.add(p);
+            }
+        }
+        return productsValid;
     }
 
     public void saveProduct(Product novoproduto){
