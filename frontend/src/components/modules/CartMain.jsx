@@ -8,6 +8,10 @@ export function CartMain() {
 
     const { state } = useContext(ShoppingContext);
 
+    const handleClick = () => {
+        
+    }
+    
     const summaries = [
         { label: 'Quantidade de produtos:', value: state.reduce((acc, item) => acc + item.quantity, 0) },
         { label: 'Data da compra:', value: new Date().toLocaleDateString() },
@@ -61,7 +65,10 @@ export function CartMain() {
                                         </div>
                                     ))
                                 }
-                                <button className="bg-white text-black p-2.5 rounded font-bold hover:bg-orange-600 transition-all">
+                                <button 
+                                    className="bg-white text-black p-2.5 rounded font-bold hover:bg-orange-600 transition-all"
+                                    onClick={handleClick}
+                                    >
                                     Finalizar compra
                                 </button>
                             </div>

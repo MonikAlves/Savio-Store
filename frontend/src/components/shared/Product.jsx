@@ -33,12 +33,13 @@ export function Product({image, title, description, price, product}){
 
 
     const handleAddToCartClick = async () => {
-        addToCart(product);
         setShowCart(true);
         
         setTimeout(() => {
           setShowCart(false);
         }, 1000);
+
+        addToCart(product);
 
         if (audioRef.current) { 
             audioRef.current.volume = 0.1;
@@ -47,7 +48,9 @@ export function Product({image, title, description, price, product}){
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
         }
-
+        /*
+            vc tem que pegar e exibir esse carrinho na tela
+        */
         if(user){
             console.log(user.id)
             try {
@@ -62,15 +65,13 @@ export function Product({image, title, description, price, product}){
         if(setSelectedButton) {
             try {
                 const response = await consumer.addCart(parametro)
+                console.log(response)
+                setMessage(response.error)
+                setType("sucess")
 
-                if(response.error) {
-                    setMessage(response.error)
-                    setType("error")
-                }
-              
             } catch (error) {
                 console.log(error)
-                setMessage(error.message)
+                setMessage(error)
                 setType("error")
             }
         } else {
@@ -78,14 +79,9 @@ export function Product({image, title, description, price, product}){
             setType("error")
         }
 
-        setSelectedButton("");
-
+        setSelectedButton("") 
+             
       };
-    
-      useEffect(() => {
-        if (showCart) {
-        }
-      }, [showCart]);
 
     return (
         <div className="w-80 h-[500px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">

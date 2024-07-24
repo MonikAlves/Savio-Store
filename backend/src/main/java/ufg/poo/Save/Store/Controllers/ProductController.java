@@ -16,17 +16,30 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
+    /**
+     * @brief Get a list with all available products
+     * @return List of all available products
+     */
     @GetMapping("/all")
     public List<Product> getAllProducts() {
         return this.productService.getAll();
     }
 
+    /**
+     * @brief Generate a list with three random products
+     * @return List with three random products
+     */
     @GetMapping("/random")
     public List<Product> random(){
         List<Product> products = this.productService.getAll();
         return this.productService.getRandom(products);
     }
 
+    /**
+     * @brief Add a list of products
+     * @param product List of products that will be added
+     * @return Response entity with operation status
+     */
     @PostMapping("/add")
     public ResponseEntity<?> post(@RequestBody List<Product> product){
         try {
@@ -42,6 +55,11 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @brief Delete a product
+     * @param product Product to be deleted
+     * @return Response entity with operation status
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody Product product) {
         try {

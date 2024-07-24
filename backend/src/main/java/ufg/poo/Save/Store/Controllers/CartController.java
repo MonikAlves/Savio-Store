@@ -3,6 +3,8 @@ package ufg.poo.Save.Store.Controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import ufg.poo.Save.Store.DTOS.ErrorDTO;
 import ufg.poo.Save.Store.DTOS.ResponseDTO;
 import ufg.poo.Save.Store.Entities.Cart;
 import ufg.poo.Save.Store.Entities.Product;
@@ -17,6 +19,11 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
+    /**
+     * @brief Get a list with all available products in client cart
+     * @param id Client id
+     * @return Response entity with status operation and product list
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> showProducts(@PathVariable long id) {
         List<Cart> carts;
@@ -31,16 +38,28 @@ public class CartController {
         return ResponseEntity.ok().body(carts);
     }
 
+    /**
+     * @brief Add cart
+     * @param cart Cart to be added
+     * @return Response entity with status operation
+     */
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody Cart cart) {
+        ErrorDTO a = new ErrorDTO();
+        a.setError("Deu certo");
         try{
             this.cartService.addCart(cart);
         }catch (SuperException e) {
             return ResponseDTO.response(e);
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(a);
     }
 
+    /**
+     * @brief Make cart purchase
+     * @param cart Cart to be purchased
+     * @return Response entity with status operation
+     */
     @PostMapping("/buy")
     public ResponseEntity<?> buy(@RequestBody Cart cart) {
         try{
@@ -52,6 +71,11 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @brief Delete a cart
+     * @param cart Cart to be deleted
+     * @return Response entity with status operation
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody Cart cart){
         try {
