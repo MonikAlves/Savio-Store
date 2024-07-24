@@ -84,15 +84,35 @@ public class ClientService {
         }
     }
 
+    public void validatePhone(String phone) throws PhoneNotValid {
+        List<Integer> digits = new ArrayList<>();
+
+        for (int index = 0; index < phone.length(); index++) {
+            char digit = phone.charAt(index);
+
+            if (!Character.isDigit(digit)) {
+                throw new PhoneNotValid("CPF não é válido");
+            }
+
+            digits.add((Integer)(digit - '0'));
+        }
+
+        if (digits.size() != 11) {
+            throw new PhoneNotValid("CPF não é válido");
+        }
+    }
+
     public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid, LegalDataNotValid {
         String email = client.getEmail();
         String legalData = client.getLegalData();
+        String phone = client.getPhone();
 
         this.verifyClientExist(email);
         this.clientRepository.save(client);
 
         this.validateEmail(email);
         // this.validateLegalData(legalData);
+        // this.validatePhone(phone);
 
         return this.clientRepository.getReferenceByEmail(email);
     }
