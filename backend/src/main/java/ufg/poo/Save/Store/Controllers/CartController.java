@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ufg.poo.Save.Store.DTOS.ErrorDTO;
 import ufg.poo.Save.Store.DTOS.ResponseDTO;
 import ufg.poo.Save.Store.Entities.Cart;
+import ufg.poo.Save.Store.Entities.Client;
 import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Exception.SuperException;
 import ufg.poo.Save.Store.Services.CartService;
@@ -77,14 +78,14 @@ public class CartController {
     }
 
     /**
-     * @brief Make purchase for all carts
-     * @param id Client id
+     * @brief Make purchase for all client carts
+     * @param client Client
      * @return Response entity with status operation
      */
-    @PostMapping("/buyAll/{id}")
-    public ResponseEntity<?> buyAll(@PathVariable long id) {
+    @PostMapping("/buyAll")
+    public ResponseEntity<?> buyAll(@RequestBody Client client) {
         try {
-            this.cartService.buyAllCart(id);
+            this.cartService.buyAllCart(client.getId());
         }
         catch (SuperException e) {
             return ResponseDTO.response(e);

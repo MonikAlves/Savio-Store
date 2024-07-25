@@ -9,7 +9,6 @@ import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.CartRepository;
 import ufg.poo.Save.Store.Repositories.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +19,7 @@ public class CartService {
     private final ClientService clientService;
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final PurchaseService purchaseService;
 
     /**
      * @brief Add a new cart with validations
@@ -47,13 +47,14 @@ public class CartService {
             int maximum = Integer.parseInt(this.calculateStockBySize(product.getSize(),newCart.getSize(),product.getStock()));
 
             if(newCart.getQuantity() > maximum) throw new insufficientStock();
-
+            newCart.setAvailable(true);
             this.cartRepository.save(newCart);
             this.cartRepository.calculate_total_line(clientId, productId,size);
         }else{
             Cart cart = this.cartRepository.get_cart_by_id_client_and_id_product(clientId, productId,size);
             if(verifyStock(cart,newCart.getQuantity())){
                 cart.setQuantity(newCart.getQuantity() + cart.getQuantity());
+                newCart.setAvailable(true);
                 this.cartRepository.save(cart);
                 cart.setTotal(cart.getQuantity() * cart.getProduct().getPrice());
             }
@@ -73,6 +74,7 @@ public class CartService {
         if(this.cartRepository.verify_stock_cart(cart.getId(),quantity,stock)){
             return true;
         }
+        cart.setAvailable(false);
         throw new insufficientStock();
 
     }
@@ -155,14 +157,13 @@ public class CartService {
      * @throws CartNotFound
      */
     public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
-        // TODO
-        // corrigir o erro "cannot find symbol ´getAvailable´"
-        //
-        // if (!cart.getAvailable()) {
-        //     throw new UnauthorizedPurchase();
-        // }
 
         cart = this.cartRepository.getReferenceById(cart.getId());
+
+        if (!cart.isAvailable()) {
+            throw new UnauthorizedPurchase();
+        }
+
         long clientId = cart.getClient().getId();
         long productId = cart.getProduct().getId();
 
@@ -177,7 +178,8 @@ public class CartService {
         String size = cart.getProduct().getSize();
         int stock = Integer.parseInt(this.calculateStockBySize(size, cart.getSize(), cart.getProduct().getStock()));
 
-        this.cartRepository.verify_purchase_available(productId, size, stock);
+        this.cartRepository.verify_purchase_available(productId, cart.getSize(), stock);
+        this.purchaseService.savePurchase(cart);
         this.cartRepository.delete(cart);
     }
 
@@ -189,7 +191,7 @@ public class CartService {
      */
     public void buyAllCart(long id) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
         List<Cart> carts = this.importList(id);
-
+        if(carts.isEmpty()) throw new CartNotFound();
         for (Cart cart: carts) {
             this.buyCart(cart);
         }
