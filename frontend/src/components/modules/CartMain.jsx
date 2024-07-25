@@ -44,7 +44,7 @@ export function CartMain() {
             <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Carrinho</h1>
             <div className="flex gap-5">
                 {
-                    state.length == 0 ?
+                    cart.length == 0 ?
                         <div className="text-white ring ring-white w-full p-5 rounded flex flex-col gap-5 justify-center items-center">
                             <h2 className="text-center text-5xl font-thin">
                                 Seu carrinho está vazio
