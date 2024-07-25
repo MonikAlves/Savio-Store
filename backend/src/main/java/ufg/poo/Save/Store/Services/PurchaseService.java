@@ -18,6 +18,10 @@ public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
     private final ClientService clientService;
 
+    /**
+     * Create purchase from cart and add it to purchase repository
+     * @param cart Cart whose purchase will be created
+     */
     public void savePurchase(Cart cart) {
         Purchase purchase = new Purchase();
 
@@ -31,13 +35,14 @@ public class PurchaseService {
         this.purchaseRepository.save(purchase);
     }
 
+    /**
+     * Get a list with all client purchases
+     * @param id Client id
+     * @return List with all client purchases
+     * @throws ClientNotFound
+     */
     public List<Purchase> importPurchases(long id) throws ClientNotFound {
         this.clientService.clientExist(id);
-
-        List<Purchase> purchases = this.purchaseRepository.get_purchase_by_id_client(id);
-
-        System.out.println("LKLDKLSKDLSKDLSKD " + purchases);
-
-        return purchases;
+        return this.purchaseRepository.get_purchase_by_id_client(id);
     }
 }
