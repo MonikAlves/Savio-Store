@@ -66,22 +66,22 @@ public class ClientService {
     }
 
     /**
-     * @brief Validate client legal data
-     * @param legalData Client legal data
+     * Validate CPF
+     * @param cpf CPF to be validated
      * @throws LegalDataNotValid
      */
-    public void validateLegalData(String legalData) throws LegalDataNotValid {
+    private void validateCpf(String cpf) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
         boolean equals = true;
 
-        for (int index = 0; index < legalData.length(); index++) {
-            char digit = legalData.charAt(index);
+        for (int index = 0; index < cpf.length(); index++) {
+            char digit = cpf.charAt(index);
 
             if (!Character.isDigit(digit)) {
                 throw new LegalDataNotValid();
             }
 
-            if (digit != legalData.charAt(0)) {
+            if (digit != cpf.charAt(0)) {
                 equals = false;
             }
 
@@ -111,6 +111,87 @@ public class ClientService {
         if (first != digits.get(9) && second != digits.get(10)) {
             throw new LegalDataNotValid();
         }
+    }
+
+    /**
+     * Validate CNPJ
+     * @param cnpj CNPJ to be validated
+     * @throws LegalDataNotValid
+     */
+    private void validateCnpj(String cnpj) throws LegalDataNotValid {
+        List<Integer> digits = new ArrayList<>();
+        boolean equals = true;
+
+        for (int index = 0; index < cnpj.length(); index++) {
+            char digit = cnpj.charAt(index);
+
+            if (!Character.isDigit(digit)) {
+                throw new LegalDataNotValid();
+            }
+
+            if (digit != cnpj.charAt(0)) {
+                equals = false;
+            }
+
+            digits.add((Integer)(digit - '0'));
+        }
+
+        if (equals || digits.size() != 14) {
+            throw new LegalDataNotValid();
+        }
+
+        int first = 0;
+        int second = 0;
+
+        for (int index = 0, weight = 5; index < 12; index++, weight--) {
+            if (weight == 1) {
+                weight = 9;
+            }
+
+            first += (weight * digits.get(index));
+        }
+
+        first = first % 11;
+
+        if (first < 2) {
+            first = 0;
+        }
+        else {
+            first = 11 - first;
+        }
+
+        second += (2 * first);
+
+        for (int index = 0, weight = 6; index < 12; index++, weight--) {
+            if (weight == 1) {
+                weight = 9;
+            }
+
+            second += (weight * digits.get(index));
+        }
+
+        second = second % 11;
+
+        if (second < 2) {
+            second = 0;
+        }
+        else {
+            second = 11 - second;
+        }
+
+        if (first != digits.get(12) && second != digits.get(13)) {
+            throw new LegalDataNotValid();
+        }
+    }
+
+    /**
+     * @brief Validate client legal data
+     * @param legalData Client legal data
+     * @throws LegalDataNotValid
+     */
+    public void validateLegalData(String legalData) throws LegalDataNotValid {
+        validateCpf(legalData);
+        validateCnpj(legalData);
     }
 
     /**
