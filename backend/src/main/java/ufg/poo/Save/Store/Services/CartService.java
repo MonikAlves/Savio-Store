@@ -174,6 +174,12 @@ public class CartService {
         this.cartRepository.delete(cart);
     }
 
+    /**
+     * @brief Make purchase for all carts
+     * @param id Cliente id
+     * @throws ClientNotFound 
+     * @throws UnauthorizedPurchase
+     */
     public void buyAllCart(long id) throws ClientNotFound, UnauthorizedPurchase {
         List<Cart> carts = this.importList(id);
 
