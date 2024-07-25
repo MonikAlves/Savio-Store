@@ -45,13 +45,13 @@ public class CartController {
      */
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody Cart cart) {
-        ErrorDTO a = new ErrorDTO();
-        a.setError("Deu certo");
-        try{
+        try {
             this.cartService.addCart(cart);
-        }catch (SuperException e) {
+        }
+        catch (SuperException e) {
             return ResponseDTO.response(e);
         }
+
         return ResponseEntity.ok().body(a);
     }
 
@@ -62,12 +62,29 @@ public class CartController {
      */
     @PostMapping("/buy")
     public ResponseEntity<?> buy(@RequestBody Cart cart) {
-        try{
+        try {
             this.cartService.buyCart(cart);
-
-        }catch (SuperException e) {
+        }
+        catch (SuperException e) {
             return ResponseDTO.response(e);
         }
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * @brief Make purchase for all carts
+     * @param id Client id
+     * @return Response entity with status operation
+     */
+    @PostMapping("/buyAll/{id}")
+    public ResponseEntity<?> buyAll(@PathVariable long id) {
+        try {
+            this.cartService.buyAllCart(id);
+        }
+        catch (SuperException e) {
+            return ResponseDTO.response(e);
+        }
+
         return ResponseEntity.ok().build();
     }
 
