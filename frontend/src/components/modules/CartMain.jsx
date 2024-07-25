@@ -35,7 +35,7 @@ export function CartMain() {
         { label: 'Quantidade de produtos:', value: cart.reduce((acc, item) => acc + item.quantity, 0) },
         { label: 'Data da compra:', value: new Date().toLocaleDateString() },
         { label: 'Status do pedido:', value: 'Comprando' },
-        { label: 'Valor total:', value: `$${cart.reduce((acc, item) => acc + item.total, 0).toFixed(2)}`, isBold: true }
+        { label: 'Valor total:', value: `R$ ${cart.reduce((acc, item) => acc + item.total, 0).toFixed(2)}`, isBold: true }
     ]
 
     return (

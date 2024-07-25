@@ -85,7 +85,7 @@ export function Product({image, title, description, price, product}){
       };
 
     return (
-        <div className="w-80 h-[500px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
+        <div className="w-80 h-[450px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
             {message && type && (
                 <Message message ={message} type= {type}/>
             )}
@@ -103,7 +103,7 @@ export function Product({image, title, description, price, product}){
                 </p>
             </NavLink>
                 <NavLink to={"/infoproduct"} className="text-center flex flex-col font-thin text-2xl w-full">
-                    $ {price}
+                    R$ {`${price.toFixed(2)}`}
                 </NavLink>
                 <div className="p-5 flex gap-3 flex-wrap flex-col h-full items-center justify-end">
                     <div className="flex gap-2 space-x-3">
@@ -111,7 +111,6 @@ export function Product({image, title, description, price, product}){
                         <button className={getButtonClasses('M')} onClick={() => handleButtonClick('M')}>M</button>
                         <button className={getButtonClasses('G')} onClick={() => handleButtonClick('G')}>G</button>
                     </div>
-                    <button className="text-black w-full w-[240px] font-bold bg-white/100 rounded p-2 cursor-pointer text-center hover:bg-orange-600 transition-all">Comprar</button>
                     <button className="text-black w-full font-bold bg-white/100 rounded p-2 cursor-pointer text-center hover:bg-orange-600 transition-all" onClick={handleAddToCartClick}>Adicionar ao carrinho</button>
                 </div>
                     {showCart && (

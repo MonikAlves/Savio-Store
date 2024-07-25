@@ -19,16 +19,12 @@ export function CartProduct({ image, title, description, quantity, price, itemPr
                 <h2 className="text-xl font-bold">
                     {title}
                 </h2>
-                <p> Preço do item: {itemPrice}</p>
-                <p>
-                    {description}
-                </p>
-                <p> Tamanho Escolhido: {size}</p>
-                <p>
-                    Quantidade escolhida: {quantity} 
-                </p>
-                <p> Total: {price}</p>
                 <p>  {availableText(available)} </p>
+                <p> {description} </p>
+                <p> Preço do item: {`R$ ${itemPrice.toFixed(2)}`}</p>
+                <p> Tamanho Escolhido: {size}</p>
+                <p> Quantidade escolhida: {quantity} </p>
+                <p> Total: {`R$ ${price.toFixed(2)}`}</p>
             </div>
         </div>
     )
