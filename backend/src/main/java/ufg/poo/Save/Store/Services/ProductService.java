@@ -99,6 +99,12 @@ public class ProductService {
         return productsValid;
     }
 
+    /**
+     * Get product by id
+     * @param id Product id
+     * @return Product by id
+     * @throws ProductNotFound
+     */
     public Product getProduct(long id) throws ProductNotFound {
         this.productExist(id);
         return this.productRepository.getProductById(id);
