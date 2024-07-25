@@ -1,4 +1,4 @@
-export function CartProduct({ image, title, description, quantity, price }) {
+export function CartProduct({ image, title, description, quantity, price, itemPrice, size, avaliable }) {
     return (
         <div className="w-full flex items-center gap-5 p-2.5 border-b-[1px] border-b-black/30">
             <img src={image} alt={description} className="w-32" />

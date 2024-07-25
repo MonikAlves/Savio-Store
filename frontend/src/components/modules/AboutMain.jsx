@@ -12,21 +12,24 @@ export function AboutMain() {
   ]
   return (
     <main className="p-5 flex flex-col gap-7">
-      <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Sobre nós</h1>
-      <p className='text-center text-white text-xl font-thin'>
-      A Savio´Store é uma loja virtual que visa trazer um maior conforto aos seus clientes,
-        com nossos produtos de alta qualidade e preços imbatíveis no mercado.
-        Seja você também um de nossos clientes de sorte e aproveite a experiência promovida
-        por nossa marca, que está há mais de 50 anos tornando a vida das pessoas mais confortável.
-      </p>
+      <div className='flex flex-col gap-5 mx-16'>
+          <h1 className='text-4xl font-semibold text-white w-full text-center p-1'>Sobre nós</h1>
+          <p className='text-center text-white text-xl font-thin'>
+          A Savio´Store é uma loja virtual desenvolvida como projeto final da disciplina
+            de programação orientada a objeto, e o nome "Savio´Store" faz referência
+            ao nome do nosso professor. Nossos produtos fictícios são todos personalizados
+            e todas as imagens dos modelos são autorais. Aproveite a sua experiência! 
+          </p>
+      </div>
+      
 
       <h2 className='text-3xl font-semibold w-full text-center text-white'>Nossos produtos</h2>
       <div className='flex gap-5 flex-wrap justify-center items-center'>
         {
           categories.map((category, index) => (
-            <section key={index} className='w-72 aspect-video flex flex-col rounded ring-[1px] ring-white'>
+            <section key={index} className='w-72 bg-amazon-eerie aspect-video flex flex-col rounded ring-[2px] ring-white'>
               <img src={category.image} alt={category.name} className='w-full rounded-t' />
-              <h3 className='text-xl font-semibold text-white text-center p-2.5'>{category.name}</h3>
+              <h3 className='text-xl border-t-[1.5px] font-semibold text-white text-center p-2.5'>{category.name}</h3>
             </section>
           ))
         }
