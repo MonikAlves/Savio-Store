@@ -27,13 +27,13 @@ public class ProductService {
 
     /**
      * @brief Register a new product
-     * @param novoproduto New product to be registered
-     * @return If operation is successful
+     * @param newProduct New product to be registered
      */
-    public boolean register(Product novoproduto){
-        this.productRepository.save(novoproduto);
-        return true;
+    public void register(Product newProduct) throws BadRequestException {
+        this.verifyInformationEmpty(newProduct);
+        this.productRepository.save(newProduct);
     }
+
 
     /**
      * @brief Verify if product exists by id
@@ -103,14 +103,6 @@ public class ProductService {
         this.productExist(id);
         return this.productRepository.getProductById(id);
     };
-
-    /**
-     * @brief Register a new product
-     * @param novoproduto New product to be registered
-     */
-    public void saveProduct(Product novoproduto){
-        this.productRepository.save(novoproduto);
-    }
 
     /**
      * @brief Verify if an information is empty

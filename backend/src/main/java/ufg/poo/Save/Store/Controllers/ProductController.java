@@ -55,8 +55,7 @@ public class ProductController {
     public ResponseEntity<?> post(@RequestBody List<Product> product){
         try {
             for (Product p : product) {
-                this.productService.verifyInformationEmpty(p);
-                this.productService.saveProduct(p);
+                this.productService.register(p);
             }
         }
         catch (SuperException e) {
