@@ -35,6 +35,17 @@ public class ProductController {
         return this.productService.getRandom(products);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> unique(@PathVariable long id){
+        Product product = new Product();
+        try{
+            product = this.productService.getProduct(id);
+        }catch (SuperException e){
+            return ResponseDTO.response(e);
+        }
+        return ResponseEntity.ok().body(product);
+    }
+
     /**
      * @brief Add a list of products
      * @param product List of products that will be added

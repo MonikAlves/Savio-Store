@@ -99,6 +99,11 @@ public class ProductService {
         return productsValid;
     }
 
+    public Product getProduct(long id) throws ProductNotFound {
+        this.productExist(id);
+        return this.productRepository.getProductById(id);
+    };
+
     /**
      * @brief Register a new product
      * @param novoproduto New product to be registered
