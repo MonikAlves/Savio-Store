@@ -155,9 +155,12 @@ public class CartService {
      * @throws CartNotFound
      */
     public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
-        if (!cart.getAvailable()) {
-            throw new UnauthorizedPurchase();
-        }
+        // TODO
+        // corrigir o erro "cannot find symbol ´getAvailable´"
+        //
+        // if (!cart.getAvailable()) {
+        //     throw new UnauthorizedPurchase();
+        // }
 
         cart = this.cartRepository.getReferenceById(cart.getId());
         long clientId = cart.getClient().getId();
