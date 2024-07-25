@@ -6,7 +6,6 @@ export const ShoppingProvider = ({ children }) => {
     const [state, setState] = useState([]);
     const [total, setTotal] = useState(0);
     
-    
     const addToCart = (product) => {
         setState(prevState => {
             const exists = prevState.find((item) => item.id === product.id);

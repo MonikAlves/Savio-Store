@@ -33,7 +33,7 @@ export function HomeMain() {
             {
                 location.pathname === '/' &&
                 <section className="min-h-[80vh] bg-main-bg rounded text-white p-10 flex justify-center items-end">
-                    <div className="flex flex-col gap-2.5 bg-black/40 rounded p-5 w-fit">
+                    <div className="flex flex-col gap-2.5 bg-black/50 rounded p-5 w-fit">
                         <h1 className="text-3xl font-bold">
                             Nossa Equipe de Desenvolvimento
                         </h1>

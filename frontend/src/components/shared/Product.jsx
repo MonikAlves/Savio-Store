@@ -4,6 +4,7 @@ import { ShoppingCart } from 'lucide-react';
 import { useUser } from "../../contexts/UserProvider";
 import { productConsumer } from "../FetchAPI/productCosumer";
 import Message from "./Message";
+import { NavLink } from "react-router-dom";
 
 
 export function Product({image, title, description, price, product}){
@@ -16,6 +17,7 @@ export function Product({image, title, description, price, product}){
     const [showCart, setShowCart] = useState(false);
     const [ message, setMessage ] = useState("")
     const [ type, setType ] = useState("")
+    const  [products, setProducts] = useState();
 
     const handleButtonClick = (buttonId) => {
         console.log(buttonId)
@@ -48,37 +50,34 @@ export function Product({image, title, description, price, product}){
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
         }
-        /*
-            vc tem que pegar e exibir esse carrinho na tela
-        */
-       
-        if(user){
+
+        /*if(user){
             console.log(user.id)
             try {
-                const blabla =  await consumer.GetCart(user.id);
-                console.log(blabla)
+                const cart =  await consumer.GetCart(user.id);
+                console.log(cart)
             } catch(error) {
                 console.log(error)
             }
-        }
+        }*/
 
         const parametro = {idClient: user.id, idProduto: product.id, Tamanho: selectedButton};
 
         if(setSelectedButton) {
             try {
                 const response = await consumer.addCart(parametro)
-                //console.log(response)
+                console.log(response)
                 //setMessage(response.error)
-                //setType("sucess")
+                setType("sucess")
 
             } catch (error) {
-                //console.log(error)
-                //setMessage(error)
-                //setType("error")
+                console.log(error)
+                setMessage(error)
+                setType("error")
             }
         } else {
-            //setMessage("Nenhum tamanho selecionado")
-            //setType("error")
+            setMessage("Nenhum tamanho selecionado")
+            setType("error")
         }
 
         setSelectedButton("") 
@@ -92,20 +91,20 @@ export function Product({image, title, description, price, product}){
             )}
             
             <audio ref={audioRef} src="public/cart_sound.mp3"/>
-            <figure className="flex bg-gray-500 flex-col ring-1 ring-white w-[170px] h-[180px]">
+            <NavLink to={"/infoproduct"} className="flex bg-gray-500 flex-col ring-1 rounded ring-white w-[170px] h-[180px]">
                 <img src={image} alt={description} className="h-[160px]"/>
-            </figure>
-            <div className="flex flex-col gap-1 items-center">
+            </NavLink>
+            <NavLink to={"/infoproduct"} className="flex flex-col gap-1 items-center">
                 <h2 className="text-xl flex font-bold text-center">
                     {title.length > 22 ? title.slice(0, 22) + '...' : title}
                 </h2>
                 <p className="text-center text-sm flex">
                     {description.length > 80 ? description.slice(0, 80) + '...' : description}
                 </p>
-            </div>
-                <p className="text-center flex flex-col font-thin text-2xl w-full">
+            </NavLink>
+                <NavLink to={"/infoproduct"} className="text-center flex flex-col font-thin text-2xl w-full">
                     $ {price}
-                </p>
+                </NavLink>
                 <div className="p-5 flex gap-3 flex-wrap flex-col h-full items-center justify-end">
                     <div className="flex gap-2 space-x-3">
                         <button className={getButtonClasses('P')} onClick={() => handleButtonClick('P')}>P</button>
