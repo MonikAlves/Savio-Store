@@ -50,7 +50,7 @@ export function HomeMain() {
                 <h1 className="w-full p-1 text-center text-white text-5xl">
                     Produtos Recomendados
                 </h1>
-                <div className="flex p-5 gap-2.5 flex-wrap p-2.5 items-start justify-center" >
+                <div className="flex p-5 gap-2.5 flex-wrap items-start justify-center" >
                     {
                         products &&
                         products.map((product, index) => {

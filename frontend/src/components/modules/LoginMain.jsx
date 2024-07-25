@@ -42,7 +42,7 @@ export function LoginMain() {
                     name: data.name,
                     id: data.id,
                     phone: data.phone,
-                    superUser: data.superUser,
+                    legalData: data.legalData,
                 }
                 )
                 setMessage("Usuario logado com sucesso")
