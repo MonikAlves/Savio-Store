@@ -59,17 +59,17 @@ export function CartMain() {
                             <div className="flex flex-col ring-[1px] ring-white text-white rounded p-2.5 gap-5">
                                 <h2 className="bg-white p-2.5 text-black rounded text-xl font-bold">Lista de Produtos</h2>
                                 {
-                                    cart.map(({product}, index) => (
+                                    cart.map((item, index) => (
                                         <CartProduct
                                             key={index}
-                                            image={"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" +product.image}
-                                            title={product.title}
-                                            description={product.description}
-                                            quantity={product.quantity}
-                                            price={product.price}
-                                            //itemPrice={cart.total}
-                                            //size={cart.product}
-                                            //avaliable={cart.avaliable}
+                                            image={"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" + item.product.image}
+                                            title={item.product.name}
+                                            description={item.product.description}
+                                            quantity={item.quantity}
+                                            price={item.total}
+                                            itemPrice={item.product.price}
+                                            size={item.size}
+                                            available={item.available}
                                         />
                                     ))
                                 }
