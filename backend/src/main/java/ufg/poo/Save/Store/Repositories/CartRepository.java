@@ -8,10 +8,11 @@ import ufg.poo.Save.Store.Entities.Cart;
 import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
-
     @Procedure(name = "get_products_by_id_client")
     List<Cart> get_products_by_id_client(@Param("id") long id);
 
+    @Procedure(name = "verify_purchase_available")
+    void verify_purchase_available(@Param("id_p") long id_p, @Param("size") String size, @Param("stock") int stock);
 
     @Procedure(name = "calculate_total_line")
     void calculate_total_line(@Param("id_c") long id_c,@Param("id_p") long id_p,@Param("size") String size);
