@@ -55,7 +55,7 @@ public class CartService {
             if(verifyStock(cart,newCart.getQuantity())){
                 cart.setQuantity(newCart.getQuantity() + cart.getQuantity());
                 this.cartRepository.save(cart);
-                cart.setTotal(cart.getQuantity() *cart.getProduct().getPrice());
+                cart.setTotal(cart.getQuantity() * cart.getProduct().getPrice());
             }
         }
     }
@@ -163,9 +163,28 @@ public class CartService {
         this.productService.productExist(productId);
         this.cartExist(cart.getId());
 
-        this.verifyStock(cart,0);
-        cart.getProduct().setStock(this.reduceStock(cart));
-        this.cartRepository.delete(cart);
+        this.verifyStock(cart, 0);
 
+        cart.getProduct().setStock(this.reduceStock(cart));
+
+        String size = cart.getProduct.getSize();
+        int stock = Integer.parseInt(this.calculateStockBySize(size, cart.getSize(), cart.getProduct().getStock()));
+
+        this.cartRepository.verify_purchase_available(productId, size, stock);
+        this.cartRepository.delete(cart);
+    }
+
+    public void buyAllCart(long id) throws ClientNotFound, UnauthorizedPurchase {
+        List<Cart> carts = this.importList(id);
+
+        for (Cart cart: carts) {
+            if (!cart.getAvailable()) {
+                new throw UnauthorizedPurchase();
+            }
+        }
+
+        for (Cart cart: carts) {
+            this.buyCart(cart);
+        }
     }
 }
