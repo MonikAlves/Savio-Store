@@ -17,6 +17,11 @@ import java.util.List;
 public class PurchaseController {
     private final PurchaseService purchaseService;
 
+    /**
+     * Get a list with all client purchases
+     * @param client Client whose purchases will be got
+     * @return List with all client purchases
+     */
     @PostMapping("/account")
     public ResponseEntity<?> getPurchases(@RequestBody Client client) {
         List<Purchase> purchases;
