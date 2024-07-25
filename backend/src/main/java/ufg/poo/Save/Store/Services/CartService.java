@@ -171,7 +171,7 @@ public class CartService {
 
         cart.getProduct().setStock(this.reduceStock(cart));
 
-        String size = cart.getProduct.getSize();
+        String size = cart.getProduct().getSize();
         int stock = Integer.parseInt(this.calculateStockBySize(size, cart.getSize(), cart.getProduct().getStock()));
 
         this.cartRepository.verify_purchase_available(productId, size, stock);
