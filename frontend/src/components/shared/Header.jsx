@@ -63,7 +63,7 @@ export function Header() {
 
                     {isLoggedIn && (
                     <div className='flex gap-2.5 justify-end'>
-                        <NavLink to={"/about"} className="transition-all text-white ring-black rounded py-1 px-2 text-sm hover:text-amazon-orange flex items-center gap-2">
+                        <NavLink to={"/account"} className="transition-all text-white ring-black rounded py-1 px-2 text-sm hover:text-amazon-orange flex items-center gap-2">
                             <User />
                             {user.name}
                         </NavLink>

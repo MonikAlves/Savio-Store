@@ -43,7 +43,7 @@ export function Product({image, title, description, price, product}){
 
         if (audioRef.current) { 
             audioRef.current.volume = 0.1;
-            //audioRef.current.currentTime = 0; // Reinicia o áudio se ele já estiver tocando
+            audioRef.current.currentTime = 0;
             audioRef.current.play().catch(error => {
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
@@ -51,6 +51,7 @@ export function Product({image, title, description, price, product}){
         /*
             vc tem que pegar e exibir esse carrinho na tela
         */
+       
         if(user){
             console.log(user.id)
             try {
@@ -62,21 +63,22 @@ export function Product({image, title, description, price, product}){
         }
 
         const parametro = {idClient: user.id, idProduto: product.id, Tamanho: selectedButton};
+
         if(setSelectedButton) {
             try {
                 const response = await consumer.addCart(parametro)
-                console.log(response)
-                setMessage(response.error)
-                setType("sucess")
+                //console.log(response)
+                //setMessage(response.error)
+                //setType("sucess")
 
             } catch (error) {
-                console.log(error)
-                setMessage(error)
-                setType("error")
+                //console.log(error)
+                //setMessage(error)
+                //setType("error")
             }
         } else {
-            setMessage("Nenhum tamanho selecionado")
-            setType("error")
+            //setMessage("Nenhum tamanho selecionado")
+            //setType("error")
         }
 
         setSelectedButton("") 

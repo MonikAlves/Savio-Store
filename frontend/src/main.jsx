@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { ProductsMain } from './components/modules/ProductsMain.jsx';
+import { HomeMain } from './components/modules/HomeMain.jsx';
 import { AboutMain } from './components/modules/AboutMain.jsx';
 import { ContactMain } from './components/modules/ContactMain.jsx';
 import { LoginMain } from './components/modules/LoginMain.jsx';
 import { RegisterMain } from './components/modules/RegisterMain.jsx';
 import { CartMain } from './components/modules/CartMain.jsx';
 import { InfoProduct } from './components/modules/InfoProduct.jsx';
+import { ProductsMain } from './components/modules/ProductsMain.jsx';
+import { AccountMain } from './components/modules/AccountMain.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ProductsMain />,
+        element: <HomeMain />,
       },
       {
         path: "/products",
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/infoproduct",
         element: <InfoProduct />,
+      },
+      {
+        path: "/account",
+        element: <AccountMain />,
       },
     ]
   },

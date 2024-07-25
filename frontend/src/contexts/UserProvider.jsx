@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
     };
 
     useEffect( () => {
-        verifySession()
+        verifySession();
     }, [])
 
     return (
