@@ -52,7 +52,12 @@ public class CartController {
             return ResponseDTO.response(e);
         }
 
-        return ResponseEntity.ok().body(a);
+        // TODO
+        // verificar se isso é necessário
+        ErrorDTO error = new ErrorDTO();
+        error.setError("Deu certo");
+
+        return ResponseEntity.ok().body(error);
     }
 
     /**
