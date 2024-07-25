@@ -154,7 +154,11 @@ public class CartService {
      * @throws SizeNotFound
      * @throws CartNotFound
      */
-    public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound {
+    public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
+        if (!cart.getAvailable()) {
+            throw new UnauthorizedPurchase();
+        }
+
         cart = this.cartRepository.getReferenceById(cart.getId());
         long clientId = cart.getClient().getId();
         long productId = cart.getProduct().getId();
@@ -180,14 +184,8 @@ public class CartService {
      * @throws ClientNotFound 
      * @throws UnauthorizedPurchase
      */
-    public void buyAllCart(long id) throws ClientNotFound, UnauthorizedPurchase {
+    public void buyAllCart(long id) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
         List<Cart> carts = this.importList(id);
-
-        for (Cart cart: carts) {
-            if (!cart.getAvailable()) {
-                new throw UnauthorizedPurchase();
-            }
-        }
 
         for (Cart cart: carts) {
             this.buyCart(cart);
