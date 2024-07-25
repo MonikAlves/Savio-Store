@@ -32,5 +32,8 @@ public class Cart implements Serializable {
     private String size;
 
     @Column(nullable = false)
+    private boolean available;
+
+    @Column(nullable = false)
     private double total;
 }
