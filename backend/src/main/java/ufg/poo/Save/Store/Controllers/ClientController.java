@@ -18,7 +18,7 @@ public class ClientController {
 
 
     /**
-     * @brief Verify client login
+     * Verify client login
      * @param client
      * @return Response entity with operation status
      */
@@ -34,7 +34,7 @@ public class ClientController {
     }
 
     /**
-     * @brief Register client
+     * Register client
      * @param client Client to be registered
      * @return Response entity with operation status
      */
@@ -51,7 +51,7 @@ public class ClientController {
     }
 
     /**
-     * @brief Delete a client
+     * Delete a client
      * @param client Client to be deleted
      * @return Response entity with operation status
      */

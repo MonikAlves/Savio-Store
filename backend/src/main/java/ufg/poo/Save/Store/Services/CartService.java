@@ -22,7 +22,7 @@ public class CartService {
     private final PurchaseService purchaseService;
 
     /**
-     * @brief Add a new cart with validations
+     * Add a new cart with validations
      * @param newCart New cart to be added
      * @throws ClientNotFound
      * @throws ProductNotFound
@@ -62,7 +62,7 @@ public class CartService {
     }
 
     /**
-     * @brief Verify if there is sufficient stock
+     * Verify if there is sufficient stock
      * @param cart Cart to be verified
      * @param quantity Quantity of product in cart
      * @return If verification is successful
@@ -80,7 +80,7 @@ public class CartService {
     }
 
     /**
-     * @brief Calculate the stock from size string information
+     * Calculate the stock from size string information
      * @param sizes String with available sizes
      * @param size String with chosen size
      * @param stocks String with stock values
@@ -98,7 +98,7 @@ public class CartService {
     }
 
     /**
-     * @brief Get list with client carts
+     * Get list with client carts
      * @param id Client id
      * @return A list with all client carts
      * @throws ClientNotFound
@@ -109,7 +109,7 @@ public class CartService {
     }
 
     /**
-     * @brief Verify if cart exists by id
+     * Verify if cart exists by id
      * @param id Cart id
      * @throws CartNotFound
      */
@@ -119,7 +119,7 @@ public class CartService {
     }
 
     /**
-     * @brief Delete cart from id
+     * Delete cart from id
      * @param id Cart id
      * @throws CartNotFound
      */
@@ -129,7 +129,7 @@ public class CartService {
     }
 
     /**
-     * @brief Reduce cart stock
+     * Reduce cart stock
      * @param cart Cart whose stock will be reduced
      * @return String with new stocks
      * @throws ProductNotFound
@@ -148,7 +148,7 @@ public class CartService {
     }
 
     /**
-     * @brief Make cart purchase
+     * Make cart purchase
      * @param cart Cart to be purchased
      * @throws ClientNotFound
      * @throws ProductNotFound
@@ -184,7 +184,7 @@ public class CartService {
     }
 
     /**
-     * @brief Make purchase for all carts
+     * Make purchase for all carts
      * @param id Cliente id
      * @throws ClientNotFound 
      * @throws UnauthorizedPurchase

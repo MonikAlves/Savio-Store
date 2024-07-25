@@ -21,7 +21,7 @@ public class CartController {
     private final CartService cartService;
 
     /**
-     * @brief Get a list with all available products in client cart
+     * Get a list with all available products in client cart
      * @param id Client id
      * @return Response entity with status operation and product list
      */
@@ -40,7 +40,7 @@ public class CartController {
     }
 
     /**
-     * @brief Add cart
+     * Add cart
      * @param cart Cart to be added
      * @return Response entity with status operation
      */
@@ -62,7 +62,7 @@ public class CartController {
     }
 
     /**
-     * @brief Make cart purchase
+     * Make cart purchase
      * @param cart Cart to be purchased
      * @return Response entity with status operation
      */
@@ -78,7 +78,7 @@ public class CartController {
     }
 
     /**
-     * @brief Make purchase for all client carts
+     * Make purchase for all client carts
      * @param client Client
      * @return Response entity with status operation
      */
@@ -95,7 +95,7 @@ public class CartController {
     }
 
     /**
-     * @brief Delete a cart
+     * Delete a cart
      * @param cart Cart to be deleted
      * @return Response entity with status operation
      */

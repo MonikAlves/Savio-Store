@@ -26,7 +26,7 @@ public class ProductService {
     }
 
     /**
-     * @brief Register a new product
+     * Register a new product
      * @param newProduct New product to be registered
      */
     public void register(Product newProduct) throws BadRequestException {
@@ -36,7 +36,7 @@ public class ProductService {
 
 
     /**
-     * @brief Verify if product exists by id
+     * Verify if product exists by id
      * @param id Product id
      * @throws ProductNotFound
      */
@@ -46,7 +46,7 @@ public class ProductService {
     }
 
     /**
-     * @brief Generate id
+     * Generate id
      * @param max Max value of id
      * @return Generated id
      */
@@ -62,7 +62,7 @@ public class ProductService {
     }
 
     /**
-     * @brief Get three random products
+     * Get three random products
      * @param products List with all available products
      * @return List with three random products
      */
@@ -85,7 +85,7 @@ public class ProductService {
     }
 
     /**
-     * @brief Get a list with all available products
+     * Get a list with all available products
      * @return A list with all available products
      */
     public List<Product> getAll(){
@@ -111,7 +111,7 @@ public class ProductService {
     };
 
     /**
-     * @brief Verify if an information is empty
+     * Verify if an information is empty
      * @param produto Product whose information will be verified
      * @throws BadRequestException
      */
@@ -124,7 +124,7 @@ public class ProductService {
     }
 
     /**
-     * @brief Delete a product with validations
+     * Delete a product with validations
      * @param id Product id
      * @throws ProductNotFound
      */

@@ -22,7 +22,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     /**
-     * @brief Verify if client exists from id
+     * Verify if client exists from id
      * @param id Client id
      * @throws ClientNotFound
      */
@@ -32,7 +32,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Verify if client exists from email
+     * Verify if client exists from email
      * @param email Client email
      * @throws ClientNotFound
      */
@@ -42,7 +42,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Verify if client not exists from email
+     * Verify if client not exists from email
      * @param email Client email
      * @throws ClientAlreadyExist
      */
@@ -52,7 +52,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Validate client email
+     * Validate client email
      * @param email Client email
      * @throws EmailNotValid
      */
@@ -185,7 +185,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Validate client legal data
+     * Validate client legal data
      * @param legalData Client legal data
      * @throws LegalDataNotValid
      */
@@ -218,7 +218,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Register client with validations
+     * Register client with validations
      * @param client Client that will be added
      * @return Client found
      * @throws ClientAlreadyExist
@@ -243,7 +243,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Find client with validations
+     * Find client with validations
      * @param client Client whose login will be validated
      * @return Client found
      * @throws Unauthorized
@@ -262,7 +262,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Verify if an information is empty
+     * Verify if an information is empty
      * @param client Client whose information will be verified
      * @throws BadRequestException
      */
@@ -275,7 +275,7 @@ public class ClientService {
     }
 
     /**
-     * @brief Delete a client with validations
+     * Delete a client with validations
      * @param id Client id
      * @throws ClientNotFound
      */

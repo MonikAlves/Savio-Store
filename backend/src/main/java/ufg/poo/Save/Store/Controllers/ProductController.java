@@ -17,7 +17,7 @@ public class ProductController {
     private final ProductService productService;
 
     /**
-     * @brief Get a list with all available products
+     * Get a list with all available products
      * @return List of all available products
      */
     @GetMapping("/all")
@@ -26,7 +26,7 @@ public class ProductController {
     }
 
     /**
-     * @brief Generate a list with three random products
+     * Generate a list with three random products
      * @return List with three random products
      */
     @GetMapping("/random")
@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     /**
-     * @brief Add a list of products
+     * Add a list of products
      * @param product List of products that will be added
      * @return Response entity with operation status
      */
@@ -66,7 +66,7 @@ public class ProductController {
     }
 
     /**
-     * @brief Delete a product
+     * Delete a product
      * @param product Product to be deleted
      * @return Response entity with operation status
      */
