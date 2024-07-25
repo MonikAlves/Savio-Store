@@ -9,7 +9,6 @@ import { UserProvider, UserContext, useUser } from "../../contexts/UserProvider"
 export function CartMain() {
 
     const {user} = useUser();
-    const { state } = useContext(ShoppingContext);
     const [ cart, setCart ] = useState([]);
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
 
@@ -33,10 +32,10 @@ export function CartMain() {
     useEffect(()=> console.log(cart), [cart])
     
     const summaries = [
-        { label: 'Quantidade de produtos:', value: state.reduce((acc, item) => acc + item.quantity, 0) },
+        { label: 'Quantidade de produtos:', value: cart.reduce((acc, item) => acc + item.quantity, 0) },
         { label: 'Data da compra:', value: new Date().toLocaleDateString() },
         { label: 'Status do pedido:', value: 'Comprando' },
-        { label: 'Valor total:', value: `$${state.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}`, isBold: true }
+        { label: 'Valor total:', value: `$${cart.reduce((acc, item) => acc + item.total, 0).toFixed(2)}`, isBold: true }
     ]
 
     return (
