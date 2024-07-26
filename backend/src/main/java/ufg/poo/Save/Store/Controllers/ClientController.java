@@ -10,12 +10,18 @@ import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Services.ClientService;
 
 
+/**
+ * Client Controller
+ *
+ */
 @RestController
 @RequestMapping("/SavioStore/Client")
 @RequiredArgsConstructor
 public class ClientController {
+    /**
+     * Client service to controller
+     */
     private final ClientService clientService;
-
 
     /**
      * Verify client login
