@@ -3,14 +3,23 @@ import { ShoppingContext, ShoppingProvider } from "../../contexts/ShoppingProvid
 import { CartProduct } from "../shared/CartProduct";
 import { NavLink } from "react-router-dom";
 import { ArrowLeftIcon } from "lucide-react";
-import { productConsumer } from "../FetchAPI/productCosumer";
+import { productConsumer} from "../FetchAPI/productCosumer";
 import { UserProvider, UserContext, useUser } from "../../contexts/UserProvider";
+
 
 export function CartMain() {
 
     const {user} = useUser();
     const [ cart, setCart ] = useState([]);
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
+
+    async function encapBuyAll(idClient){
+        try{
+            await consumer.buyAll(idClient)
+        }catch(error){
+            console.log(error)
+        }
+    }
 
     useEffect (() => {
         
@@ -71,10 +80,10 @@ export function CartMain() {
                                             itemPrice={item.product.price}
                                             size={item.size}
                                             available={item.available}
+                                            idCart={item.id}
                                             />
                                         ))
                                     }
-
                                 </div>
                             </div>
                             <div className="flex flex-col h-fit ring-[1px] ring-white rounded p-2.5 min-w-80">
@@ -91,7 +100,7 @@ export function CartMain() {
                                         </div>
                                     ))
                                 }
-                                <button className="bg-white text-black p-2.5 rounded font-bold hover:bg-orange-600 transition-all">
+                                <button className="bg-white text-black p-2.5 rounded font-bold hover:bg-orange-600 transition-all" onClick = {() => encapBuyAll(user.id)}>
                                     Finalizar compra
                                 </button>
                             </div>

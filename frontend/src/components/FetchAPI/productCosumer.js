@@ -87,4 +87,56 @@ export class productConsumer {
             throw e
         }
     }
+
+    async buy(idCart) {
+        console.log('idCart:', idCart);
+        try {
+            const response = await fetch(this.BASEURL + "/buy", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    id: idCart
+                })
+            })
+            
+            if(!response) {
+                const errorResponse = await response.json(); 
+                throw new Error(errorResponse.error || "Erro desconhecido");
+            }
+
+            return await response.json()
+        } catch(e) {
+            console.log(e)
+            throw e
+        }
+    }
+
+    async buyAll (idClient) {
+        try {
+            const response = await fetch(this.BASEURL + "/buyAll", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                        id: idClient
+                    
+                })
+            })
+            
+            if(!response) {
+                const errorResponse = await response.json(); 
+                throw new Error(errorResponse.error || "Erro desconhecido");
+            }
+
+            return await response.json()
+        } catch(e) {
+            console.log(e)
+            throw e
+        }
+    }
+
 }
