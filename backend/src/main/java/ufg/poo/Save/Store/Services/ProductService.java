@@ -23,6 +23,7 @@ public class ProductService {
 
     /**
      * @deprecated
+     * @return Product
      */
     @Deprecated
     public String getProduto(){
@@ -32,6 +33,7 @@ public class ProductService {
     /**
      * Register a new product
      * @param newProduct New product to be registered
+     * @throws BadRequestException If request is bad
      */
     public void register(Product newProduct) throws BadRequestException {
         this.verifyInformationEmpty(newProduct);

@@ -25,7 +25,7 @@ public class ClientController {
 
     /**
      * Verify client login
-     * @param client
+     * @param client Client
      * @return Response entity with operation status
      */
     @PostMapping("/login")

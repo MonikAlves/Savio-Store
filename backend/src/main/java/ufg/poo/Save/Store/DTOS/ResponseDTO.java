@@ -9,7 +9,7 @@ import ufg.poo.Save.Store.Exception.SuperException;
  */
 public class ResponseDTO {
     /**
-     * @brief Generate an error from exception
+     * Generate an error from exception
      * @param e Exception to be converted to na error
      * @return A response entity to error
      */
