@@ -10,7 +10,6 @@ public class CartNotFound extends SuperException {
     /**
      * Constructor to CartNotFound
      *
-     * @param message Message exception
      */
     public CartNotFound() {
         super("Carrinho não encontrado", HttpStatus.NOT_FOUND);
