@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * Product Entity
+ *
+ */
 @Entity
 @Table(name="product")
 @Getter
