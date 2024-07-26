@@ -11,6 +11,10 @@ import ufg.poo.Save.Store.Repositories.ProductRepository;
 
 import java.util.List;
 
+/**
+ * Cart Service
+ *
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -187,7 +191,10 @@ public class CartService {
      * Make purchase for all carts
      * @param id Cliente id
      * @throws ClientNotFound If client does not exist
-     * @throws UnauthorizedPurchase If purchase is unauthorized
+     * @throws ProductNotFound If product does not exist
+     * @throws insufficientStock If product stock is insufficient
+     * @throws SizeNotFound If product size does not exist
+     * @throws CartNotFound If cart does not exist
      */
     public void buyAllCart(long id) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
         List<Cart> carts = this.importList(id);
