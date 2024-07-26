@@ -3,6 +3,10 @@ package ufg.poo.Save.Store.DTOS;
 import org.springframework.http.ResponseEntity;
 import ufg.poo.Save.Store.Exception.SuperException;
 
+/**
+ * ResponseDTO
+ *
+ */
 public class ResponseDTO {
     /**
      * @brief Generate an error from exception
