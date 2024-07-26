@@ -42,6 +42,12 @@ public class ProductController {
         return this.productService.getRandom(products);
     }
 
+    /**
+     * Unique
+     *
+     * @param id Product id
+     * @return Response entity with operation status
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> unique(@PathVariable long id){
         Product product = new Product();
