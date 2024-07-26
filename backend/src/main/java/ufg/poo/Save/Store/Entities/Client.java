@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * Client Entity
+ *
+ */
 @Entity
 @Table(name="client")
 @Getter
