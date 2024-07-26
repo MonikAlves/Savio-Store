@@ -32,7 +32,7 @@ export function HomeMain() {
         <main className="p-5 flex flex-col gap-10">
             {
                 location.pathname === '/' &&
-                <section className="min-h-[80vh] bg-main-bg rounded text-white p-10 flex justify-center items-end">
+                <section className="min-h-[80vh] bg-main-bg bg-cover bg-no-repeat rounded text-white p-10 flex justify-center items-end">
                     <div className="flex flex-col gap-2.5 bg-black/50 rounded p-5 w-fit">
                         <h1 className="text-3xl font-bold">
                             Nossa Equipe de Desenvolvimento

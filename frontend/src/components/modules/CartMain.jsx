@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { ArrowLeftIcon} from "lucide-react";
 import { productConsumer} from "../FetchAPI/productCosumer";
 import { UserProvider, UserContext, useUser } from "../../contexts/UserProvider";
+import { BallTriangle } from 'react-loader-spinner';
 
 
 export function CartMain() {
@@ -12,6 +13,7 @@ export function CartMain() {
     const {user} = useUser();
     const [ cart, setCart ] = useState([]);
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
+    const [isLoading,setLoading] = useState(false);
 
     async function encapBuyAll(idClient){
 
@@ -29,6 +31,7 @@ export function CartMain() {
             try {
                 const data =  await consumer.GetCart(user.id);
                 setCart(data);
+                setLoading(true)
             } catch(error) {
                 console.log(error)
             }
@@ -47,6 +50,13 @@ export function CartMain() {
     ]
 
     return (
+        <>
+            {
+                !isLoading ? (
+                    <div className="flex justify-center items-center">
+                <BallTriangle  width="200" color="#EB0A0A"/>
+                </div>
+            ):(
         <main className="flex-1 p-5 flex flex-col gap-10 justify-center items-center">
             <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Carrinho</h1>
             <div className="flex gap-5">
@@ -111,5 +121,7 @@ export function CartMain() {
                 }
             </div>
         </main>
+        )}
+        </>
     )
 }

@@ -4,26 +4,34 @@ import { Product } from "../shared/Product";
 import { useLocation } from "react-router-dom";
 import { useUser } from "../../contexts/UserProvider";
 import { productConsumer } from "../FetchAPI/productCosumer";
+import{ BallTriangle } from 'react-loader-spinner';
 
 export function ProductsMain() {
     const consumer = new productConsumer(import.meta.env.VITE_API_BASE_URL);
     const location = useLocation();
     const {user} = useUser();
+    const [isLoading,setLoading] = useState(false);
     const  [products, setProducts] = useState();
     
     useEffect(() => {
-
         const productsApi = new ProductsApi()
 
         async function fetchProducts() {
             const data = await productsApi.getProducts();
             setProducts (data);
+            setLoading(true)
         }
 
         fetchProducts();
     }, [])
 
     return (
+        <>
+        {!isLoading ? (
+            <div className="flex justify-center items-center">
+            <BallTriangle  width="200" color="#EB0A0A"/>
+            </div>
+            ):(
         <main className="p-5 flex flex-col gap-10">
             <section className="flex flex-col gap-5">
                 <h1 className="w-full p-1 text-center text-white text-5xl">
@@ -48,6 +56,7 @@ export function ProductsMain() {
                     
                 </div>
             </section>
-        </main>
+            </main>
+        )}</>
     )
 }
