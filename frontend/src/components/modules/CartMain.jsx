@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { ShoppingContext, ShoppingProvider } from "../../contexts/ShoppingProvider";
 import { CartProduct } from "../shared/CartProduct";
 import { NavLink } from "react-router-dom";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon} from "lucide-react";
 import { productConsumer} from "../FetchAPI/productCosumer";
 import { UserProvider, UserContext, useUser } from "../../contexts/UserProvider";
 
@@ -12,6 +12,9 @@ export function CartMain() {
     const {user} = useUser();
     const [ cart, setCart ] = useState([]);
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
+    const [apagar, setApagar] = useState(false)
+
+    
 
     async function encapBuyAll(idClient){
         try{
@@ -37,6 +40,10 @@ export function CartMain() {
         bla();
 
     }, [])
+
+    async function deleted(){
+        await bla();
+    }
 
     useEffect(()=> console.log(cart), [cart])
     
@@ -81,6 +88,7 @@ export function CartMain() {
                                             size={item.size}
                                             available={item.available}
                                             idCart={item.id}
+                                            deleted={deleted}
                                             />
                                         ))
                                     }

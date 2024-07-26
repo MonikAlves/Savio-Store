@@ -46,7 +46,7 @@ export function AccountMain() {
                         </div>
                         :
                         <>
-                            <div className="flex flex-col  text-white rounded p-2.5 gap-5">
+                            <div className="w-full h-full flex flex-col text-white rounded p-2.5 gap-5">
                                 <h2 className="bg-white p-2.5 text-black rounded text-xl font-bold ">Lista de Compras</h2>
                                 <div className="max-h-[550px] overflow-y-auto">
 

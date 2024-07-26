@@ -121,9 +121,31 @@ export class productConsumer {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    
                         id: idClient
-                    
+                })
+            })
+            
+            if(!response) {
+                const errorResponse = await response.json(); 
+                throw new Error(errorResponse.error || "Erro desconhecido");
+            }
+
+            return await response.json()
+        } catch(e) {
+            console.log(e)
+            throw e
+        }
+    }
+
+    async deleteCart (idCart){
+        try {
+            const response = await fetch(this.BASEURL + "/delete", {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                        id: idCart
                 })
             })
             
