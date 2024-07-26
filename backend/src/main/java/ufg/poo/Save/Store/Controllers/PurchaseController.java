@@ -19,15 +19,15 @@ public class PurchaseController {
 
     /**
      * Get a list with all client purchases
-     * @param client Client whose purchases will be got
+     * @param id Client whose purchases will be got
      * @return List with all client purchases
      */
-    @PostMapping("/account")
-    public ResponseEntity<?> getPurchases(@RequestBody Client client) {
+    @GetMapping("/account/{id}")
+    public ResponseEntity<?> getPurchases(@PathVariable long id) {
         List<Purchase> purchases;
 
         try {
-            purchases = this.purchaseService.importPurchases(client.getId());
+            purchases = this.purchaseService.importPurchases(id);
         }
         catch (SuperException e) {
             return ResponseDTO.response(e);
