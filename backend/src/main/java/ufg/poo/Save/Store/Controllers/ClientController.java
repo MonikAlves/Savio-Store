@@ -68,7 +68,6 @@ public class ClientController {
         } catch (SuperException e) {
             return ResponseDTO.response(e);
         }
-
         return ResponseEntity.ok().build();
     }
 }
