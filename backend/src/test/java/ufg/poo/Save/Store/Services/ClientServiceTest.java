@@ -5,19 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ufg.poo.Save.Store.Entities.Client;
 import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @ExtendWith(SpringExtension.class)
 public class ClientServiceTest {
@@ -88,6 +83,52 @@ public class ClientServiceTest {
 
     @Test
     public void validateCnpjTest() {
+        List<String> cnpjs_validos = Arrays.asList(
+            "34975768000100",
+            "74685191000109",
+            "67532302000181",
+            "65323502000107",
+            "78100723000150",
+            "86152224000134",
+            "59785751000103",
+            "10656815000187",
+            "75463853000169",
+            "69355778000110"
+        );
+
+        List<String> cnpjs_invalidos = Arrays.asList(
+            "3497576800010",
+            "746851910001090",
+            "ahausiaoosjaks",
+            "1h&h)9a*9s0+^]",
+            "              ",
+            "11111111111111",
+            "vai tomando ze",
+            "34975768000101",
+            "74685191000119",
+            "67532302000118",
+            "65323502000118",
+            "78100723000134",
+            "86152224000150",
+            "59785751190103",
+            "10656815037187",
+            "75463853092169",
+            "69355778111110",
+            "34.975.768/0001-00",
+            "74.685.191/0001-09"
+        );
+
+        for (String cnpj_valido: cnpjs_validos) {
+            assertDoesNotThrow(() -> {
+                this.clientService.validateCnpj(cnpj_valido);
+            });
+        }
+
+        for (String cnpj_invalido: cnpjs_invalidos) {
+            assertThrows(LegalDataNotValid.class, () -> {
+                this.clientService.validateCnpj(cnpj_invalido);
+            });
+        }
     }
 
     @Test
