@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { ShoppingContext } from '../../contexts/ShoppingProvider';
 import { FilePen, LogIn, Pencil, ShoppingCart, User } from 'lucide-react';
 import logo from '/S-logo.png';
@@ -10,10 +10,11 @@ export function Header() {
     const { user } = useUser();
     const { isLoggedIn } = useUser();
     const { state } = useContext(ShoppingContext);
+    const navigate = useNavigate();
 
     const LOGOUT = () => {
-        console.log("desloguei")
         logout();
+        navigate("/");
     }
 
     const navItems = [
@@ -71,7 +72,7 @@ export function Header() {
                             <ShoppingCart/>
                             Carrinho
                         </NavLink>
-                        <button onClick={LOGOUT} className="transition-all text-white ring-black rounded py-1 px-2 text-sm hover:text-amazon-orange flex items-center gap-2">
+                        <button link="/home" onClick={LOGOUT} className="transition-all text-white ring-black rounded py-1 px-2 text-sm hover:text-amazon-orange flex items-center gap-2">
                             <LogIn />
                             Logout
                         </button>
