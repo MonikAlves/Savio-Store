@@ -8,7 +8,6 @@ import ufg.poo.Save.Store.DTOS.ErrorDTO;
 import ufg.poo.Save.Store.DTOS.ResponseDTO;
 import ufg.poo.Save.Store.Entities.Cart;
 import ufg.poo.Save.Store.Entities.Client;
-import ufg.poo.Save.Store.Entities.Product;
 import ufg.poo.Save.Store.Exception.SuperException;
 import ufg.poo.Save.Store.Services.CartService;
 
@@ -81,7 +80,9 @@ public class CartController {
         catch (SuperException e) {
             return ResponseDTO.response(e);
         }
-        return ResponseEntity.ok().build();
+        ErrorDTO error = new ErrorDTO();
+        error.setError("Todos os produto comprado com sucesso");
+        return ResponseEntity.ok().body(error);
     }
 
     /**
@@ -98,7 +99,9 @@ public class CartController {
             return ResponseDTO.response(e);
         }
 
-        return ResponseEntity.ok().build();
+        ErrorDTO error = new ErrorDTO();
+        error.setError("Produto comprado com sucesso");
+        return ResponseEntity.ok().body(error);
     }
 
     /**
@@ -114,8 +117,9 @@ public class CartController {
         catch (SuperException e) {
             return ResponseDTO.response(e);
         }
-
-        return ResponseEntity.ok().build();
+        ErrorDTO error = new ErrorDTO();
+        error.setError("Deu certo");
+        return ResponseEntity.ok().body(error);
     }
 }
 
