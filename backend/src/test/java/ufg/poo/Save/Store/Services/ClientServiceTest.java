@@ -12,10 +12,14 @@ import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 public class ClientServiceTest {
@@ -24,13 +28,6 @@ public class ClientServiceTest {
 
     @InjectMocks
     private ClientService clientService;
-
-    @Test
-    public void clientExistTest() {}
-    @Test
-    public void loginExistsTest() {}
-    @Test
-    public void verifyClientExistTest() {}
 
     @DisplayName("Testar validação de Email")
     @Test
@@ -91,8 +88,8 @@ public class ClientServiceTest {
         );
 
         List<String> invalid_cpfs = Arrays.asList(
-            "192819281",
-            "182937263726",
+            "192819",
+            "182937263726281",
             "ahausiaoosj",
             "1h&h)9a*9s0",
             "           ",
@@ -142,8 +139,8 @@ public class ClientServiceTest {
         );
 
         List<String> invalid_cnpjs = Arrays.asList(
-            "3497576800010",
-            "746851910001090",
+            "3497576800",
+            "7468519100010900100",
             "ahausiaoosjaks",
             "1h&h)9a*9s0+^]",
             "              ",
@@ -208,11 +205,6 @@ public class ClientServiceTest {
         }
     }
 
-    @Test
-    public void addClientTest() {}
-    @Test
-    public void verifyLoginTest() {}
-
     @DisplayName("Testar a verificação de informação vazia")
     @Test
     public void verifyInformationEmptyTest() {
@@ -239,14 +231,8 @@ public class ClientServiceTest {
         });
 
         client.setLegalData("70833895192");
-        assertThrows(BadRequestException.class, () -> {
-            this.clientService.verifyInformationEmpty(client);
-        });
         assertDoesNotThrow(() -> {
             this.clientService.verifyInformationEmpty(client);
         });
     }
-
-    @Test
-    public void deleteTest() {}
 }

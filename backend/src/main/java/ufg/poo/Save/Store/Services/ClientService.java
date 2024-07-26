@@ -218,7 +218,7 @@ public class ClientService {
 
             if (!Character.isDigit(digit)) {
                 throw new PhoneNotValid();
-            }
+        }
 
             digits.add((Integer)(digit - '0'));
         }
