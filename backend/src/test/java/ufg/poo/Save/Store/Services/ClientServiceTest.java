@@ -28,8 +28,47 @@ public class ClientServiceTest {
     public void loginExistsTest() {}
     @Test
     public void verifyClientExistTest() {}
+
     @Test
-    public void validateEmailTest() {}
+    public void validateEmailTest() {
+        List<String> valid_emails = Arrays.asList(
+            "matheus@gmail.com",
+            "monikinha@hotmail.com",
+            "gabriel123@yahoo.com",
+            "emmanuel.castro@outlook.com",
+            "luizGCD@gmail.com",
+            "luis_cesar@outlook.com",
+            "savio@savio.com",
+            "rabudinha69@hotmail.com",
+            "theusincomedordeshereka@yahoo.com",
+            "espanca_xota@outlook.com"
+        );
+
+        List<String> invalid_emails = Arrays.asList(
+            "@gmail.com",
+            "monikinhahotmail.com",
+            "gabriel123@.com",
+            "emmanuel.castro@outlookcom",
+            "luizGCD@gmail.",
+            "luis_cesar@outlook.com lakslkas",
+            "ajakjs savio@savio.com",
+            "@.com",
+            "theusincomedordesherekayahoo",
+            "1090hA)(*Ygd08Ŝ)sŜds0~0776¨%S"
+        );
+
+        for (String valid_email: valid_emails) {
+            assertDoesNotThrow(() -> {
+                this.clientService.validateEmail(valid_email);
+            });
+        }
+
+        for (String invalid_email: invalid_emails) {
+            assertThrows(EmailNotValid.class, () -> {
+                this.clientService.validateEmail(invalid_email);
+            });
+        }
+    }
 
     @Test
     public void validateCpfTest() {
