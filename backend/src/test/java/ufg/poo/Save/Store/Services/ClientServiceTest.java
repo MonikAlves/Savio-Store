@@ -171,7 +171,36 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void validatePhoneTest() {}
+    public void validatePhoneTest() {
+        List<String> valid_phones = Arrays.asList(
+            "62984595071",
+            "87648272864",
+            "32764239784",
+            "67587267492",
+            "17281726187"
+        );
+
+        List<String> invalid_phones = Arrays.asList(
+            "12781",
+            "01928102981029128",
+            "ad8s7d9a87d",
+            "- -0 0 -- 0",
+            "828@@8981@@"
+        );
+
+        for (String valid_phone: valid_phones) {
+            assertDoesNotThrow(() -> {
+                this.clientService.validatePhone(valid_phone);
+            });
+        }
+
+        for (String invalid_phone: invalid_phones) {
+            assertThrows(PhoneNotValid.class, () -> {
+                this.clientService.validatePhone(invalid_phone);
+            });
+        }
+    }
+
     @Test
     public void addClientTest() {}
     @Test
