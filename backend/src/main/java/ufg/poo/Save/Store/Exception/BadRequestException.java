@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
  */
 public class BadRequestException extends SuperException {
     /**
-     * Constructor to Bad Request
+     * Constructor to BadRequest
      *
      * @param message Message exception
      */
