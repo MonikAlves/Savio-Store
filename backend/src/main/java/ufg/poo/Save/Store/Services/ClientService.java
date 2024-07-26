@@ -70,7 +70,7 @@ public class ClientService {
      * @param cpf CPF to be validated
      * @throws LegalDataNotValid
      */
-    private void validateCpf(String cpf) throws LegalDataNotValid {
+    public void validateCpf(String cpf) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
         boolean equals = true;
 
@@ -108,7 +108,7 @@ public class ClientService {
 
         second = ((10 * second) % 11) % 10;
 
-        if (first != digits.get(9) && second != digits.get(10)) {
+        if (first != digits.get(9) || second != digits.get(10)) {
             throw new LegalDataNotValid();
         }
     }
@@ -118,7 +118,7 @@ public class ClientService {
      * @param cnpj CNPJ to be validated
      * @throws LegalDataNotValid
      */
-    private void validateCnpj(String cnpj) throws LegalDataNotValid {
+    public void validateCnpj(String cnpj) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
         boolean equals = true;
 
@@ -179,7 +179,7 @@ public class ClientService {
             second = 11 - second;
         }
 
-        if (first != digits.get(12) && second != digits.get(13)) {
+        if (first != digits.get(12) || second != digits.get(13)) {
             throw new LegalDataNotValid();
         }
     }
