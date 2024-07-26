@@ -190,8 +190,15 @@ public class ClientService {
      * @throws LegalDataNotValid
      */
     public void validateLegalData(String legalData) throws LegalDataNotValid {
-        validateCpf(legalData);
-        validateCnpj(legalData);
+        if (legalData.length() == 11) {
+            validateCpf(legalData);
+        }
+        else if (legalData.length() == 14) {
+            validateCnpj(legalData);
+        }
+        else {
+            throw new LegalDataNotValid();
+        }
     }
 
     /**
