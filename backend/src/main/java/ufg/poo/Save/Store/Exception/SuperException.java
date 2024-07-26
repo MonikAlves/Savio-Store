@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
  * All exceptions inherit from it
  */
 public class SuperException extends Exception {
+    /**
+     * Status http
+     */
     private final HttpStatus status;
 
     /**
