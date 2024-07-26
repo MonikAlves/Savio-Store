@@ -8,6 +8,10 @@ import ufg.poo.Save.Store.Entities.Product;
 
 import java.util.List;
 
+/**
+ * Product Repository
+ *
+ */
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long>{
     /**

@@ -7,6 +7,10 @@ import ufg.poo.Save.Store.Entities.Cart;
 
 import java.util.List;
 
+/**
+ * Cart Repository
+ *
+ */
 public interface CartRepository extends JpaRepository<Cart, Long> {
     /**
      * Get all product of client by client id

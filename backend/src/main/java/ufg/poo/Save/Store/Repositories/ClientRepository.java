@@ -5,6 +5,10 @@ import ufg.poo.Save.Store.Entities.Client;
 
 import java.util.Optional;
 
+/**
+ * Client Repository
+ *
+ */
 public interface ClientRepository extends JpaRepository<Client, Long> {
     /**
      * Find client by email
