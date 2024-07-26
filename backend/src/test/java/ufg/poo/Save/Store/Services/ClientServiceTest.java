@@ -1,10 +1,13 @@
 package ufg.poo.Save.Store.Services;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import ufg.poo.Save.Store.Entities.*;
 import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Repositories.ClientRepository;
 
@@ -29,6 +32,7 @@ public class ClientServiceTest {
     @Test
     public void verifyClientExistTest() {}
 
+    @DisplayName("Testar validação de Email")
     @Test
     public void validateEmailTest() {
         List<String> valid_emails = Arrays.asList(
@@ -70,6 +74,7 @@ public class ClientServiceTest {
         }
     }
 
+    @DisplayName("Testar validação de CPF")
     @Test
     public void validateCpfTest() {
         List<String> valid_cpfs = Arrays.asList(
@@ -120,6 +125,7 @@ public class ClientServiceTest {
         }
     }
 
+    @DisplayName("Testar validação de CNPJ")
     @Test
     public void validateCnpjTest() {
         List<String> valid_cnpjs = Arrays.asList(
@@ -170,6 +176,7 @@ public class ClientServiceTest {
         }
     }
 
+    @DisplayName("Testar validação de telefone")
     @Test
     public void validatePhoneTest() {
         List<String> valid_phones = Arrays.asList(
@@ -205,8 +212,41 @@ public class ClientServiceTest {
     public void addClientTest() {}
     @Test
     public void verifyLoginTest() {}
+
+    @DisplayName("Testar a verificação de informação vazia")
     @Test
-    public void verifyInformationEmptyTest() {}
+    public void verifyInformationEmptyTest() {
+        Client client = new Client();
+
+        client.setName("Matheus");
+        assertThrows(BadRequestException.class, () -> {
+            this.clientService.verifyInformationEmpty(client);
+        });
+
+        client.setEmail("matheus@gmail.com");
+        assertThrows(BadRequestException.class, () -> {
+            this.clientService.verifyInformationEmpty(client);
+        });
+
+        client.setPassword("12345");
+        assertThrows(BadRequestException.class, () -> {
+            this.clientService.verifyInformationEmpty(client);
+        });
+        
+        client.setPhone("62984595071");
+        assertThrows(BadRequestException.class, () -> {
+            this.clientService.verifyInformationEmpty(client);
+        });
+
+        client.setLegalData("70833895192");
+        assertThrows(BadRequestException.class, () -> {
+            this.clientService.verifyInformationEmpty(client);
+        });
+        assertDoesNotThrow(() -> {
+            this.clientService.verifyInformationEmpty(client);
+        });
+    }
+
     @Test
     public void deleteTest() {}
 }
