@@ -10,5 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long>{
+    /**
+     * Get product by id
+     *
+     * @param id Product id
+     * @return Product
+     */
     Product getProductById(Long id);
 }
