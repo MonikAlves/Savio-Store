@@ -19,27 +19,27 @@ public class ClientServiceTest {
     private ClientService clientService;
 
     @Test
-    public void clientExistTest(long id) {}
+    public void clientExistTest() {}
     @Test
-    public void loginExistsTest(String email) {}
+    public void loginExistsTest() {}
     @Test
-    public void verifyClientExistTest(String email) {}
+    public void verifyClientExistTest() {}
     @Test
-    public void validateEmailTest(String email) {}
+    public void validateEmailTest() {}
     @Test
-    public void validateCpfTest(String cpf) {}
+    public void validateCpfTest() {}
     @Test
-    public void validateCnpjTest(String cnpj) {}
+    public void validateCnpjTest() {}
     @Test
-    public void validateLegalDataTest(String legalData) {}
+    public void validateLegalDataTest() {}
     @Test
-    public void validatePhoneTest(String phone) {}
+    public void validatePhoneTest() {}
     @Test
-    public void addClientTest(Client client) {}
+    public void addClientTest() {}
     @Test
-    public void verifyLoginTest(Client client) {}
+    public void verifyLoginTest() {}
     @Test
-    public void verifyInformationEmptyTest(Client client) {}
+    public void verifyInformationEmptyTest() {}
     @Test
-    public void deleteTest(long id) {}
+    public void deleteTest() {}
 }
