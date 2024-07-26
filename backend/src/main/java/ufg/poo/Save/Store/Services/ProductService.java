@@ -57,7 +57,7 @@ public class ProductService {
      * @return Generated id
      */
     public int idGen(int max){
-        Random rand  = new Random();
+        Random rand = new Random();
         return rand.nextInt(max) + 1;
     }
 
