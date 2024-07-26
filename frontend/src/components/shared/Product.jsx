@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 
 export function Product({image, title, description, price, product}){
     const { user } = useUser()
-    const {addToCart} = useContext(ShoppingContext); 
+    //const {addToCart} = useContext(ShoppingContext); 
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL)
     const audioRef = useRef(null);
     const [selectedButton, setSelectedButton] = useState(null);
@@ -35,13 +35,14 @@ export function Product({image, title, description, price, product}){
 
 
     const handleAddToCartClick = async () => {
+        
         setShowCart(true);
         
         setTimeout(() => {
           setShowCart(false);
         }, 1000);
 
-        addToCart(product);
+        //addToCart(product);
 
         if (audioRef.current) { 
             audioRef.current.volume = 0.1;
@@ -50,20 +51,12 @@ export function Product({image, title, description, price, product}){
               console.error("Erro ao tentar reproduzir o áudio: ", error);
             });
         }
-
-        /*if(user){
-            console.log(user.id)
-            try {
-                const cart =  await consumer.GetCart(user.id);
-                console.log(cart)
-            } catch(error) {
-                console.log(error)
-            }
-        }*/
-
+        
+        
         const parametro = {idClient: user.id, idProduto: product.id, Tamanho: selectedButton};
-
-        if(setSelectedButton) {
+        
+        if(selectedButton) {
+            
             try {
                 const response = await consumer.addCart(parametro)
                 console.log(response)
@@ -82,7 +75,7 @@ export function Product({image, title, description, price, product}){
 
         setSelectedButton("") 
              
-      };
+    };
 
     return (
         <div className="w-80 h-[450px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">

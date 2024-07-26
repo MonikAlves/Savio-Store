@@ -16,7 +16,7 @@ export function AccountMain() {
         async function bla () {
             if(user){
                 try {
-                    const data =  await consumer.GetCart(user.id);
+                    const data =  await consumer.GetPurchase(user.id);
                     setCart(data);
                 } catch(error) {
                     console.log(error)
