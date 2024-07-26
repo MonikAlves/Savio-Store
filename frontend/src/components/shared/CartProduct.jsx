@@ -8,9 +8,8 @@ export function CartProduct({ image, title, description, quantity, price, itemPr
     
     async function encapDeleteCart(idCart){
         try {
-            const data =  await consumer.deleteCart(idCart); 
+            await consumer.deleteCart(idCart); 
             deleted()
-            console.log(data)
         } catch(error) {
             console.log(error)
         }    
@@ -18,8 +17,8 @@ export function CartProduct({ image, title, description, quantity, price, itemPr
     
     async function buy(idCart){
             try {
-                const data =  await consumer.buy(idCart); 
-                console.log(data)
+                await consumer.buy(idCart); 
+                deleted()
             } catch(error) {
                 console.log(error)
             }

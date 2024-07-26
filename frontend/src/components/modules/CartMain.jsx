@@ -12,40 +12,32 @@ export function CartMain() {
     const {user} = useUser();
     const [ cart, setCart ] = useState([]);
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
-    const [apagar, setApagar] = useState(false)
-
-    
 
     async function encapBuyAll(idClient){
+
         try{
             await consumer.buyAll(idClient)
+            fetchCart();
+            
         }catch(error){
             console.log(error)
         }
     }
 
-    useEffect (() => {
-        
-        async function bla () {
-            if(user){
-                try {
-                    const data =  await consumer.GetCart(user.id);
-                    setCart(data);
-                } catch(error) {
-                    console.log(error)
-                }
+    async function fetchCart() {
+        if(user){
+            try {
+                const data =  await consumer.GetCart(user.id);
+                setCart(data);
+            } catch(error) {
+                console.log(error)
             }
         }
-
-        bla();
-
-    }, [])
-
-    async function deleted(){
-        await bla();
     }
-
-    useEffect(()=> console.log(cart), [cart])
+    
+    useEffect (() => {
+        fetchCart();
+    }, [user])
     
     const summaries = [
         { label: 'Quantidade de produtos:', value: cart.reduce((acc, item) => acc + item.quantity, 0) },
@@ -69,31 +61,33 @@ export function CartMain() {
                                 Continuar comprado
                             </NavLink>
                         </div>
-                        :
-                        <>
-                            <div className="flex flex-col ring-[1px] ring-white text-white rounded p-2.5 gap-5">
-                                <h2 className="bg-white p-2.5 text-black rounded text-xl font-bold">Lista de Produtos</h2>
-                                <div className="max-h-[550px] overflow-y-auto">
+                     : 
 
-                                    {
-                                        cart.map((item, index) => (
-                                            <CartProduct
-                                            key={index}
-                                            image={"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" + item.product.image}
-                                            title={item.product.name}
-                                            description={item.product.description}
-                                            quantity={item.quantity}
-                                            price={item.total}
-                                            itemPrice={item.product.price}
-                                            size={item.size}
-                                            available={item.available}
-                                            idCart={item.id}
-                                            deleted={deleted}
-                                            />
-                                        ))
-                                    }
+                             <>
+                                <div className="flex flex-col ring-[1px] ring-white text-white rounded p-2.5 gap-5">
+                                    <h2 className="bg-white p-2.5 text-black rounded text-xl font-bold">Lista de Produtos</h2>
+                                        <div className="max-h-[550px] overflow-y-auto">
+
+                                        {
+                                            cart.map((item, index) => (
+                                                <CartProduct
+                                                key={index}
+                                                image={"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" + item.product.image}
+                                                title={item.product.name}
+                                                description={item.product.description}
+                                                quantity={item.quantity}
+                                                price={item.total}
+                                                itemPrice={item.product.price}
+                                                size={item.size}
+                                                available={item.available}
+                                                idCart={item.id}
+                                                deleted={fetchCart}
+                                                />
+                                            ))
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+
                             <div className="flex flex-col h-fit ring-[1px] ring-white rounded p-2.5 min-w-80">
                                 <h2 className="bg-white p-2.5 rounded text-xl font-bold">Resumo do pedido</h2>
                                 {
@@ -113,6 +107,7 @@ export function CartMain() {
                                 </button>
                             </div>
                         </>
+                
                 }
             </div>
         </main>
