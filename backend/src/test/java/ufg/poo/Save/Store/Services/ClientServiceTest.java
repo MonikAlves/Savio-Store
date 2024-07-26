@@ -33,7 +33,7 @@ public class ClientServiceTest {
 
     @Test
     public void validateCpfTest() {
-        List<String> cpfs_validos = Arrays.asList(
+        List<String> valid_cpfs = Arrays.asList(
             "79554775105",
             "05124657626",
             "97882662151",
@@ -46,7 +46,7 @@ public class ClientServiceTest {
             "17162053360"
         );
 
-        List<String> cpfs_invalidos = Arrays.asList(
+        List<String> invalid_cpfs = Arrays.asList(
             "192819281",
             "182937263726",
             "ahausiaoosj",
@@ -68,22 +68,22 @@ public class ClientServiceTest {
             "051.246.576-26"
         );
 
-        for (String cpf_valido: cpfs_validos) {
+        for (String valid_cpf: valid_cpfs) {
             assertDoesNotThrow(() -> {
-                this.clientService.validateCpf(cpf_valido);
+                this.clientService.validateCpf(valid_cpf);
             });
         }
 
-        for (String cpf_invalido: cpfs_invalidos) {
+        for (String invalid_cpf: invalid_cpfs) {
             assertThrows(LegalDataNotValid.class, () -> {
-                this.clientService.validateCpf(cpf_invalido);
+                this.clientService.validateCpf(invalid_cpf);
             });
         }
     }
 
     @Test
     public void validateCnpjTest() {
-        List<String> cnpjs_validos = Arrays.asList(
+        List<String> valid_cnpjs = Arrays.asList(
             "34975768000100",
             "74685191000109",
             "67532302000181",
@@ -96,7 +96,7 @@ public class ClientServiceTest {
             "69355778000110"
         );
 
-        List<String> cnpjs_invalidos = Arrays.asList(
+        List<String> invalid_cnpjs = Arrays.asList(
             "3497576800010",
             "746851910001090",
             "ahausiaoosjaks",
@@ -118,15 +118,15 @@ public class ClientServiceTest {
             "74.685.191/0001-09"
         );
 
-        for (String cnpj_valido: cnpjs_validos) {
+        for (String valid_cnpj: valid_cnpjs) {
             assertDoesNotThrow(() -> {
-                this.clientService.validateCnpj(cnpj_valido);
+                this.clientService.validateCnpj(valid_cnpj);
             });
         }
 
-        for (String cnpj_invalido: cnpjs_invalidos) {
+        for (String invalid_cnpj: invalid_cnpjs) {
             assertThrows(LegalDataNotValid.class, () -> {
-                this.clientService.validateCnpj(cnpj_invalido);
+                this.clientService.validateCnpj(invalid_cnpj);
             });
         }
     }
