@@ -10,16 +10,22 @@ import ufg.poo.Save.Store.Exception.*;
 import ufg.poo.Save.Store.Services.ClientService;
 
 
+/**
+ * Client Controller
+ *
+ */
 @RestController
 @RequestMapping("/SavioStore/Client")
 @RequiredArgsConstructor
 public class ClientController {
+    /**
+     * Client service to controller
+     */
     private final ClientService clientService;
-
 
     /**
      * Verify client login
-     * @param client
+     * @param client Client
      * @return Response entity with operation status
      */
     @PostMapping("/login")
@@ -62,7 +68,6 @@ public class ClientController {
         } catch (SuperException e) {
             return ResponseDTO.response(e);
         }
-
         return ResponseEntity.ok().build();
     }
 }

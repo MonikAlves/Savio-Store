@@ -14,6 +14,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Client Service
+ *
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,7 +28,7 @@ public class ClientService {
     /**
      * Verify if client exists from id
      * @param id Client id
-     * @throws ClientNotFound
+     * @throws ClientNotFound If client was not found
      */
     public void clientExist(long id) throws ClientNotFound {
         boolean exist = this.clientRepository.existsById(id);
@@ -34,7 +38,7 @@ public class ClientService {
     /**
      * Verify if client exists from email
      * @param email Client email
-     * @throws ClientNotFound
+     * @throws ClientNotFound If client was not found
      */
     public void loginExists(String email) throws ClientNotFound {
         Optional<Client> exist = this.clientRepository.findByEmail(email);
@@ -44,7 +48,7 @@ public class ClientService {
     /**
      * Verify if client not exists from email
      * @param email Client email
-     * @throws ClientAlreadyExist
+     * @throws ClientAlreadyExist If client already exist
      */
     public void verifyClientExist(String email) throws ClientAlreadyExist {
         Optional<Client> isClientRegistered = this.clientRepository.findByEmail(email);
@@ -54,7 +58,7 @@ public class ClientService {
     /**
      * Validate client email
      * @param email Client email
-     * @throws EmailNotValid
+     * @throws EmailNotValid If email is not valid
      */
     public void validateEmail(String email) throws EmailNotValid {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-.]+.[.]com$");
@@ -68,9 +72,9 @@ public class ClientService {
     /**
      * Validate CPF
      * @param cpf CPF to be validated
-     * @throws LegalDataNotValid
+     * @throws LegalDataNotValid If CPF is not valid
      */
-    private void validateCpf(String cpf) throws LegalDataNotValid {
+    public void validateCpf(String cpf) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
         boolean equals = true;
 
@@ -108,7 +112,7 @@ public class ClientService {
 
         second = ((10 * second) % 11) % 10;
 
-        if (first != digits.get(9) && second != digits.get(10)) {
+        if (first != digits.get(9) || second != digits.get(10)) {
             throw new LegalDataNotValid();
         }
     }
@@ -116,9 +120,9 @@ public class ClientService {
     /**
      * Validate CNPJ
      * @param cnpj CNPJ to be validated
-     * @throws LegalDataNotValid
+     * @throws LegalDataNotValid if CNPJ is not valid
      */
-    private void validateCnpj(String cnpj) throws LegalDataNotValid {
+    public void validateCnpj(String cnpj) throws LegalDataNotValid {
         List<Integer> digits = new ArrayList<>();
         boolean equals = true;
 
@@ -179,7 +183,7 @@ public class ClientService {
             second = 11 - second;
         }
 
-        if (first != digits.get(12) && second != digits.get(13)) {
+        if (first != digits.get(12) || second != digits.get(13)) {
             throw new LegalDataNotValid();
         }
     }
@@ -187,17 +191,24 @@ public class ClientService {
     /**
      * Validate client legal data
      * @param legalData Client legal data
-     * @throws LegalDataNotValid
+     * @throws LegalDataNotValid If legal data is not valid
      */
     public void validateLegalData(String legalData) throws LegalDataNotValid {
-        validateCpf(legalData);
-        validateCnpj(legalData);
+        if (legalData.length() == 11) {
+            validateCpf(legalData);
+        }
+        else if (legalData.length() == 14) {
+            validateCnpj(legalData);
+        }
+        else {
+            throw new LegalDataNotValid();
+        }
     }
 
     /**
      * Validate client phone
      * @param phone Client phone
-     * @throws PhoneNotValid
+     * @throws PhoneNotValid If phone is not valid
      */
     public void validatePhone(String phone) throws PhoneNotValid {
         List<Integer> digits = new ArrayList<>();
@@ -221,10 +232,10 @@ public class ClientService {
      * Register client with validations
      * @param client Client that will be added
      * @return Client found
-     * @throws ClientAlreadyExist
-     * @throws EmailNotValid
-     * @throws LegalDataNotValid
-     * @throws PhoneNotValid
+     * @throws ClientAlreadyExist If client already exist
+     * @throws EmailNotValid If email is not valid
+     * @throws LegalDataNotValid If legal data is not valid
+     * @throws PhoneNotValid If phone is not valid
      */
     public Client addClient(Client client) throws ClientAlreadyExist, EmailNotValid, LegalDataNotValid, PhoneNotValid {
         String email = client.getEmail();
@@ -246,8 +257,8 @@ public class ClientService {
      * Find client with validations
      * @param client Client whose login will be validated
      * @return Client found
-     * @throws Unauthorized
-     * @throws ClientNotFound
+     * @throws Unauthorized If operation is unauthorized
+     * @throws ClientNotFound If client was not found
      */
     public Client verifyLogin(Client client) throws Unauthorized, ClientNotFound {
         String email = client.getEmail();
@@ -264,7 +275,7 @@ public class ClientService {
     /**
      * Verify if an information is empty
      * @param client Client whose information will be verified
-     * @throws BadRequestException
+     * @throws BadRequestException If some request is bad
      */
     public void verifyInformationEmpty(Client client) throws BadRequestException{
         if(client.getName() == null) throw new BadRequestException("Nome não informado");
@@ -277,7 +288,7 @@ public class ClientService {
     /**
      * Delete a client with validations
      * @param id Client id
-     * @throws ClientNotFound
+     * @throws ClientNotFound If client was not found
      */
     public void delete(long id) throws ClientNotFound{
         this.clientExist(id);

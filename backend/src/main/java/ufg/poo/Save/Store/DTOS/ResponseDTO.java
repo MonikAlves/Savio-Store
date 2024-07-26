@@ -3,9 +3,13 @@ package ufg.poo.Save.Store.DTOS;
 import org.springframework.http.ResponseEntity;
 import ufg.poo.Save.Store.Exception.SuperException;
 
+/**
+ * ResponseDTO
+ *
+ */
 public class ResponseDTO {
     /**
-     * @brief Generate an error from exception
+     * Generate an error from exception
      * @param e Exception to be converted to na error
      * @return A response entity to error
      */

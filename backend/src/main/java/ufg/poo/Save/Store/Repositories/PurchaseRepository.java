@@ -8,7 +8,17 @@ import ufg.poo.Save.Store.Entities.Purchase;
 
 import java.util.List;
 
+/**
+ * Purchase Repository
+ *
+ */
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
+    /**
+     * Get purchase by id client
+     *
+     * @param ids Client id
+     * @return Purchase client
+     */
     @Procedure(name = "get_purchase_by_id_client")
     List<Purchase> get_purchase_by_id_client(@Param("ids") long ids);
 }

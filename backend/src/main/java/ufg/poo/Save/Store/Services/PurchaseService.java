@@ -11,6 +11,10 @@ import ufg.poo.Save.Store.Repositories.PurchaseRepository;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Purchase Service
+ *
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -39,7 +43,7 @@ public class PurchaseService {
      * Get a list with all client purchases
      * @param id Client id
      * @return List with all client purchases
-     * @throws ClientNotFound
+     * @throws ClientNotFound If client was not found
      */
     public List<Purchase> importPurchases(long id) throws ClientNotFound {
         this.clientService.clientExist(id);

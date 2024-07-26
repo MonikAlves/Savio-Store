@@ -14,10 +14,17 @@ import ufg.poo.Save.Store.Services.CartService;
 
 import java.util.List;
 
+/**
+ * Cart Controller
+ *
+ */
 @RestController
 @RequestMapping("/SavioStore/Cart")
 @RequiredArgsConstructor
 public class CartController {
+    /**
+     * Cart service to controller
+     */
     private final CartService cartService;
 
     /**

@@ -1,3 +1,4 @@
+/*
 package ufg.poo.Save.Store.configuration;
 
 import org.springframework.http.HttpStatus;
@@ -44,3 +45,4 @@ public class ExceptionEntityHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(badRequestException.getMessage());
     }
 }
+*/

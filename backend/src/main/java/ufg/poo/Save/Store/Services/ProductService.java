@@ -11,6 +11,10 @@ import ufg.poo.Save.Store.Repositories.ProductRepository;
 
 import java.util.*;
 
+/**
+ * Product Service
+ *
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -19,8 +23,9 @@ public class ProductService {
 
     /**
      * @deprecated
-     * @return
+     * @return Product
      */
+    @Deprecated
     public String getProduto(){
         return this.productRepository.toString();
     }
@@ -28,6 +33,7 @@ public class ProductService {
     /**
      * Register a new product
      * @param newProduct New product to be registered
+     * @throws BadRequestException If request is bad
      */
     public void register(Product newProduct) throws BadRequestException {
         this.verifyInformationEmpty(newProduct);
@@ -38,7 +44,7 @@ public class ProductService {
     /**
      * Verify if product exists by id
      * @param id Product id
-     * @throws ProductNotFound
+     * @throws ProductNotFound If product was not found
      */
     public void productExist(long id) throws ProductNotFound {
         boolean exist = this.productRepository.existsById(id);
@@ -103,7 +109,7 @@ public class ProductService {
      * Get product by id
      * @param id Product id
      * @return Product by id
-     * @throws ProductNotFound
+     * @throws ProductNotFound If product was not found
      */
     public Product getProduct(long id) throws ProductNotFound {
         this.productExist(id);
@@ -113,7 +119,7 @@ public class ProductService {
     /**
      * Verify if an information is empty
      * @param produto Product whose information will be verified
-     * @throws BadRequestException
+     * @throws BadRequestException If request is bad
      */
     public void verifyInformationEmpty(Product produto) throws BadRequestException {
         if(produto.getName() == null) throw new BadRequestException("Nome não informado");
@@ -126,7 +132,7 @@ public class ProductService {
     /**
      * Delete a product with validations
      * @param id Product id
-     * @throws ProductNotFound
+     * @throws ProductNotFound If product was not found
      */
     public void delete(long id) throws ProductNotFound {
         this.productExist(id);

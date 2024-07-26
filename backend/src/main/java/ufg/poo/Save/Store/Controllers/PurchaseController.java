@@ -11,10 +11,17 @@ import ufg.poo.Save.Store.Services.PurchaseService;
 
 import java.util.List;
 
+/**
+ * Purchase Controller
+ *
+ */
 @RestController
 @RequestMapping("/SavioStore/Purchase")
 @RequiredArgsConstructor
 public class PurchaseController {
+    /**
+     * Purchase service to controller
+     */
     private final PurchaseService purchaseService;
 
     /**

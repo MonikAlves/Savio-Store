@@ -11,6 +11,10 @@ import ufg.poo.Save.Store.Repositories.ProductRepository;
 
 import java.util.List;
 
+/**
+ * Cart Service
+ *
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,10 +28,10 @@ public class CartService {
     /**
      * Add a new cart with validations
      * @param newCart New cart to be added
-     * @throws ClientNotFound
-     * @throws ProductNotFound
-     * @throws insufficientStock
-     * @throws SizeNotFound
+     * @throws ClientNotFound If the client was not found
+     * @throws ProductNotFound If the product was not found
+     * @throws insufficientStock If the product stock is insufficient
+     * @throws SizeNotFound If the product size was not found
      */
     public void addCart(Cart newCart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound {
         if(newCart.getQuantity() < 1) throw new SizeNotFound();
@@ -66,8 +70,8 @@ public class CartService {
      * @param cart Cart to be verified
      * @param quantity Quantity of product in cart
      * @return If verification is successful
-     * @throws SizeNotFound
-     * @throws insufficientStock
+     * @throws SizeNotFound If the product size was not found
+     * @throws insufficientStock If the product stock is insufficient
      */
     public boolean verifyStock(Cart cart,int quantity) throws SizeNotFound, insufficientStock {
         int stock = Integer.parseInt(this.calculateStockBySize(cart.getProduct().getSize(),cart.getSize(), cart.getProduct().getStock()));
@@ -85,7 +89,7 @@ public class CartService {
      * @param size String with chosen size
      * @param stocks String with stock values
      * @return A string with stock value
-     * @throws SizeNotFound
+     * @throws SizeNotFound If the size product was not found
      */
     public String calculateStockBySize(String sizes, String size, String stocks) throws SizeNotFound {
         for(int i=0;i<3;i++){
@@ -101,7 +105,7 @@ public class CartService {
      * Get list with client carts
      * @param id Client id
      * @return A list with all client carts
-     * @throws ClientNotFound
+     * @throws ClientNotFound If client was not found
      */
     public List<Cart> importList(long id) throws ClientNotFound {
         this.clientService.clientExist(id);
@@ -111,7 +115,7 @@ public class CartService {
     /**
      * Verify if cart exists by id
      * @param id Cart id
-     * @throws CartNotFound
+     * @throws CartNotFound If cart was not found
      */
     public void cartExist(long id) throws CartNotFound {
         boolean exist = this.cartRepository.existsById(id);
@@ -121,7 +125,7 @@ public class CartService {
     /**
      * Delete cart from id
      * @param id Cart id
-     * @throws CartNotFound
+     * @throws CartNotFound If cart was not found
      */
     public void delete(long id) throws CartNotFound {
         this.cartExist(id);
@@ -132,7 +136,7 @@ public class CartService {
      * Reduce cart stock
      * @param cart Cart whose stock will be reduced
      * @return String with new stocks
-     * @throws ProductNotFound
+     * @throws ProductNotFound If product was not found
      */
     public String reduceStock(Cart cart) throws ProductNotFound {
         this.productService.productExist(cart.getProduct().getId());
@@ -150,11 +154,12 @@ public class CartService {
     /**
      * Make cart purchase
      * @param cart Cart to be purchased
-     * @throws ClientNotFound
-     * @throws ProductNotFound
-     * @throws insufficientStock
-     * @throws SizeNotFound
-     * @throws CartNotFound
+     * @throws ClientNotFound If client was not found
+     * @throws ProductNotFound If product was not found
+     * @throws insufficientStock If product stock is insufficient
+     * @throws SizeNotFound If product size was not found
+     * @throws CartNotFound If cart was not found
+     * @throws UnauthorizedPurchase If purchase is unauthorized
      */
     public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
 
@@ -186,8 +191,12 @@ public class CartService {
     /**
      * Make purchase for all carts
      * @param id Cliente id
-     * @throws ClientNotFound 
-     * @throws UnauthorizedPurchase
+     * @throws ClientNotFound If client was not found
+     * @throws ProductNotFound If product was not found
+     * @throws insufficientStock If product stock is insufficient
+     * @throws SizeNotFound If product size was not found
+     * @throws CartNotFound If cart was not found
+     * @throws UnauthorizedPurchase If purchase is unauthorized
      */
     public void buyAllCart(long id) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
         List<Cart> carts = this.importList(id);
