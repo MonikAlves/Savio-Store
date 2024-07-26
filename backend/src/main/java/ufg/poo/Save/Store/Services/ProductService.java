@@ -58,13 +58,7 @@ public class ProductService {
      */
     public int idGen(int max){
         Random rand  = new Random();
-        int numero = rand.nextInt(max);
-
-        while(numero == 0){
-            numero = rand.nextInt(max);
-        };
-
-        return numero;
+        return rand.nextInt(max) + 1;
     }
 
     /**
