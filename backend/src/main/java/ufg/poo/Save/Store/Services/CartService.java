@@ -159,6 +159,7 @@ public class CartService {
      * @throws insufficientStock If product stock is insufficient
      * @throws SizeNotFound If product size does not exist
      * @throws CartNotFound If cart does not exist
+     * @throws UnauthorizedPurchase If purchase is unauthorized
      */
     public void buyCart(Cart cart) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
 
@@ -195,6 +196,7 @@ public class CartService {
      * @throws insufficientStock If product stock is insufficient
      * @throws SizeNotFound If product size does not exist
      * @throws CartNotFound If cart does not exist
+     * @throws UnauthorizedPurchase If purchase is unauthorized
      */
     public void buyAllCart(long id) throws ClientNotFound, ProductNotFound, insufficientStock, SizeNotFound, CartNotFound, UnauthorizedPurchase {
         List<Cart> carts = this.importList(id);
