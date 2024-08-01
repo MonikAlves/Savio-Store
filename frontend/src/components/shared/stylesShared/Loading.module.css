@@ -1,0 +1,55 @@
+.ModalOverlay{
+    height: 10rem;
+    width: 10rem;
+}
+
+.Modal{
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Carrinho{
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    z-index: 2;
+}
+
+.Caixa{
+    width: 4rem;
+    height: 4rem;
+    z-index: 1;
+    position: relative;
+    animation: entrar-carrinho 1s infinite linear;
+    visibility: hidden;
+}
+
+@keyframes entrar-carrinho {
+    0%{
+        visibility: visible;
+        bottom: 100px;
+        rotate: 0;
+    }50%{
+        bottom: 60px;
+        rotate: 20deg;
+        left: 2px;
+    }75%{
+        bottom: 15px;
+        rotate: -20deg;
+    }90%{
+        left: 5px;
+        rotate: -20deg;
+    }
+    100%{
+        bottom: 8px;
+        left: 10px;
+        rotate: 0;
+    }
+}
