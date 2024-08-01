@@ -14,6 +14,7 @@ Programa feito para a materia Programação Orientada a Objetos do cruso Ciencia
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#%EF%B8%8F-estrutura-banco-de-dados">Estruturas banco de dados</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-autores">Autores</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
@@ -62,6 +63,55 @@ A Savio Store é um site destinado a compra de roupas e sapatos da marca Savio S
     </tr>
   </table>
 </div>
+
+## 🗂️ Estrutura Banco de Dados
+
+```mermaid
+classDiagram
+    class Client {
+        -Long id
+        -String name
+        -String email
+        -String phone
+        -String password
+        -String legalData
+    }
+
+    class Product {
+        -Long id
+        -String name
+        -String description
+        -String size
+        -Double price
+        -String stock
+        -String image
+    }
+
+    class Cart {
+        -Long id
+        -Product product
+        -Client client
+        -Int quantity
+        -String size
+        -Boolean available
+        -Double total
+    }
+
+    class Purchase {
+        -Long id
+        -Product product
+        -Client client
+        -Int quantity
+        -String size
+        -Double total
+        -Date date
+    }
+
+    Cart --> Client
+    Cart --> Product
+    Purchase --> Client
+    Purchase --> Product
+```
 
 ## 💻 Autores
 
