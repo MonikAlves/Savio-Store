@@ -79,7 +79,7 @@ export function CartMain() {
                                         <div className="max-h-[550px] overflow-y-auto">
 
                                         {
-                                            cart.map((item, index) => (
+                                            cart.slice().reverse().map((item, index) => (
                                                 <CartProduct
                                                 key={index}
                                                 image={"https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/" + item.product.image}
@@ -125,3 +125,4 @@ export function CartMain() {
         </>
     )
 }
+

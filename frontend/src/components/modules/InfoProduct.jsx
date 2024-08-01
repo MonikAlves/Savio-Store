@@ -8,6 +8,7 @@ import { ChevronsLeft, ChevronsRight, ShoppingCart } from 'lucide-react';
 import { NavLink } from "react-router-dom";
 import { ShoppingContext } from "../../contexts/ShoppingProvider";
 import Message from '../shared/Message';
+import Warning from '../shared/Warning';
 
 export function InfoProduct (props) {
 
@@ -18,11 +19,14 @@ export function InfoProduct (props) {
     const [selectedButton, setSelectedButton] = useState(null);
     const [buttonState, setButtonState] = useState(false);
     const [ message, setMessage ] = useState("")
-    const [ type, setType ] = useState("")
     const audioRef = useRef(null);
     const [showCart, setShowCart] = useState(false);
-
+    const cartConsumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
+    const [warning, setWarning] = useState(false)
+    const idsConsumer = new productConsumer(import.meta.env.VITE_API_BASE_URL) 
+    const [dataIds, setDataIds] = useState()
     
+
     async function fetchProduct(){
         try{
             const dataProduct = await consumer.GetPurchase(productId)
@@ -30,6 +34,23 @@ export function InfoProduct (props) {
         }catch(error){
             console.log(error)
         }
+    }
+
+    async function fetchIds(){
+        try{
+            const dataIds = await idsConsumer.
+        }catch(){
+
+        }
+
+    }
+
+    const handleWarning = (message) => {
+        setWarning(true)
+        setMessage(message)
+        setTimeout(() => {
+            setWarning(false);
+          }, 1000);
     }
 
     const handleButtonClick = (buttonId) => {
@@ -48,45 +69,48 @@ export function InfoProduct (props) {
 
     useEffect( () => {
             fetchProduct();
+            const response = await ids.
+            console.log(ids)
         }, [] // o [] serve para a montagem só ocorrer uma vez
     )
 
-    const handleAddToCartClick = async () => {        
-        
-        setShowCart(true);
-        
-        setTimeout(() => {
-          setShowCart(false);
-        }, 1000);
-
-        //addToCart(product);
-
-        if (audioRef.current) { 
-            audioRef.current.volume = 0.1;
-            audioRef.current.currentTime = 0;
-            audioRef.current.play().catch(error => {
-              console.error("Erro ao tentar reproduzir o áudio: ", error);
-            });
-        }
-
+    const handleAddToCartClick = async () => {
+                
         const parametro = {idClient: user.id, idProduto: produto.id, Tamanho: selectedButton};
-        
+
         if(selectedButton) {
             
             try {
-                const response = await consumer.addCart(parametro)
-                console.log(response)
-                //setMessage(response.error)
-                setType("sucess")
+                const response = await cartConsumer.addCart(parametro)
+                const erroBack = response.error;
+                console.log(erroBack)
+
+                if(erroBack == "Deu certo"){
+                    setShowCart(true);
+                    setTimeout(() => {
+                      setShowCart(false);
+                    }, 1000);
+    
+            //addToCart(product);
+    
+                    if (audioRef.current) { 
+                        audioRef.current.volume = 0.1;
+                        audioRef.current.currentTime = 0;
+                        audioRef.current.play().catch(error => {
+                          console.error("Erro ao tentar reproduzir o áudio: ", error);
+                        });
+                    }
+                }else{
+                    handleWarning(erroBack)
+                }
+
 
             } catch (error) {
                 console.log(error)
-                setMessage(error)
-                setType("error")
+                handleWarning(error.message)            
             }
         } else {
-            setMessage("Nenhum tamanho selecionado")
-            setType("error")
+            handleWarning("Nenhum tamanho selecionado")
         }
 
         setSelectedButton("") 
@@ -99,13 +123,16 @@ export function InfoProduct (props) {
     return (
         <div className='flex justify-center items-center'>
 
-            {message && type && (
+            {/*message && type && (
                 <Message message ={message} type= {type}/>
-            )}
+            )*/}
+
             
             <audio ref={audioRef} src="./../../public/cart_sound.mp3"/>
 
-        <div className='flex mt-10 flex-row p-2.5 items-center h-[750px] w-3/4 bg-gray-700 rounded p-2 border border-white-500'>
+        <div className='flex mt-10 flex-row p-2.5 items-center h-[750px] w-3/4 bg-gray-700 rounded p-2 border border-white-500 relative'>
+            
+            {warning ? <Warning message={message}/> : ""}
 
             <div className='flex flex-col h-full w-full items-center'>
 

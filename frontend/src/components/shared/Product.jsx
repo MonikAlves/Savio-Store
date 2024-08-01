@@ -5,6 +5,7 @@ import { useUser } from "../../contexts/UserProvider";
 import { productConsumer } from "../FetchAPI/productCosumer";
 import Message from "./Message";
 import { NavLink } from "react-router-dom";
+import Warning from "./Warning"
 
 
 export function Product({image, title, description, price, product}){
@@ -18,6 +19,19 @@ export function Product({image, title, description, price, product}){
     const [ message, setMessage ] = useState("")
     const [ type, setType ] = useState("")
     const  [products, setProducts] = useState();
+    const [warning, setWarning] = useState(false)
+
+    // alterações de warning
+
+    const handleWarning = (message) => {
+        setWarning(true)
+        setMessage(message)
+        setTimeout(() => {
+            setWarning(false);
+          }, 1000);
+    }
+
+    // alterações de warning
 
     const handleButtonClick = (buttonId) => {
         console.log(buttonId)
@@ -35,42 +49,42 @@ export function Product({image, title, description, price, product}){
 
 
     const handleAddToCartClick = async () => {
-        
-        setShowCart(true);
-        
-        setTimeout(() => {
-          setShowCart(false);
-        }, 1000);
-
-        //addToCart(product);
-
-        if (audioRef.current) { 
-            audioRef.current.volume = 0.1;
-            audioRef.current.currentTime = 0;
-            audioRef.current.play().catch(error => {
-              console.error("Erro ao tentar reproduzir o áudio: ", error);
-            });
-        }
-        
-        
+                
         const parametro = {idClient: user.id, idProduto: product.id, Tamanho: selectedButton};
         
         if(selectedButton) {
             
             try {
                 const response = await consumer.addCart(parametro)
-                console.log(response)
-                //setMessage(response.error)
-                setType("sucess")
+                const erroBack = response.error;
+                console.log(erroBack)
+
+                if(erroBack == "Deu certo"){
+                    setShowCart(true);
+                    setTimeout(() => {
+                      setShowCart(false);
+                    }, 1000);
+    
+            //addToCart(product);
+    
+                    if (audioRef.current) { 
+                        audioRef.current.volume = 0.1;
+                        audioRef.current.currentTime = 0;
+                        audioRef.current.play().catch(error => {
+                          console.error("Erro ao tentar reproduzir o áudio: ", error);
+                        });
+                    }
+                }else{
+                    handleWarning(erroBack)
+                }
+
 
             } catch (error) {
                 console.log(error)
-                setMessage(error)
-                setType("error")
+                handleWarning(error.message)            
             }
         } else {
-            setMessage("Nenhum tamanho selecionado")
-            setType("error")
+            handleWarning("Nenhum tamanho selecionado")
         }
 
         setSelectedButton("") 
@@ -78,11 +92,14 @@ export function Product({image, title, description, price, product}){
     };
 
     return (
-        <div className="w-80 h-[450px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded">
-            {message && type && (
-                <Message message ={message} type= {type}/>
-            )}
+        <div className="w-80 h-[450px] bg-gray-700 text-white aspect-square p-2.5 flex flex-col items-center gap-3 ring-1 ring-white rounded relative">
             
+            {/*message && type && (
+                <Message message ={message} type= {type}/>
+            )*/}
+            
+            {warning ? <Warning message={message}/> : ""}
+
             <audio ref={audioRef} src="public/cart_sound.mp3"/>
             <NavLink to={"/infoproduct/" + product.id} className="flex bg-gray-500 flex-col ring-1 rounded ring-white w-[170px] h-[180px]">
                 <img src={image} alt={description} className="h-[160px]"/>
@@ -116,3 +133,4 @@ export function Product({image, title, description, price, product}){
             </div>
     );
 }
+
