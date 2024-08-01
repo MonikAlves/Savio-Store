@@ -38,24 +38,26 @@ A Savio Store é um site destinado a compra de roupas e sapatos da marca Savio S
   <table>
     <tr>
       <td>
-        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142018%20-%20Copia.png" alt="Descrição da Imagem 1" width="200">
+        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142018%20-%20Copia.png" alt="Descrição da Imagem 1" width="500">
       </td>
       <td>
-        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142047.png" alt="Descrição da Imagem 2" width="200">
+        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142047.png" alt="Descrição da Imagem 2" width="500">
+      </td>
+    <tr/>
+    <tr>
+      <td>
+        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142030%20-%20Copia.png" alt="Descrição da Imagem 3" width="500">
       </td>
       <td>
-        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142030%20-%20Copia.png" alt="Descrição da Imagem 3" width="200">
+        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142037.png" alt="Descrição da Imagem 4" width="500">
       </td>
     </tr>
     <tr>
       <td>
-        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142037.png" alt="Descrição da Imagem 4" width="200">
+        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142131.png" alt="Descrição da Imagem 5" width="500">
       </td>
       <td>
-        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142131.png" alt="Descrição da Imagem 5" width="200">
-      </td>
-      <td>
-        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142328.png" alt="Descrição da Imagem 6" width="200">
+        <img src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/Captura%20de%20tela%202024-08-01%20142328.png" alt="Descrição da Imagem 6" width="500">
       </td>
     </tr>
   </table>
