@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { useUser } from "../../contexts/UserProvider";
 import { ProductsApi } from "../../lib/axios";
 import { Product } from "../shared/Product";
 import { productConsumer } from "../FetchAPI/productCosumer";
 import { useParams } from 'react-router-dom';
 import { ChevronsLeft, ChevronsRight, ShoppingCart } from 'lucide-react';
-
+import { NavLink } from "react-router-dom";
+import { ShoppingContext } from "../../contexts/ShoppingProvider";
+import Message from '../shared/Message';
 
 export function InfoProduct (props) {
 
@@ -15,6 +17,10 @@ export function InfoProduct (props) {
     const consumer = new productConsumer(import.meta.env.VITE_API_BASE_URL);
     const [selectedButton, setSelectedButton] = useState(null);
     const [buttonState, setButtonState] = useState(false);
+    const [ message, setMessage ] = useState("")
+    const [ type, setType ] = useState("")
+    const audioRef = useRef(null);
+    const [showCart, setShowCart] = useState(false);
 
     
     async function fetchProduct(){
@@ -45,11 +51,60 @@ export function InfoProduct (props) {
         }, [] // o [] serve para a montagem só ocorrer uma vez
     )
 
+    const handleAddToCartClick = async () => {        
+        
+        setShowCart(true);
+        
+        setTimeout(() => {
+          setShowCart(false);
+        }, 1000);
+
+        //addToCart(product);
+
+        if (audioRef.current) { 
+            audioRef.current.volume = 0.1;
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(error => {
+              console.error("Erro ao tentar reproduzir o áudio: ", error);
+            });
+        }
+
+        const parametro = {idClient: user.id, idProduto: produto.id, Tamanho: selectedButton};
+        
+        if(selectedButton) {
+            
+            try {
+                const response = await consumer.addCart(parametro)
+                console.log(response)
+                //setMessage(response.error)
+                setType("sucess")
+
+            } catch (error) {
+                console.log(error)
+                setMessage(error)
+                setType("error")
+            }
+        } else {
+            setMessage("Nenhum tamanho selecionado")
+            setType("error")
+        }
+
+        setSelectedButton("") 
+             
+    };
+
     if(!produto)
         return null
 
     return (
         <div className='flex justify-center items-center'>
+
+            {message && type && (
+                <Message message ={message} type= {type}/>
+            )}
+            
+            <audio ref={audioRef} src="./../../public/cart_sound.mp3"/>
+
         <div className='flex mt-10 flex-row p-2.5 items-center h-[750px] w-3/4 bg-gray-700 rounded p-2 border border-white-500'>
 
             <div className='flex flex-col h-full w-full items-center'>
@@ -80,10 +135,22 @@ export function InfoProduct (props) {
 
                     <div className='flex w-full justify-end items-end'>
                     <div className='flex w-full h-1/7 flex-row justify-evenly items-center border border-white-500 rounded bg-white p-2 m-0'>
-                        <button className='pl-1 justify-center items-center'><ChevronsLeft /></button>
-                        <button className='justify-center items-center'>Comprar</button>
-                        <button className='flex h-10 w-10 h-8 justify-center items-center'> <ShoppingCart />+</button>
-                        <button className='pl-1 w-10 h-10 w-10 h-8 justify-center items-center'><ChevronsRight /></button>
+                        <button className='pl-1 w-10 h-10 justify-center items-center rounded hover:bg-orange-500'><ChevronsLeft /></button>
+                        {/* <button className='h-10 p-1 justify-center  items-center rounded hover:bg-orange-500'>Comprar</button> */}
+                        <button className='flex h-10 w-10 justify-center items-center rounded hover:bg-orange-500' onClick={handleAddToCartClick}> <ShoppingCart />+
+                        
+                        
+                    {showCart && (
+                        <div className="absolute h-full flex justify-center w-full">
+                        <div className="animate-cart-up">
+                            <ShoppingCart className="h-[50px] w-[50px] text-orange-500"/>
+                        </div>
+                        </div>
+                    )}
+            
+
+                        </button>
+                        <button className='pl-1 w-10 h-10 w-10 justify-center items-center rounded hover:bg-orange-500'><ChevronsRight /></button>
                     </div>
                     </div>
                     
@@ -189,5 +256,4 @@ export function InfoProduct (props) {
         );
         */
     };
-
 
