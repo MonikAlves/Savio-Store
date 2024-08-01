@@ -84,10 +84,10 @@ export function Product({image, title, description, price, product}){
             )}
             
             <audio ref={audioRef} src="public/cart_sound.mp3"/>
-            <NavLink to={"/infoproduct"} className="flex bg-gray-500 flex-col ring-1 rounded ring-white w-[170px] h-[180px]">
+            <NavLink to={"/infoproduct/" + product.id} className="flex bg-gray-500 flex-col ring-1 rounded ring-white w-[170px] h-[180px]">
                 <img src={image} alt={description} className="h-[160px]"/>
             </NavLink>
-            <NavLink to={"/infoproduct"} className="flex flex-col gap-1 items-center">
+            <NavLink to={"/infoproduct/" + product.id} className="flex flex-col gap-1 items-center">
                 <h2 className="text-xl flex font-bold text-center">
                     {title.length > 22 ? title.slice(0, 22) + '...' : title}
                 </h2>
@@ -95,7 +95,7 @@ export function Product({image, title, description, price, product}){
                     {description.length > 80 ? description.slice(0, 80) + '...' : description}
                 </p>
             </NavLink>
-                <NavLink to={"/infoproduct"} className="text-center flex flex-col font-thin text-2xl w-full">
+                <NavLink to={"/infoproduct/" + product.id} className="text-center flex flex-col font-thin text-2xl w-full">
                     R$ {`${price.toFixed(2)}`}
                 </NavLink>
                 <div className="p-5 flex gap-3 flex-wrap flex-col h-full items-center justify-end">
