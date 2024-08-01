@@ -110,9 +110,18 @@ export function AccountMain() {
                     </div>
                 </div>
                     <ul className="flex bg-amazon-gunmetal justify-center flex-col gap-3 w-1/3 items-center p-5 border-[2px] rounded aspect-square ">
-                    <li className="flex max-h-[200px] items-center justify-center bg-amazon-apricot h-1/4 w-1/4 border-[2px] rounded">
-                    <UserRoundPlus className="flex h-1/2 w-1/2" />
+                    {   user.id === 91 && 
+                    <li className="flex max-h-[200px] items-center justify-center h-1/4 w-1/4 border-[2px] rounded">
+                        <img className="bg-white flex h-full w-full" src="https://exbxwvxqlnbphyieygiz.supabase.co/storage/v1/object/public/Roupas/superSavio.png"></img>
                     </li>
+
+                    }
+                    { user.id != 91 && 
+                        
+                        <li className="flex max-h-[200px] items-center bg-amazon-apricot justify-center h-1/4 w-1/4 border-[2px] rounded">
+                    <UserRoundPlus className="  flex h-1/2 w-1/2" />
+                    </li>
+                    }
                         <div className="flex w-full flex-col">
                             <p className="flex p-1 text-white">User :</p>
                             <li className="flex p-2.5 text-white items-center bg-amazon-eerie h-[40px] w-full border-[2px] rounded">

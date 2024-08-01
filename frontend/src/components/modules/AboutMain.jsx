@@ -8,7 +8,7 @@ export function AboutMain() {
   const categories = [
     { name: 'Roupas Masculinas', image: '/public/luiz.png' },
     { name: 'Roupas Femininas', image: '/public/monik.jpg' },
-    { name: 'Tênis', image: 'https://images.pexels.com/photos/1927259/pexels-photo-1927259.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { name: 'Tênis', image: '/public/tenis.png' },
   ]
   return (
     <main className="p-5 flex flex-col gap-7">

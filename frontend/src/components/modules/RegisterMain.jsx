@@ -18,9 +18,15 @@ export function RegisterMain() {
 
     const consumer = new userConsumer(import.meta.env.VITE_USER_API_URL)
 
-    const handleWarning = (message) => {
+    const handleWarning = (message,callback) => {
         setWarning(true)
         setMessage(message)
+        setTimeout(() => {
+            setWarning(false)
+        }, 1000);
+        if (callback) {
+            callback();
+        }
     }
 
     const validations = (Client) => {
@@ -55,10 +61,11 @@ export function RegisterMain() {
         try {
             if(validations(client)) {
                 await consumer.CadUser(client);
-                handleWarning("Usuário cadastrado com sucesso, faça login!!")
-                setTimeout(() => {
-                    navigate("/");
-                }, 2500);
+                handleWarning("Usuário cadastrado com sucesso, faça login!!", () => {
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 2500);
+                });
                 
             } else {
                 handleWarning("Algum campo do cadastro está vazio");

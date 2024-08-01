@@ -13,6 +13,9 @@ export function CartProduct({ image, title, description, quantity, price, itemPr
     const handleWarning = (message,callback) => {
         setWarning(true)
         setMessage(message)
+        setTimeout(() => {
+            setWarning(false)
+        }, 1000);
         if (callback) {
             callback();
         }
