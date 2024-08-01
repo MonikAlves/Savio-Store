@@ -60,6 +60,17 @@ public class ProductController {
     }
 
     /**
+     * Get a list with all available product ids
+     *
+     * @return A list with all available product ids
+     */
+    @GetMapping("/validId")
+    public List<Long> getIds(){
+        return this.productService.getIds();
+    }
+
+
+    /**
      * Add a list of products
      * @param product List of products that will be added
      * @return Response entity with operation status

@@ -81,7 +81,20 @@ public class ProductService {
         }
 
         return escolhidos;
+    }
 
+    /**
+     * Get a list with all available product ids
+     *
+     * @return A list with all available product ids
+     */
+    public List<Long> getIds(){
+        List<Long> ids = new ArrayList<>();
+        List<Product> products = this.getAll();
+        for(Product p : products){
+            ids.add(p.getId());
+        }
+        return ids;
     }
 
     /**
