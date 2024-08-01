@@ -160,5 +160,23 @@ export class productConsumer {
             throw e
         }
     }
+    
+    async validIds (){
+        try {
+            const response = await fetch(this.BASEURL + "/validId", {
+                method: "GET",
+            })
+            
+            if(!response) {
+                const errorResponse = await response.json(); 
+                throw new Error(errorResponse.error || "Erro desconhecido");
+            }
+
+            return await response.json()
+        } catch(e) {
+            console.log(e)
+            throw e
+        }
+    }
 
 }

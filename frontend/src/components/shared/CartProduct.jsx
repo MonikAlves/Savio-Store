@@ -2,14 +2,31 @@
 import { useContext, useEffect, useState } from "react"
 import { productConsumer } from "../FetchAPI/productCosumer";
 import {Trash2} from "lucide-react";
+import Warning from "./Warning";
 
 export function CartProduct({ image, title, description, quantity, price, itemPrice, size, available,idCart,deleted}) {
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL)
-    
+    const [warning, setWarning] = useState(false)
+    const [message, setMessage] = useState(""); 
+
+
+    const handleWarning = (message,callback) => {
+        setWarning(true)
+        setMessage(message)
+        if (callback) {
+            callback();
+        }
+    }
+
     async function encapDeleteCart(idCart){
         try {
-            await consumer.deleteCart(idCart); 
-            deleted()
+            const errorBack = await consumer.deleteCart(idCart); 
+            handleWarning("Produto retirado do carrinho", () => {
+                setTimeout(() => {
+                    deleted()
+                }, 1500);
+            });
+            
         } catch(error) {
             console.log(error)
         }    
@@ -17,8 +34,11 @@ export function CartProduct({ image, title, description, quantity, price, itemPr
     
     async function buy(idCart){
             try {
-                await consumer.buy(idCart); 
-                deleted()
+                const errorBack = await consumer.buy(idCart); 
+                handleWarning(errorBack.error)
+                setTimeout(() => {
+                    deleted()
+                }, 1500);
             } catch(error) {
                 console.log(error)
             }
@@ -39,6 +59,9 @@ export function CartProduct({ image, title, description, quantity, price, itemPr
       }
     return (
         <div className="w-full flex items-center gap-5 p-2.5 border-b-[1px] border-b-black/30">
+            
+            { warning ? <Warning message = {message} /> : ""}
+
             <img src={image} alt={description} className="w-32" />
             <div className=" w-full flex flex-col gap-2.5">
                 <div className="flex justify-between">

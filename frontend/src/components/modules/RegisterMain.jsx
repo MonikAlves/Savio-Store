@@ -3,6 +3,7 @@ import { useState } from "react";
 import { userConsumer } from "../FetchAPI/userConsumer";
 import Message from "../shared/Message"
 import { useNavigate } from "react-router-dom";
+import Warning from "../shared/Warning";
 
 export function RegisterMain() {
     const  [ NomeCompleto, setNomeCompleto ] = useState("")
@@ -12,9 +13,15 @@ export function RegisterMain() {
     const  [ cpf, setCpf ] = useState("")
     const  [ message, setMessage] = useState("")
     const  [ type , setType ] = useState("")
+    const [warning, setWarning] = useState(false)
     const navigate = useNavigate();
 
     const consumer = new userConsumer(import.meta.env.VITE_USER_API_URL)
+
+    const handleWarning = (message) => {
+        setWarning(true)
+        setMessage(message)
+    }
 
     const validations = (Client) => {
         if (Client.name.trim().length <= 0 || Client.name === null) {
@@ -37,7 +44,6 @@ export function RegisterMain() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        
         const client = {
             name: NomeCompleto,
             email: email,
@@ -48,17 +54,17 @@ export function RegisterMain() {
 
         try {
             if(validations(client)) {
-                await consumer.CadUser(client)
-                setMessage("cadastrado com sucesso")
-                setType("sucess")
-                navigate("/"); 
+                await consumer.CadUser(client);
+                handleWarning("Usuário cadastrado com sucesso, faça login!!")
+                setTimeout(() => {
+                    navigate("/");
+                }, 2500);
+                
             } else {
-                setMessage("Algum campo do cadastro está vazio");
-                setType("error")
+                handleWarning("Algum campo do cadastro está vazio");
             }
         } catch (error) {
-            setMessage(error.message)
-            setType("error")
+            handleWarning(error.message)
         }
 
     }
@@ -74,13 +80,9 @@ export function RegisterMain() {
     return (
         <main className="p-5 flex gap-7 flex-col justify-center items-center">
             <h1 className='text-4xl flex-col font-semibold text-white w-full text-center p-2.5'>Cadastrar</h1>
-            {
-                message && type && (
-                    <Message 
-                        message = {message} 
-                        type = {type}/>
-                )
-            }
+
+            { warning ? <Warning message = {message} /> : ""}
+
             <form className="w-full max-w-96 h-full flex flex-col gap-3.5 items-center justify-center" onSubmit={(event) => handleSubmit(event)}>
                 {
                     inputs.map((input, index) => (

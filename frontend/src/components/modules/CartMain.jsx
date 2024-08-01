@@ -6,11 +6,14 @@ import { ArrowLeftIcon} from "lucide-react";
 import { productConsumer} from "../FetchAPI/productCosumer";
 import { UserProvider, UserContext, useUser } from "../../contexts/UserProvider";
 import { BallTriangle } from 'react-loader-spinner';
+import Warning from "../shared/Warning";
 
 
 export function CartMain() {
-
+    
     const {user} = useUser();
+    const [warning, setWarning] = useState(false)
+    const [message, setMessage] = useState(""); 
     const [ cart, setCart ] = useState([]);
     const consumer = new productConsumer(import.meta.env.VITE_PRODUCT_API_URL);
     const [isLoading,setLoading] = useState(false);
@@ -18,12 +21,21 @@ export function CartMain() {
     async function encapBuyAll(idClient){
 
         try{
-            await consumer.buyAll(idClient)
+            const errorBack = await consumer.buyAll(idClient)
             fetchCart();
+            handleWarning(errorBack.error)
             
         }catch(error){
-            console.log(error)
+            handleWarning(error.message)
         }
+    }
+
+    const handleWarning = (message) => {
+        setWarning(true)
+        setMessage(message)
+        setTimeout(() => {
+            setWarning(false);
+          }, 1000);
     }
 
     async function fetchCart() {
@@ -33,7 +45,7 @@ export function CartMain() {
                 setCart(data);
                 setLoading(true)
             } catch(error) {
-                console.log(error)
+                handleWarning(error.message)
             }
         }
     }
@@ -59,6 +71,9 @@ export function CartMain() {
             ):(
         <main className="flex-1 p-5 flex flex-col gap-10 justify-center items-center">
             <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Carrinho</h1>
+
+            { warning ? <Warning message = {message} /> : ""}
+
             <div className="flex gap-5">
                 {
                     cart.length == 0 ?

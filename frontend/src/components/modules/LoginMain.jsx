@@ -4,6 +4,7 @@ import { userConsumer } from "../FetchAPI/userConsumer";
 import { useUser } from "../../contexts/UserProvider";
 import { useNavigate } from "react-router-dom";
 import Message from "../shared/Message";
+import Warning from "../shared/Warning";
 
 export function LoginMain() {
     const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export function LoginMain() {
     const [ type, setType ] = useState("")
     const { user, login, logout} = useUser()
     const navigate = useNavigate(); 
+    const [warning, setWarning] = useState(false)
 
     const validations = (Client) => {
         if(Client.email.trim().length <= 0 || Client.email === null) {
@@ -21,6 +23,14 @@ export function LoginMain() {
             return false;
         }
         return true;
+    }
+
+    const handleWarning = (message) => {
+        setWarning(true)
+        setMessage(message)
+        setTimeout(() => {
+            setWarning(false);
+          }, 1000);
     }
 
 
@@ -36,7 +46,6 @@ export function LoginMain() {
         try {
             if(validations(Client)){
                 const data = await consumer.VerifyLogin(Client); 
-                setMessage(""); 
                 login({
                     email: data.email,
                     name: data.name,
@@ -45,8 +54,6 @@ export function LoginMain() {
                     legalData: data.legalData,
                 }
                 )
-                setMessage("Usuario logado com sucesso")
-                setType("sucess")
                 navigate("/"); 
             } else {
                 setMessage("Campo senha ou email estão vazios")
@@ -55,14 +62,16 @@ export function LoginMain() {
             //fica pro luiz implementar o local storage para guardar a session
             
         } catch (error) {
-            setMessage(error.message); 
-            setType("error")
+            handleWarning(error.message); 
         }
     }
 
     return (
         <main className="p-5 flex flex-col gap-8 justify-center items-center">
             <h1 className='text-4xl font-semibold text-white w-full text-center p-2.5'>Login</h1>
+
+            { warning ? <Warning message = {message} /> : ""}
+
             <form 
                 className="w-full max-w-96 h-full flex flex-col gap-10 items-center justify-center"
                 onSubmit={(event) => handleSubmit(event)}

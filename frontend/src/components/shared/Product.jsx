@@ -6,6 +6,7 @@ import { productConsumer } from "../FetchAPI/productCosumer";
 import Message from "./Message";
 import { NavLink } from "react-router-dom";
 import Warning from "./Warning"
+import Loading from "../shared/Loading";
 
 
 export function Product({image, title, description, price, product}){
@@ -61,6 +62,7 @@ export function Product({image, title, description, price, product}){
 
                 if(erroBack == "Deu certo"){
                     setShowCart(true);
+                    <Loading isOpen={true}/>
                     setTimeout(() => {
                       setShowCart(false);
                     }, 1000);
@@ -99,6 +101,7 @@ export function Product({image, title, description, price, product}){
             )*/}
             
             {warning ? <Warning message={message}/> : ""}
+            {showCart ? <Loading isOpen={true}/> : ""}
 
             <audio ref={audioRef} src="public/cart_sound.mp3"/>
             <NavLink to={"/infoproduct/" + product.id} className="flex bg-gray-500 flex-col ring-1 rounded ring-white w-[170px] h-[180px]">
@@ -123,14 +126,7 @@ export function Product({image, title, description, price, product}){
                     </div>
                     <button className="text-black w-full font-bold bg-white/100 rounded p-2 cursor-pointer text-center hover:bg-orange-600 transition-all" onClick={handleAddToCartClick}>Adicionar ao carrinho</button>
                 </div>
-                    {showCart && (
-                        <div className="absolute h-full flex justify-center w-full">
-                        <div className="animate-cart-up">
-                            <ShoppingCart className="h-[50px] w-[50px] text-orange-500"/>
-                        </div>
-                        </div>
-                    )}
-            </div>
+        </div>
     );
 }
 

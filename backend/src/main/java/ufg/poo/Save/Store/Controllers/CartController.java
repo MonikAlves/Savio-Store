@@ -81,7 +81,7 @@ public class CartController {
             return ResponseDTO.response(e);
         }
         ErrorDTO error = new ErrorDTO();
-        error.setError("Todos os produto comprado com sucesso");
+        error.setError("Produto comprado com sucesso");
         return ResponseEntity.ok().body(error);
     }
 
@@ -100,7 +100,7 @@ public class CartController {
         }
 
         ErrorDTO error = new ErrorDTO();
-        error.setError("Produto comprado com sucesso");
+        error.setError("Todos os produto comprado com sucesso");
         return ResponseEntity.ok().body(error);
     }
 
