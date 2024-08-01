@@ -222,7 +222,7 @@ export function InfoProduct (props) {
                     <div className='flex w-1/2 text-white h-full flex-col p-2.5 items-center justify-center gap-8' >
                         <p className='flex justify-center items-center text-4xl'>{produto.name}</p>
                         <p className='flex justify-center items-center'> {produto.description} </p>
-                        <p className='flex justify-center items-center text-3xl'>${produto.price}</p>
+                        <p className='flex justify-center items-center text-3xl'>R${produto.price}</p>
                     </div>
 
                 </div>
