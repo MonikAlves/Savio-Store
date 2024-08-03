@@ -7,7 +7,7 @@
 <h1 align="center"> Links </h1>
 
 <p align="center">
-Programa feito para a materia Programação Orientada a Objetos do cruso Ciencias da Computação da UFG (Universidade Federal de Goiás)  <br/>
+Site feito para a materia Programação Orientada a Objetos do curso Ciencias da Computação da UFG (Universidade Federal de Goiás)  <br/>
 </p>
 
 <p align="center">
